@@ -37,6 +37,18 @@ def downloadLog():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     return send_file('z:\\MiscWorkJunk\\TubeCondition\\LogFiles\\LoggingFilePSU1.txt',as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
 
+@app.route("/ManualXrayControl", methods = ["POST"])
+def XrayONOFF():
+    if "Xray_On" in request.form.keys():
+        print("Xray turning On to: ", request.form["kvSet"], " and ", request.form["mASet"] )
+
+    elif "Xray_Off" in request.form.keys():
+        print("Xray turing off")
+    
+
+    return redirect("/Quick_Access")
+
+
 import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
