@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        
+        <link rel="stylesheet" href="static\css\QuickAccessStyleSheet.css"/>
+        <link rel = "icon" href ="static\img\icon.ico" type="image/icon"/> 
+        <title>Conditioning Rig Quick Access</title>
+    </head>
+
+    <script> 
+        function onlyNumberKey(evt) { 
+              
+            // Only ASCII charactar in that range allowed NUMBERS AND .
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 46)
+                return false; 
+            return true; 
+        } 
+    </script>
+
+    <header>
+        <h1>Quick Access</h1>
+        <li><a href = "hvsupplypage">HighVoltage Supply Setup</a></li>
+    </header>
+    <body>
+
+    <div class="PSU_Nav">
+        <h2>Power Supply 1</h2>
+            <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
+            <a href="LogFileDownloaderPSU1"><button class='b1'>Download Log File</button></a>
+            <br>
+            <div>
+                <form action="/ManualXrayControl" method="post">
+                    <label>Quick HV and mA set.</label>
+                    <br>
+                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{CurrKV}}>
+                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{CurrMA}}>
+                    <br>
+                    <input type="submit" name="Xray_Off" value="Xray Off" >
+                    <input type="submit" name="Xray_On" value="Xray On">
+                    <p>"Xray Off" turns the Xray off. "Xray On" turns Xray on with the current values in the boxes above. If Xray is already on,it changes the value to new value
+                    </p>
+                </form>
+                
+            </div>
+    </div>
+
+</html>
