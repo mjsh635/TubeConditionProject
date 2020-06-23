@@ -21,16 +21,16 @@ def add_header(response):
 
 @app.route("/", methods=["GET"])
 def redirect_to_main_page():
-    return redirect("/Home")
+    return redirect("/Quick_Access")
 
-
-@app.route("/Home", methods=["GET", "POST"])
+##reminder to change the fixed values to read previous sets
+@app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
-    return render_template("Home.html")
 
 @app.route("/logpage", methods=["GET", "POST"])
 def loggingPage():
     return render_template("LoggingPage.html")
+    return render_template("QuickAccess.html", CurrKV = 1, CurrMA = 2)
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
