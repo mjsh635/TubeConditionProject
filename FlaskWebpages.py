@@ -26,20 +26,16 @@ def redirect_to_main_page():
 ##reminder to change the fixed values to read previous sets
 @app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
-
-@app.route("/logpage", methods=["GET", "POST"])
-def loggingPage():
-    return render_template("LoggingPage.html")
     return render_template("QuickAccess.html", CurrKV = 1, CurrMA = 2)
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
     return render_template("HVSettings.html")
 
-@app.route("/LogFileDownloader", methods = ['GET'])
+@app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    return send_file('z:\\MiscWorkJunk\\TubeCondition\\LogFiles\\LoggingFile.txt',as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
+    return send_file('z:\\MiscWorkJunk\\TubeCondition\\LogFiles\\LoggingFilePSU1.txt',as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
 
 import socket
 
