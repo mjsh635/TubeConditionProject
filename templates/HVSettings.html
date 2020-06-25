@@ -34,4 +34,51 @@
     </header>
 
     
+
+    <h1><a href="Quick_Access"><button class="b1">Return to Quick Access</button></a></h1>
+    <article>
+        <section>
+            <h1>Power Supply 1 Settings</h1>
+            <form action="/updateHV" method="POST">
+
+                <label>kV Starting Voltage:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{condKVStart}}>
+                <br>
+                <label>kV Target Voltage:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{condKVTarget}}>
+                <br>
+                <label>mA Starting Current:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{condMAStart}}>
+                <br>
+                <label>mA Target Current:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{condMATarget}}>
+                <br>
+                <label>Conditioning Step Dwell:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{condStepDwell}}>
+                <br>
+                <label>Post Arc Dwell:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="CondPostArcDwell" value={{CondPostArcDwell}}>
+                <br>
+                <label>Off Dwell:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="CondOffDwell" value={{CondOffDwell}}>
+                <br>
+                <label>Number of Steps:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="CondStepCount" value={{CondStepCount}}>
+                <br>
+                <input type="submit" name="UpdatePSU1" value="Click to Update Params" >
+            </form>
+            <br>
+            <!-- <form action="/updateHV" method="GET">
+                <label>Total Time</label>
+                <br>
+                <label value="this is a test"></label>
+                <br>
+                <label>Total Time Remaining</label>
+                <br>
+                <label value="this is a test"></label>
+
+                <input type="button" name="update_time" value="Calculate Time">
+            </form> -->
+        </section>
+</article>
 </html>
