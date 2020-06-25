@@ -17,4 +17,21 @@
         </nav>
         
     </section>
+    <div>
+        {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+    </div>
+    
+    <header>
+        <h1>High Voltage Supply Configuration</h1>
+    </header>
+
+    
 </html>
