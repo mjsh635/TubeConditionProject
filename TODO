@@ -1,4 +1,0 @@
-~ Write conditioning cycle
-	 write Arc Detection scripts (only when conditioning)
-
-~ fix file path for Log file, and pickle file, add the IO Connections on the PI
