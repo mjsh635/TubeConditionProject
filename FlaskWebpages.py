@@ -7,8 +7,11 @@ from flask import Flask, render_template, request, redirect, send_file, send_fro
 import time,datetime
 import os
 from Scripts import Raspberry_PI_IO_Controller
-
-RPI = Raspberry_PI_IO_Controller.RPIO()
+import RPi.GPIO as io 
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
+RPI = Raspberry_PI_IO_Controller.RPIO(io,i2c)
 app = Flask(__name__)
 app.secret_key = 'random string'
 
@@ -38,7 +41,7 @@ def HVSettings():
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    return send_file('z:\\MiscWorkJunk\\TubeCondition\\LogFiles\\LoggingFilePSU1.txt',as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
+    return send_file(r"/home/pi/Desktop/TubeConditionProject-Dev/LogFiles/LoggingFilePSU1.txt",as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
 
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
