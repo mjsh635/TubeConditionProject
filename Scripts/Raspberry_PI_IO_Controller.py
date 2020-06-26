@@ -1,10 +1,25 @@
 import time
 import pickle
+import Adafruit_ADS1x15
+import adafruit_mcp4725
+import math
+
+
+
 class outside_bounds_exception(Exception):
     pass
 
 class RPIO():
-    def __init__(self):
+    def __init__(self,io,i2c):
+        self.io = io
+        io.setmode(io.BCM)
+        self.adc = Adafruit_ADS1x15.ADS1115(address=0x48)  #0x48
+        self.dac1 = adafruit_mcp4725.MCP4725(i2c ,address=0x62) #0x62
+        self.dac2 = adafruit_mcp4725.MCP4725(i2c ,address=0x63)
+        self.io.setup(17,io.OUT) # XRAY ON/OFF  
+        self.io.setup(18,io.OUT) # RESET SUPPLY
+        self.io.setup(22,io.IN,)  #XRAYS ARE ON
+        self.io.setup(27,io.IN) #PSU IS FAULTED
         
         with open(r"/home/pi/Desktop/TubeConditionProject-Dev/static/Settings/settings.pkl","rb") as file:
             settings = pickle.load(file)
