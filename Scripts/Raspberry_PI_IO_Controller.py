@@ -83,6 +83,10 @@ class RPIO():
             if ((setKV >= 0.0 and setKV <=60.0) and (setMA>=0.0 and setMA<=80.0)):
                 self.currKV = setKV
                 self.currMA = setMA
+                self.set_analog_out(self.currKV,self.currMA)
+                self.set_GPIO(17,0)
+                time.sleep(0.5)
+                self.set_GPIO(17,1)
                 mes = "xray set complete"
             else:
                 raise outside_bounds_exception
@@ -102,6 +106,8 @@ class RPIO():
         """turn off the DO to xray, check feedback that xray is off
         """
         print("Xrays turning off")
+        self.set_GPIO(17,1)
+
         mes = "xray turned off"
         return mes 
 
