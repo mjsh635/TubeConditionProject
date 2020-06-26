@@ -149,6 +149,9 @@ class RPIO():
         return mes
     
     def currentKVMA(self):
-        mes = str("current kv: {0} and ma: {1}").format(self.currKV,self.currMA)
+        print(self.read_analog_KV())
+        print(self.read_analog_MA())
+        mes = str("current kv: {0} and ma: {1}").format(self.read_analog_KV(),self.read_analog_MA())
+        print(mes)
         return mes
     
