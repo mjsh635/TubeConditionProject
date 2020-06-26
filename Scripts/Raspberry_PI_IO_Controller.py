@@ -6,21 +6,6 @@ class outside_bounds_exception(Exception):
 class RPIO():
     def __init__(self):
         
-        # settings = {
-        #     "currKV" : 0.0,
-        #     "currMA" : 0.0,
-        #     "condKVStart" : 0.0,
-        #     "condKVTarget" : 0.0,
-        #     "condMAStart" :0.0,
-        #     "condMATarget" : 0.0,
-        #     "condStepDwell" : 0.0,
-        #     "CondPostArcDwell" :0.0,
-        #     "CondOffDwell" : 0.0,
-        #     "CondStepCount" :   0.0,
-        # }
-        # with open(r"Z:\MiscWorkJunk\TubeCondition\static\Settings\settings.pkl","wb") as file:
-        #     pickle.dump(settings,file)
-
         with open(r"/home/pi/Desktop/TubeConditionProject-Dev/static/Settings/settings.pkl","rb") as file:
             settings = pickle.load(file)
         
