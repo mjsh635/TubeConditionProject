@@ -69,8 +69,30 @@ class RPIO():
     #     channel_data = [channel.value, channel.voltage]
     #     return channel_data
 
+        self.readKV = 0.0
+        self.readMA = 0.0
+        self.set_GPIO(17,1)
+        self.set_GPIO(18,1)
+    
     def set_GPIO(self,pin, value):
-        pass
+        self.io.output(pin,value)
+
+    def set_analog_out(self, kv, ma):
+        value_to_set1 = math.floor((kv*10.0*6.825))
+        value_to_set2 = math.floor((ma*10.0*5.11875))
+        self.dac1.raw_value = 2000#value_to_set1
+        self.dac2.raw_value = 2000#value_to_set2
+    
+    def read_analog_KV(self):
+        KVraw = self.adc.read_adc(0)
+        self.readKV = KVraw/68.25
+
+    def read_analog_MA(self):
+        MAraw = self.adc.read_adc(1)
+        self.readMA = MAraw/51.1875
+
+    def readinput(self):
+        print(self.io.input(22), self.io.input(27))
 
     def XrayOn(self,kv,mA):
         """set KV, set MA, check if xray already on, if is do nothing, if not turn on DO to turn on xray, wait 2 seconds, check that xrays turned on
