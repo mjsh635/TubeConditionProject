@@ -21,7 +21,7 @@ class RPIO():
         # with open(r"Z:\MiscWorkJunk\TubeCondition\static\Settings\settings.pkl","wb") as file:
         #     pickle.dump(settings,file)
 
-        with open(r"Z:\MiscWorkJunk\TubeCondition\static\Settings\settings.pkl","rb") as file:
+        with open(r"/home/pi/Desktop/TubeConditionProject-Dev/static/Settings/settings.pkl","rb") as file:
             settings = pickle.load(file)
         
         self.currKV = settings["currKV"]
@@ -121,7 +121,7 @@ class RPIO():
             "CondStepCount" : CondStepCount      
         }
         try:
-            with open(r"Z:\MiscWorkJunk\TubeCondition\static\Settings\settings.pkl","wb") as file:
+            with open(r"/home/pi/Desktop/TubeConditionProject-Dev/static/Settings/settings.pkl","wb") as file:
                 pickle.dump(settings, file)
             mes = "Updated Sucessfully"
 
