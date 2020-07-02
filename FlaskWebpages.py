@@ -6,7 +6,7 @@ to the correct values for the type of conditioning.
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory, flash
 import time,datetime
 import os
-from Scripts import Raspberry_PI_IO_Controller
+from MyScripts import Raspberry_PI_IO_Controller
 import RPi.GPIO as io 
 import board
 import busio
