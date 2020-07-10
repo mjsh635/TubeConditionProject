@@ -11,7 +11,7 @@ import sys
 PARENT_DIR = pathlib.Path(__file__).resolve().parents[1]
 sys.path.append(str(PARENT_DIR))
 from MyScripts import Raspberry_PI_IO_Controller
-rpi = Raspberry_PI_IO_Controller.RPIO(test=True)
+rpi = Raspberry_PI_IO_Controller.RPIO_DF3HVPSU(test=True)
 
 
 class Test_Xray_On(unittest.TestCase):
