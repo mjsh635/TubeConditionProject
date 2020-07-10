@@ -1,3 +1,7 @@
+"""This class is sorta a one off, it was designed with specific intention to handle the
+analog communication with the DF3 highvoltage powersupply that does not support communication
+over Ethernet
+"""
 import time
 import pickle
 import math
@@ -5,9 +9,11 @@ import math
 class outside_bounds_exception(Exception):
     pass
 
-class RPIO():
+
+
+class RPIO_DF3HVPSU():
     
-    def __init__(self,io=None,i2c=None, test=False,test_hardware=False):
+    def __init__(self,io=None,i2c=None,test=False,test_hardware=False):
         self.test = test
         self.test_hardware = test_hardware
 
@@ -216,6 +222,3 @@ class RPIO():
                 self.read_analog_MA()
                 mes = [self.readKV, self.readMA]
         return mes
-    
-    def conditiong_routine(self):
-        pass
