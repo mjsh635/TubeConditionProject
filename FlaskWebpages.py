@@ -6,12 +6,13 @@ to the correct values for the type of conditioning.
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory, flash
 import time,datetime
 import os
-from MyScripts import Raspberry_PI_IO_Controller
-import RPi.GPIO as io 
+from MyScripts import Raspberry_PI_IO_Controller,Logging_Controller
+import RPI.GPIO as io 
 import board
 import busio
 i2c = busio.I2C(board.SCL, board.SDA)
-RPI = Raspberry_PI_IO_Controller.RPIO(io,i2c)
+Logger = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LoggingFile1.txt")
+RPI = Raspberry_PI_IO_Controller.RPIO_DF3HVPSU(io,i2c)
 app = Flask(__name__)
 app.secret_key = 'random string'
 
@@ -41,7 +42,7 @@ def HVSettings():
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    return send_file(r"/home/pi/Desktop/TubeConditionProject-Dev/LogFiles/LoggingFilePSU1.txt",as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
+    return send_file(Logger.filepath, as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
 
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
