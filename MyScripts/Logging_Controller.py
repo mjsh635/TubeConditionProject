@@ -1,32 +1,36 @@
 import io, os
 
 
-filepath = r"Z:\MiscWorkJunk\TubeCondition\LoggingFile.txt"
+class Conditioning_Logger():
 
-def append_to_log(log_data, file_path):
-    """
-    Open the log file, and then append the data to the end of the file,
-    closing the file afterwards
+    def __init__(self, path):
+        """
+        :param path: (str) if path doesnt exist, create the file
+        """
+        def logfile_creation():
+            if os.path.exists(self.filepath):
+                return
+            else:
+                with open(self.filepath, mode="w+") as f:
+                    pass
+        self.filepath = path
+        logfile_creation()
 
-    params:
-    log_data (string):
-        data to be appended on the end of the log file
-    file_path (string):
-        path of the log file
-    returns:
-        nothing
-    """
-    with open(filepath, mode="a+") as OpenedLogFile:
-        if OpenedLogFile.writable():
-            OpenedLogFile.writelines(log_data + "\n")
-def create_log_file(folder_location):
-    """
-    Create a new log file in location, if the location already contains a
-    log file, if log file already exists, this operation does nothing
-    params:
-    file_path (string):
-        path of the log file location
-    returns:
-        nothing
-    """
-    pass
+
+    def append_to_log(self, log_data):
+        """
+        Open the log file, and then append the data to the end of the file,
+        closing the file afterwards
+
+        params:
+        log_data (string):
+            data to be appended on the end of the log file
+        file_path (string):
+            path of the log file
+        returns:
+            nothing
+        """
+        with open(self.filepath, mode="a") as OpenedLogFile:
+            if OpenedLogFile.writable():
+                OpenedLogFile.writelines(log_data + "\n")
+
