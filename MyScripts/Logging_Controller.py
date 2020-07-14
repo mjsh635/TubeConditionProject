@@ -1,4 +1,5 @@
-import io, os
+import io
+import os
 
 
 class Conditioning_Logger():
@@ -33,4 +34,3 @@ class Conditioning_Logger():
         with open(self.filepath, mode="a") as OpenedLogFile:
             if OpenedLogFile.writable():
                 OpenedLogFile.writelines(log_data + "\n")
-

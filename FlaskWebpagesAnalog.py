@@ -47,7 +47,10 @@ def downloadLog():
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
     if "Xray_On" in request.form.keys():
-        compresp = RPI.XrayOn(request.form["kvSet"], request.form["mASet"])
+        compresp = RPI.XrayOn(request.form["kvSet"], request.form["mASet"]) 
+
+    elif "Set_KVMA" in request.form.keys():
+        compresp = "Not a feature on this style supply"
 
     elif "Xray_Off" in request.form.keys():
         compresp = RPI.XrayOff()

@@ -2,9 +2,13 @@
 analog communication with the DF3 highvoltage powersupply that does not support communication
 over Ethernet
 """
+import sys, path
+PARENT_DIR = pathlib.Path(__file__).resolve().parents[1]
+sys.path.append(str(PARENT_DIR))
 import time
 import pickle
 import math
+
 
 class outside_bounds_exception(Exception):
     pass
@@ -19,12 +23,12 @@ class RPIO_DF3HVPSU():
 
         if not self.test:
             import Adafruit_ADS1x15
-            import adafruit_mcp4725
+            from MyScripts.DAC_Controller import AD5671R
             self.io = io
             io.setmode(io.BCM)
             self.adc = Adafruit_ADS1x15.ADS1115(address=0x48)  #0x48
-            self.dac1 = adafruit_mcp4725.MCP4725(i2c ,address=0x62) #0x62
-            self.dac2 = adafruit_mcp4725.MCP4725(i2c ,address=0x63)
+            self.dac1 = AD5671R(i2c ,address=AD5671R._AD5675_ADDRESS_ONE) #0x62
+            self.dac2 = AD5671R(i2c ,address=AD5671R._AD5675_ADDRESS_TWO)
             self.io.setup(17,io.OUT) # XRAY ON/OFF  
             self.io.setup(18,io.OUT) # RESET SUPPLY
             self.io.setup(22,io.IN,)  #XRAYS ARE ON

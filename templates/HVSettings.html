@@ -41,7 +41,12 @@
         <section>
             <h1>Power Supply 1 Settings</h1>
             <form action="/updateHV" method="POST">
-
+                <label>Filament Current Limit:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filcurlim" value={{filcurlim}}>
+                <br>
+                <label>Filament Pre-Heat:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filpreheat" value={{filpreheat}}>
+                <br>
                 <label>kV Starting Voltage:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{condKVStart}}>
                 <br>
