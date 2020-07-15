@@ -4,17 +4,19 @@ import _thread
 
 class DXM_Supply:
 
-    def __init__(self, IP_address='192.168.1.4', port=50001, wattage=1200):
+    def __init__(self, IP_address='192.168.1.4', port=50001):
         self.address = (
          IP_address, port)
-        self.wattage = wattage
         self.connect()
         self.remote_mode()
+        raw_model = self.read_model_type()
+        self.model = raw_model[2]
         self.disconnect()
+        
 
     def is_emitting(self):
         resp = self.read_status_signals()
-        if resp[1] == 1:
+        if resp[1] == '1':
             bool_is_emitting = True
         else:
             bool_is_emitting = False 
@@ -31,76 +33,115 @@ class DXM_Supply:
 
     def read_voltage_out(self):
         response = self.__send_command(19, '')
-        if self.wattage == 1200:
+        if self.model == 'DXM33':
             scaled_voltage = float(response[1]) * 0.00976
+        elif self.model == 'DXM02':
+            scaled_voltage = float(response[1]) * 0.007326007
+        elif self.model == 'DXM21':
+            scaled_voltage = float(response[1]) * 0.00976
+        elif self.model == 'DXM20':
+            scaled_voltage = float(response[1]) * 0.007326007
         return scaled_voltage
+
+    def read_model_type(self):
+        return self.__send_command(26,'')
 
     def read_current_out(self):
         response = self.__send_command(19, '')
-        if self.wattage == 1200:
+        if self.model == 'DXM33':
             scaled_current = float(response[2]) * 0.007326
+        elif self.model == 'DXM02':
+            scaled_current = float(response[2]) * 0.002442002
+        elif self.model == 'DXM21':
+            scaled_current = float(response[2]) * 0.00366300
+        elif self.model == 'DXM20':
+            scaled_current = float(response[2]) * 0.00488400
         return scaled_current
 
     def read_filament_current_out(self):
         response = self.__send_command(19, '')
-        if self.wattage == 1200:
-            scaled_fil = float(response[3]) * 0.001221
+      #  if self.model == 1200:
+        scaled_fil = float(response[3]) * 0.001221
         return scaled_fil
 
     def request_voltage_set(self):
         response = self.__send_command(14, '')
-        if self.wattage == 1200:
+        if self.model == 'DXM33':
             scaled_voltage = float(response[1]) * 0.00976
+        elif self.model == 'DXM02':
+            scaled_voltage = float(response[1]) * 0.007326007
+        elif self.model == 'DXM21':
+            scaled_voltage = float(response[1]) * 0.00976
+        elif self.model == 'DXM20':
+            scaled_voltage = float(response[1]) * 0.007326007
         return scaled_voltage
 
     def request_current_set(self):
         response = self.__send_command(15, '')
-        if self.wattage == 1200:
-            scaled_current = float(response[1]) * 0.007326
+        if self.model == 'DXM33':
+            scaled_current = float(response[2]) * 0.007326
+        elif self.model == 'DXM02':
+            scaled_current = float(response[2]) * 0.002442002
+        elif self.model == 'DXM21':
+            scaled_current = float(response[2]) * 0.00366300
+        elif self.model == 'DXM20':
+            scaled_current = float(response[2]) * 0.00488400
         return scaled_current
 
     def request_filament_limit_set(self):
         response = self.__send_command(16, '')
-        if self.wattage == 1200:
-            scaled_fil = float(response[1]) * 0.001221
+        #if self.model == 1200:
+        scaled_fil = float(response[1]) * 0.001221
         return scaled_fil
 
     def request_Pre_Heat_set(self):
         response = self.__send_command(17, '')
-        if self.wattage == 1200:
-            scaled_fil = float(response[1]) * 0.0006105
+        #if self.model == 1200:
+        scaled_fil = float(response[1]) * 0.0006105
         return scaled_fil
 
     def set_voltage(self, voltage_to_set):
         """
         :param voltage_to_set: (float) 0-40
         """
-        if self.wattage == 1200:
+        if self.model == 'DXM33':
             raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.00976)
+        elif self.model == 'DXM02':
+            raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.007326007)
+        elif self.model == 'DXM21':
+            raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.00976)
+        elif self.model == 'DXM20':
+            raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.007326007)
         return self.__send_command(10, raw_voltage_to_set)
 
     def set_current(self, current_to_set):
         """
         :param current_to_set: (float) 0-30
         """
-        if self.wattage == 1200:
-            raw_current_to_set = math.trunc(float(current_to_set) / 0.007326)
+        if self.model == 'DXM33':
+            raw_current_to_set = math.trunc(float(current_to_set) / .007326)
+        elif self.model == 'DXM02':
+            raw_current_to_set = math.trunc(float(current_to_set) / 0.002442002)
+        elif self.model == 'DXM21':
+            raw_current_to_set = math.trunc(float(current_to_set) / 0.00366300)
+        elif self.model == 'DXM20':
+            raw_current_to_set = math.trunc(float(current_to_set) / 0.00488400)
+
         return self.__send_command(11, raw_current_to_set)
 
     def set_filament_limit(self, fil_limit_to_set):
         """
         :param fil_limit_to_set: (float) 0-5
         """
-        if self.wattage == 1200:
-            raw_fil_limit_to_set = math.trunc(float(fil_limit_to_set) / 0.001221)
+        raw_fil_limit_to_set = math.trunc(float(fil_limit_to_set) / 0.001221)
         return self.__send_command(12, raw_fil_limit_to_set)
 
     def set_filament_preheat(self, fil_preheat_to_set):
         """
         :param fil_preheat_to_set: (float) 0-2.5
         """
-        if self.wattage == 1200:
-            raw_fil_preheat_to_set = math.trunc(float(fil_preheat_to_set) / 0.0006105)
+        
+        raw_fil_preheat_to_set = math.trunc(float(fil_preheat_to_set) / 0.0006105)
         return self.__send_command(13, raw_fil_preheat_to_set)
 
     def local_mode(self):
