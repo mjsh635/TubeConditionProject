@@ -40,15 +40,17 @@ def add_header(response):
 
 @app.route("/", methods=["GET"])
 def redirect_to_main_page():
+    print(settings)
     return redirect("/Quick_Access")
+    
 
 @app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
-    return render_template("QuickAccess.html",currKV = settings["currKV"], currMA = settings["cuurMA"])
+    return render_template("QuickAccess.html", currKV = settings["currKV"], currMA = settings["currMA"])
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
-    return render_template("HVSettings.html",filcurlim = settings['filCurLim'],filpreheat = settings['filpreheat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], CondPostArcDwell = settings['CondPostArcDwell'],CondOffDwell = settings['CondOffDwell'],CondStepCount = settings['CondStepCount'])
+    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], CondPostArcDwell = settings['CondPostArcDwell'],CondOffDwell = settings['CondOffDwell'],CondStepCount = settings['CondStepCount'])
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
@@ -60,8 +62,8 @@ def XrayONOFF():
     compresp = ""
     if "Xray_On" in request.form.keys():
         with supply1:
-            supply1.set_filament_limit(settings['FilCurLim'])
-            supply1.set_filament_preheat(settings['FilPreHeat'])
+            supply1.set_filament_limit(settings['filCurLim'])
+            supply1.set_filament_preheat(settings['filPreHeat'])
             if supply1.is_emitting():
                 supply1.set_voltage(request.form["kvSet"])
                 supply1.set_current(request.form["mASet"])
