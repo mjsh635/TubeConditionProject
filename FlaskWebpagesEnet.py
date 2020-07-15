@@ -7,14 +7,30 @@ the Ethernet based supplies
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory, flash
 import time,datetime
 import os
-from MyScripts import Logging_Controller, DXM, settingsPickler
+from MyScripts import Logging_Controller, DXM, settingsPickler, conditioning
 Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles\LoggingFile0.txt")
 settingsFile1 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file.pkl")
 supply1 = DXM.DXM_Supply()
 app = Flask(__name__)
 app.secret_key = 'random string'
 settings = settingsFile1.read_pickle()
+conditioner1 = conditioning.conditioning_Controller(supply1,Logger_1,settings)
 
+# Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
+#         set target KV: {request.form["kvSet"]} 
+#         set target KV: {request.form["mASet"]}
+#         {datetime.datetime.today()}]""")
+
+# class conditioning( supply, settings, logger, thread )
+#   start()
+#       started = true
+#       return started
+#   stop()
+#       
+#
+#
+#
+#
 @app.after_request
 def add_header(response):
    
@@ -57,6 +73,10 @@ def XrayONOFF():
                 settings["currKV"] = request.form["kvSet"]
                 settings["currMA"] = request.form["mASet"]
                 supply1.xray_on()
+        Logger_1.append_to_log(f"""[Manual Xray On, 
+        set target KV: {request.form["kvSet"]} 
+        set target KV: {request.form["mASet"]}
+        {datetime.datetime.today()}]""")
         compresp = "Xrays Turned On"
 
     elif "Set_KVMA" in request.form.keys():
@@ -66,19 +86,28 @@ def XrayONOFF():
             supply1.set_current(request.form["mASet"])
             settings["currKV"] = request.form["kvSet"]
             settings["currMA"] = request.form["mASet"]
+        Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
+        set target KV: {request.form["kvSet"]} 
+        set target KV: {request.form["mASet"]}
+        {datetime.datetime.today()}]""")
         compresp = "Successfully Set"
 
     elif "Xray_Off" in request.form.keys():
         with supply1:
             supply1.xray_off()
+            
+        Logger_1.append_to_log(f"""[Manual Xray OFF 
+        {datetime.datetime.today()}]""")
         compresp = "Xrays Turned Off"
     
     elif "CurrentValues" in request.form.keys():
         try:
             with supply1:
+                print(supply1.is_emitting())
                 if supply1.is_emitting():
-                    compresp = "KV: {0:.2f}, KV: {1:.2f}, FL {2:.2f}".format(supply1.read_voltage_out(),supply1.read_current_out(),supply1.read_filament_current_out())
+                    compresp = "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(supply1.read_voltage_out(),supply1.read_current_out(),supply1.read_filament_current_out())
                 else:
+                    
                     compresp = "Xrays are OFF"
         except:
             compresp = "an error occured"
