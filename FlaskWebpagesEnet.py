@@ -87,18 +87,16 @@ def XrayONOFF():
 
 @app.route("/updateHV", methods = ["POST", "GET"])
 def HVUpdate():
-    settings = {
-            "filCurLim" : request.form["filcurlim"],
-            "filPreHeat" : request.form["filpreheat"],
-            "condKVStart" : request.form["condKVStart"],
-            "condKVTarget" : request.form["condKVTarget"],
-            "condMAStart" : request.form["condMAStart"],
-            "condMATarget" : request.form["condMATarget"],
-            "condStepDwell" : request.form["condStepDwell"],
-            "CondPostArcDwell" : request.form["CondPostArcDwell"],
-            "CondOffDwell" : request.form["CondOffDwell"],
-            "CondStepCount" : request.form["CondStepCount"]
-    }
+    settings["filCurLim"] =request.form["filCurLim"]
+    settings["filPreHeat"] = request.form["filPreHeat"]
+    settings["condKVStart"] = request.form["condKVStart"]
+    settings["condKVTarget" ]= request.form["condKVTarget"]
+    settings["condMAStart" ]= request.form["condMAStart"]
+    settings["condMATarget"]= request.form["condMATarget"]
+    settings["condStepDwell"]= request.form["condStepDwell"]
+    settings["CondPostArcDwell"]= request.form["CondPostArcDwell"]
+    settings["CondOffDwell"]= request.form["CondOffDwell"]
+    settings["CondStepCount"]= request.form["CondStepCount"]
     settingsFile1.write_pickle(settings)
 
     return redirect("/hvsupplypage")
