@@ -14,8 +14,8 @@ class SettingsPickle():
                     self.settings = {
                         "currKV" : 0.0,
                         "currMA" : 0.0,
-                        "FilCurLim" : 0.0,
-                        "FilPreHeat" : 0.0,
+                        "filCurLim" : 0.0,
+                        "filPreHeat" : 0.0,
                         "condKVStart" : 0.0,
                         "condKVTarget" : 0.0,
                         "condMAStart" : 0.0,
