@@ -21,7 +21,14 @@ class DXM_Supply:
         else:
             bool_is_emitting = False 
         return bool_is_emitting
-        
+    def is_ArcPresent(self):
+        """Poll the supply and see if an Arc is present
+        """
+        faults = self.request_faults()
+        if int(faults[1]) == 1:
+            return True
+        else:
+            return False        
     def xray_on(self):
         return self.__send_command(98, 1)
 
