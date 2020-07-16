@@ -32,7 +32,9 @@ def redirect_to_main_page():
 
 @app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
-    return render_template("QuickAccess.html", currKV = settings["currKV"], currMA = settings["currMA"])
+    print(conditioner1.CondStarted)
+    return render_template("QuickAccess.html", currKV = settings["currKV"], currMA = settings["currMA"], grayOut = conditioner1.CondStarted, tubeSNum = settings["tubeSNum"])
+    
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
