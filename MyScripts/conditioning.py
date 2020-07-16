@@ -4,6 +4,12 @@ import time,datetime
 import pathlib, sys
 import threading
 
+# Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
+#         set target KV: {request.form["kvSet"]} 
+#         set target KV: {request.form["mASet"]}
+#         {datetime.datetime.today()}]""")
+
+
 class conditioning_Controller():
     def __init__(self, HVSupply=None, Logger=None, HVSettings=None):
         """
@@ -13,32 +19,43 @@ class conditioning_Controller():
 
         :HVSettings: (dict of settings) settings to be used for the routine
         """
+        self.records = {
+            "date" : "",
+            "tubeSNum" : "",
+            "supplyModel" : "",
+            "maxLvlsReached" : [0.0,0.0],
+            "timeAtMax" : [0.0,0.0],
+            "totalCondTime" : 0,
+            "numMaxRamps" : 0,
+            "avgFilCur" : 0.0
+        }
         self.HV = HVSupply
         self.settings = HVSettings
         self.Log = Logger
         self.CondStarted = False
-
-    def start_cond(self):
-        self.cond_thread = threading.Thread(self.__conditioning(),)
-        self.CondStarted = True
-    
-        self.cond_thread.start()
-
-    def stop_cond(self):
-        print("ended")
-        self.cond_thread.join()
+        self.kill_sig = threading.Event()
+        
         
 
+    def start_cycle(self):
+        # Start the cycle
+        self.kill_sig.clear()
+        self.cond_thread = threading.Thread(target=self.__conditioning)
+        self.cond_thread.start()
+
+    def stop_cycle(self):
+        # Set the kill_sig to end the conditioning routine
+        self.kill_sig.set()
+    
     def __conditioning(self):
-        while True:
-            print("conditioning")
-            time.sleep(2)
+        # Code that handles the conditioning routine
+        print("Conditioning.",end='')
+        self.CondStarted = True
+        while not self.kill_sig.is_set():
+            print(".",end='')
+            time.sleep(0.5)  
+        self.CondStarted = False
+        print(" Done")
+        self.Log.append_to_log(self.records)
 
-
-c = conditioning_Controller()
-
-c.start_cond()
-
-time.sleep(5)
-
-c.stop_cond()
+            
