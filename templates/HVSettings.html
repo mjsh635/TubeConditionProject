@@ -41,6 +41,8 @@
     <article>
         <section>
             <h1>Power Supply 1 Settings</h1>
+            <br>
+            <div class="settings">
             <form action="/updateHV" method="POST">
                 <label>Filament Current Limit:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{filCurLim}}>
@@ -69,6 +71,9 @@
                 <label>Conditioning Step Dwell:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{condStepDwell}}>
                 <br>
+                <label>Dwell Time at Max:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{condAtMaxDwell}}>
+                <br>
                 <label>Post Arc Dwell:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{condPostArcDwell}}>
                 <br>
@@ -80,12 +85,15 @@
                 <br>
                 <input  type="submit" name="UpdatePSU1" value="Click to Update Params" >
             </form>
-
+            </div>
+            <div class="Conditioning">
             <form action="/SCond" method="POST">
                 <br>
                 <input type="submit" name="StartCond" value="Click to Start Conditioning" >
                 <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
             </form>
+            </div>
+
             <br>
             <!-- <form action="/updateHV" method="GET">
                 <label>Total Time</label>
