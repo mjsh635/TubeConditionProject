@@ -1,28 +1,26 @@
 
-/* li {
-    display:inline;
-    background-color: rgb(78, 219, 59);
-    border: none;
-    color: bloack;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-} */
-.tst {
-    outline: none;
-    border: none;
-    width: 100%;
-	height: 2rem;
-	font-size: 1.0625rem;
-	padding-left: 0.875rem;
-	line-height: 147.6%;
-	padding-top: 0.825rem;
-	padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    font-size: 1.0625rem;
-    width: 20.4375rem;}
+body {
+    background-color: slategray;
+    opacity: 0.3;
+    margin-left: auto;
+    margin-right: auto;
+    
+    border-radius: 12px;
+}
+.PSUNAV {
+    border: 0.2px darkslategray;
+    padding: 5px;
+}
+
+.b1{
+    border: 0.2px darkslategray;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.grayable{
+    border: 0.2px darkslategray;
+    border-radius: 12px;
+    padding: 10px;
+
+}
