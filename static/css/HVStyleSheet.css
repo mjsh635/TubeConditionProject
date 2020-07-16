@@ -1,0 +1,77 @@
+
+body {
+    background-color: slategray;
+    
+    margin-left: auto;
+    margin-right: auto;
+    
+    border-radius: 12px;
+}
+.PSUNAV {
+    border: 0.2px darkslategray;
+    padding: 5px;
+    
+}
+h2{
+    color: whitesmoke;
+}
+
+header{
+    color: whitesmoke;
+    background-color: rgb(107, 106, 106);
+    padding: 0.5px;
+    border-radius: 30px;
+    text-align: center;
+    text-shadow: rgb(46, 53, 95);
+    border: rgb(1, 1, 54);
+    border-width: 10;
+   
+}
+.navbar{
+    color: whitesmoke;
+    background-color: rgb(156, 156, 156);
+    border-radius: 30px;
+    text-align: center;
+    text-shadow: rgb(46, 53, 95);
+    border: rgb(1, 1, 54);
+    border-width: 10;
+   
+}
+.settings{
+    color: whitesmoke;
+    background-color: rgb(156, 156, 156);
+    border-radius: 30px;
+    text-align: center;
+    text-shadow: rgb(46, 53, 95);
+    border: rgb(1, 1, 54);
+    border-width: 10;
+   
+}
+.Conditioning{
+    color: whitesmoke;
+    background-color: rgb(156, 156, 156);
+    border-radius: 30px;
+    text-align: center;
+    text-shadow: rgb(46, 53, 95);
+    border: rgb(1, 1, 54);
+    border-width: 10;
+   
+}
+.b1{
+    border: 0.2px darkslategray;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.grayable{
+    border: 0.2px darkslategray;
+    border-radius: 12px;
+    padding: 10px;
+
+}
+.paragraph{
+    color: oldlace;
+    background-color: black;
+    text-align: center;
+    border-radius: 12px;
+}
