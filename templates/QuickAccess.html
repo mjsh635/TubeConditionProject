@@ -17,7 +17,22 @@
                 return false; 
             return true; 
         } 
-        
+        var grayout = '{{grayOut}}';
+        function grayerOuter(){    
+                   
+            if (grayout == "True"){
+                alert("Certain Elements are blocked because a conditioning routine is in progress");
+                var elm =  document.getElementsByClassName("grayable")
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var i = 0; i < elm.length; i++) { 
+                elm[i].disabled = false;
+            }
+            }
+            
+        }
     </script>
 
     <div>
@@ -35,8 +50,8 @@
     <header>
         <h1>Quick Access</h1>
     </header>
-    <body>
-    <div class="PSU_Nav">
+    <body onload=grayerOuter()>
+    <!-- <div class="PSU_Nav">
         <h2>Power Supply 1</h2>
             <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
             <a href="LogFileDownloaderPSU1"><button class='b1'>Download Log File</button></a>
@@ -60,27 +75,30 @@
                     </p>
                 </form>
             </div>
-    </div>
-    <div class="PSU_Nav">
+    </div> -->
+    <div class="PSUNAV">
         <h2>Power Supply 1</h2>
             <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
             <a href="LogFileDownloaderPSU1"><button class='b1'>Download Log File</button></a>
             <br>
             <div >
-                <form action="/ManualXrayControl" method="post">
+                <form action="/settingTubes" method="post">
+                    <input class="grayable" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{tubeSNum}}>
+                    <input  class="grayable"type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                    <br><br>
+                </form>
+                <form  action="/ManualXrayControl" method="post">
                     <label>Quick HV and mA set.</label>
                     <br>
-                    <span class="tst">
-                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{currKV}}>
-                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{currMA}}>
-                    </span >
+                    <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{currKV}}>
+                    <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{currMA}}>
                     <br>
-                    <input type="submit" name="Set_KVMA" value="Click to set KV and MA">
+                    <input class="grayable" type="submit" name="Set_KVMA" value="Click to set KV and MA">
                     <br>
-                    <input type="submit" name="Xray_Off" value="Xray Off" >
-                    <input type="submit" name="Xray_On" value="Xray On">
+                    <input class="grayable" type="submit" name="Xray_Off" value="Xray Off" >
+                    <input class="grayable" type="submit" name="Xray_On" value="Xray On">
                     <br>
-                    <input type="submit" name="CurrentValues" value="Check Current KV/MA Values">
+                    <input  class="grayable"type="submit" name="CurrentValues" value="Check Current KV/MA Values">
                     <p>"Xray Off" turns the Xray off. "Xray On" turns Xray on with the current values in the boxes above. If Xray is already on,it changes the value to new value
                     </p>
                 </form>
