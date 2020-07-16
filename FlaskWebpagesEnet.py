@@ -56,8 +56,10 @@ def HVSettings():
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
-    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    return send_file(Logger_1.filepath, as_attachment=True,attachment_filename=("LogFile "+ timestamp + ".txt"), mimetype="text/plain")
+    timestamp = time.strftime("%Y_%m_%d_%H_%M_%S")
+    zip_path = Logger_1.zip_files(f"All_Log_files_as_of{timestamp}",Logger_1.search_directory())
+    
+    return send_file(f"{zip_path}", as_attachment=True, mimetype="application/zip")
 
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
