@@ -64,59 +64,65 @@ def downloadLog():
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
     compresp = ""
-    if "Xray_On" in request.form.keys():
-        with supply1:
-            supply1.set_filament_limit(settings['filCurLim'])
-            supply1.set_filament_preheat(settings['filPreHeat'])
-            if supply1.is_emitting():
-                supply1.set_voltage(request.form["kvSet"])
-                supply1.set_current(request.form["mASet"])
-                settings["currKV"] = request.form["kvSet"]
-                settings["currMA"] = request.form["mASet"]
-            else:
-                supply1.set_voltage(request.form["kvSet"])
-                supply1.set_current(request.form["mASet"])
-                settings["currKV"] = request.form["kvSet"]
-                settings["currMA"] = request.form["mASet"]
-                supply1.xray_on()
-        Logger_1.append_to_log(f"""[Manual Xray On, 
-        set target KV: {request.form["kvSet"]} 
-        set target KV: {request.form["mASet"]}
-        {datetime.datetime.today()}]""")
-        compresp = "Xrays Turned On"
 
-    elif "Set_KVMA" in request.form.keys():
-        print("setting")
-        with supply1:
-            supply1.set_voltage(request.form["kvSet"])
-            supply1.set_current(request.form["mASet"])
-            settings["currKV"] = request.form["kvSet"]
-            settings["currMA"] = request.form["mASet"]
-        Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
-        set target KV: {request.form["kvSet"]} 
-        set target KV: {request.form["mASet"]}
-        {datetime.datetime.today()}]""")
-        compresp = "Successfully Set"
+    if (float(request.form["kvSet"]) <= float(settings['maxKV']) and
+    float(request.form["mASet"]) <= float(settings['maxMA'])):
 
-    elif "Xray_Off" in request.form.keys():
-        with supply1:
-            supply1.xray_off()
-            
-        Logger_1.append_to_log(f"""[Manual Xray OFF 
-        {datetime.datetime.today()}]""")
-        compresp = "Xrays Turned Off"
-    
-    elif "CurrentValues" in request.form.keys():
-        try:
+        if "Xray_On" in request.form.keys():
             with supply1:
-                print(supply1.is_emitting())
-                if supply1.is_emitting():
-                    compresp = "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(supply1.read_voltage_out(),supply1.read_current_out(),supply1.read_filament_current_out())
-                else:
-                    
-                    compresp = "Xrays are OFF"
-        except:
-            compresp = "an error occured"
+                supply1.set_filament_limit(settings['filCurLim'])
+                supply1.set_filament_preheat(settings['filPreHeat'])
+                supply1.set_voltage(request.form["kvSet"])
+                supply1.set_current(request.form["mASet"])
+                settings["currKV"] = request.form["kvSet"]
+                settings["currMA"] = request.form["mASet"]
+                if not supply1.is_emitting():
+                    supply1.xray_on()
+
+            Logger_1.append_to_log(f"""[Manual Xray On, 
+            set target KV: {request.form["kvSet"]} 
+            set target KV: {request.form["mASet"]}
+            {datetime.datetime.today()}]""")
+
+            compresp = "Xrays Turned On"
+
+        elif "Set_KVMA" in request.form.keys():
+            print("setting")
+            with supply1:
+                supply1.set_voltage(request.form["kvSet"])
+                supply1.set_current(request.form["mASet"])
+                settings["currKV"] = request.form["kvSet"]
+                settings["currMA"] = request.form["mASet"]
+
+            Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
+            set target KV: {request.form["kvSet"]} 
+            set target KV: {request.form["mASet"]}
+            {datetime.datetime.today()}]""")
+
+            compresp = "Successfully Set"
+
+        elif "Xray_Off" in request.form.keys():
+            with supply1:
+                supply1.xray_off()
+                
+            Logger_1.append_to_log(f"""[Manual Xray OFF 
+            {datetime.datetime.today()}]""")
+            compresp = "Xrays Turned Off"
+        
+        elif "CurrentValues" in request.form.keys():
+            try:
+                with supply1:
+                    print(supply1.is_emitting())
+                    if supply1.is_emitting():
+                        compresp = "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(supply1.read_voltage_out(),supply1.read_current_out(),supply1.read_filament_current_out())
+                    else:
+                        
+                        compresp = "Xrays are OFF"
+            except:
+                compresp = "an error occured"
+    else:
+        compresp = "KV or MA higher than set Max, check HV Settings for limit"
+
     flash(compresp)
     return redirect("/Quick_Access")
 
