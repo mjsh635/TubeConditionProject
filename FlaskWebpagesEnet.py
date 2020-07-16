@@ -135,9 +135,11 @@ def HVUpdate():
     settings["condMAStart" ]= request.form["condMAStart"]
     settings["condMATarget"]= request.form["condMATarget"]
     settings["condStepDwell"]= request.form["condStepDwell"]
-    settings["CondPostArcDwell"]= request.form["CondPostArcDwell"]
-    settings["CondOffDwell"]= request.form["CondOffDwell"]
-    settings["CondStepCount"]= request.form["CondStepCount"]
+    settings["condPostArcDwell"]= request.form["condPostArcDwell"]
+    settings["condOffDwell"]= request.form["condOffDwell"]
+    settings["condStepCount"]= request.form["condStepCount"]
+    settings["maxKV"]= request.form["maxKV"]
+    settings["maxMA"]= request.form["maxMA"]
     settingsFile1.write_pickle(settings)
 
     return redirect("/hvsupplypage")
@@ -166,4 +168,4 @@ def get_IP():
 
 
 app.templates_auto_reload = True
-app.run(host=current_IP)
+app.run(host=get_IP())
