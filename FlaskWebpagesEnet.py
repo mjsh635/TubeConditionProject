@@ -52,7 +52,7 @@ def HVSettings():
     elif model == 'X4313':
         settings["maxKV"]= 30
         settings["maxMA"]= 20
-    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'])
+    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'], condAtMaxDwell = settings["condAtMaxDwell"])
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
@@ -135,6 +135,7 @@ def HVUpdate():
     settings["condMAStart" ]= request.form["condMAStart"]
     settings["condMATarget"]= request.form["condMATarget"]
     settings["condStepDwell"]= request.form["condStepDwell"]
+    settings["condAtMaxDwell"] = request.form["condAtMaxDwell"]
     settings["condPostArcDwell"]= request.form["condPostArcDwell"]
     settings["condOffDwell"]= request.form["condOffDwell"]
     settings["condStepCount"]= request.form["condStepCount"]
