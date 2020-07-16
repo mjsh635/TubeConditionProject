@@ -38,7 +38,21 @@ def Home_Load():
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
-    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], CondPostArcDwell = settings['CondPostArcDwell'],CondOffDwell = settings['CondOffDwell'],CondStepCount = settings['CondStepCount'])
+    with supply1:
+        model = supply1.read_model_type()[1]
+    if model == 'X4087':
+        settings["maxKV"]= 40
+        settings["maxMA"]= 30  
+    elif model == 'X3481':
+        settings["maxKV"]= 30
+        settings["maxMA"]= 10
+    elif model == 'X4911':
+        settings["maxKV"]= 40
+        settings["maxMA"]= 15
+    elif model == 'X4313':
+        settings["maxKV"]= 30
+        settings["maxMA"]= 20
+    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'])
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
