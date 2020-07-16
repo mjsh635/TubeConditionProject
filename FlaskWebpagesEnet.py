@@ -8,39 +8,25 @@ from flask import Flask, render_template, request, redirect, send_file, send_fro
 import time,datetime
 import os
 from MyScripts import Logging_Controller, DXM, settingsPickler, conditioning
-Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles\LoggingFile0.txt")
+
 settingsFile1 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file.pkl")
 supply1 = DXM.DXM_Supply()
+Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles_Supply1", supply=supply1.model)
 app = Flask(__name__)
 app.secret_key = 'random string'
 settings = settingsFile1.read_pickle()
 conditioner1 = conditioning.conditioning_Controller(supply1,Logger_1,settings)
 
-# Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
-#         set target KV: {request.form["kvSet"]} 
-#         set target KV: {request.form["mASet"]}
-#         {datetime.datetime.today()}]""")
-
-# class conditioning( supply, settings, logger, thread )
-#   start()
-#       started = true
-#       return started
-#   stop()
-#       
-#
-#
-#
-#
 @app.after_request
 def add_header(response):
    
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
+     
     return response
 
 @app.route("/", methods=["GET"])
 def redirect_to_main_page():
-    print(settings)
     return redirect("/Quick_Access")
     
 
