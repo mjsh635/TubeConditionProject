@@ -14,6 +14,7 @@ class SettingsPickle():
                     self.settings = {
                         "currKV" : 0.0,
                         "currMA" : 0.0,
+                        "tubeSNum" : "",
                         "filCurLim" : 0.0,
                         "filPreHeat" : 0.0,
                         "condKVStart" : 0.0,
@@ -21,9 +22,11 @@ class SettingsPickle():
                         "condMAStart" : 0.0,
                         "condMATarget" : 0.0,
                         "condStepDwell" : 0.0,
-                        "CondPostArcDwell" : 0.0,
-                        "CondOffDwell" : 0.0,
-                        "CondStepCount" : 0.0      
+                        "condPostArcDwell" : 0.0,
+                        "condOffDwell" : 0.0,
+                        "condStepCount" : 0.0,
+                        "maxKV" : 0.0,
+                        "maxMA" : 0.0      
                         }
                     pickle.dump(self.settings,f)
         settings_File_creation()
