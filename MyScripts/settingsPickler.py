@@ -22,6 +22,7 @@ class SettingsPickle():
                         "condMAStart" : 0.0,
                         "condMATarget" : 0.0,
                         "condStepDwell" : 0.0,
+                        "condAtMaxDwell" : 0.0,
                         "condPostArcDwell" : 0.0,
                         "condOffDwell" : 0.0,
                         "condStepCount" : 0.0,
