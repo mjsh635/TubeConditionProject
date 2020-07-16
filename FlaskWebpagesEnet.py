@@ -142,11 +142,28 @@ def HVUpdate():
 
     return redirect("/hvsupplypage")
 
-import socket
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-current_IP = s.getsockname()[0]
-s.close()
+@app.route("/settingTubes", methods = ["POST"])
+def updateTube():
+    settings["tubeSNum"] = request.form["tubeSNum"]
+    Logger_1.logfile_creation(settings["tubeSNum"])
+    return redirect("/Quick_Access")
+
+@app.route("/SCond", methods = ["POST"])
+def Conditioning_Start_Stop():
+    if "StartCond" in request.form.keys():
+        conditioner1.start_cycle()
+    elif "StopCond" in request.form.keys():
+        conditioner1.stop_cycle()
+    return redirect("/hvsupplypage")
+
+def get_IP():
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    IP = s.getsockname()[0]
+    s.close()
+    return IP
+
 
 app.templates_auto_reload = True
 app.run(host=current_IP)
