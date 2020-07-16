@@ -1,40 +1,49 @@
 import io
 import os
+from zipfile import ZipFile
 
 
 
 class Conditioning_Logger():
+    """ This class sets up the folders and files for logging, simply requiring
+    that append_to_log() be called and passed data to be appended to file that is
+    created by logfile_creation(). The zip_folder function can also be called to create a
+    zip folder containing all the log files
+    """
 
-    def __init__(self, path):
-        """
-        :param path: (str) if path doesnt exist, create the file
-        """
-        def logfile_creation():
-            if os.path.exists(self.filepath):
-                return
-            else:
-                with open(self.filepath, mode="w+") as f:
-                    pass
-        self.filepath = path
-        logfile_creation()
+    def __init__(self, folder_path, supply="noSupplyNumber"):
+        """ Construct a logger and give it a location for its files
 
+        :param folder: (str) folder path for file dir
+        """
+        self.folder_path = folder_path 
+        self.supply_model = supply
+
+    def logfile_creation(self, file_name = "MissingSerialNumber"):
+        """ Create a file if file does not exist
+        
+        :param file_name: (str) name for the file
+        """
+        if file_name == "":
+            self.file_name = "MissingSerialNumbers"
+        else:
+            self.file_name = file_name
+
+        if os.path.exists(f"{self.folder_path}\\{self.file_name}.txt"):
+            return
+        else:
+            with open(f"{self.folder_path}\\{self.file_name}.txt", mode="w+") as f:
+                f.writelines(f"Powersupply used: {self.supply_model} \n")
 
     def append_to_log(self, log_data):
-        """
-        Open the log file, and then append the data to the end of the file,
-        closing the file afterwards
+        """ Append to the end of the file
 
-        params:
-        log_data (string):
-            data to be appended on the end of the log file
-        file_path (string):
-            path of the log file
-        returns:
-            nothing
+        :param log_data: (str) data to be appeneded to the end of log file created
+        by logfile_creation()
         """
-        with open(self.filepath, mode="a") as OpenedLogFile:
+        with open(f"{self.folder_path}\\{self.file_name}.txt", mode="a") as OpenedLogFile:
             if OpenedLogFile.writable():
-                OpenedLogFile.writelines(log_data + "\n")                OpenedLogFile.writelines(f"{log_data}\n")
+                OpenedLogFile.writelines(f"{log_data}\n")
 
     def search_directory(self):
         """ Search path and return list of files 
