@@ -2,7 +2,7 @@
 analog communication with the DF3 highvoltage powersupply that does not support communication
 over Ethernet
 """
-import sys, path
+import sys, pathlib
 PARENT_DIR = pathlib.Path(__file__).resolve().parents[1]
 sys.path.append(str(PARENT_DIR))
 import time
