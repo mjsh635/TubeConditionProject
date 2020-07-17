@@ -34,6 +34,22 @@
                 return false; 
             return true; 
         } 
+        var grayout = '{{grayOut}}';
+        function grayerOuter(){    
+                   
+            if (grayout == "True"){
+                alert("Certain Elements are blocked because a conditioning routine is in progress");
+                var elm =  document.getElementsByClassName("grayable")
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var i = 0; i < elm.length; i++) { 
+                elm[i].disabled = false;
+            }
+            }
+            
+        }
         
     </script>
 
@@ -42,7 +58,7 @@
         <section>
             <h1>Power Supply 1 Settings</h1>
             <br>
-            <div class="settings">
+            <div class="grayable">
             <form action="/updateHV" method="POST">
                 <label>Filament Current Limit:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{filCurLim}}>
@@ -50,11 +66,17 @@
                 <label>Filament Pre-Heat:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{filPreHeat}}>
                 <br>
-                <label>Max Allowed KV:</label>
+                <label>Max Allowed Supply KV:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{maxKV}} disabled>
                 <br>
-                <label>Max Allowed MA:</label>
+                <label>Max Allowed Supply MA:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{maxMA}} disabled>
+                <br>
+                <label>Max Allowed Tube KV:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{maxTubeKV}} disabled>
+                <br>
+                <label>Max Allowed Tube MA:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{maxTubeMA}} disabled>
                 <br>
                 <label>kV Starting Voltage:</label>
                 <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{condKVStart}}>
