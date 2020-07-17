@@ -1,0 +1,203 @@
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 13:58:07.397329]
+[Manual KV/MA Adjustment, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:02:58.712573]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:03:00.786504]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:03:05.446196]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:04:18.665523]
+[Manual Xray OFF 
+            2020-07-16 14:04:58.898906]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:05:01.942182]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:05:02.222289]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:09:33.809811]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:09:34.084079]
+[Manual KV/MA Adjustment, 
+            set target KV: 10 
+            set target KV: 0.5
+            2020-07-16 14:14:43.595093]
+[Manual Xray On, 
+            set target KV: 10 
+            set target KV: 0.5
+            2020-07-16 14:14:46.388368]
+[Manual KV/MA Adjustment, 
+            set target KV: 10 
+            set target KV: 1
+            2020-07-16 14:15:05.747250]
+[Manual KV/MA Adjustment, 
+            set target KV: 15 
+            set target KV: 1
+            2020-07-16 14:15:25.668311]
+[Manual Xray On, 
+            set target KV: 15 
+            set target KV: 1
+            2020-07-16 14:15:30.170443]
+[Manual KV/MA Adjustment, 
+            set target KV: 15 
+            set target KV: 0.5
+            2020-07-16 14:15:44.347274]
+[Manual Xray OFF 
+            2020-07-16 14:15:53.553716]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:16:15.658911]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:16:15.921212]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [9.0, 0.5], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=5, microseconds=69841), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:16:32.387076]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:16:32.659344]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [13.0, 0.5], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=19, microseconds=166487), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:16:59.358746]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:16:59.642980]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [15.0, 0.5], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=15, microseconds=642428), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Manual Xray On, 
+            set target KV: 15 
+            set target KV: 0.5
+            2020-07-16 14:17:21.978419]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:17:49.081071]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:17:49.349141]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:23:47.059238]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:23:47.338489]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [15.0, 0.5], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=24, microseconds=486699), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:25:42.544798]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:25:43.317261]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [15.0, 0.5], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=11, microseconds=81761), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Manual KV/MA Adjustment, 
+            set target KV: 25 
+            set target KV: 5
+            2020-07-16 14:27:01.180999]
+[Manual Xray On, 
+            set target KV: 25 
+            set target KV: 5
+            2020-07-16 14:27:08.366154]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:31:23.378118]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:31:24.153445]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:38:58.247524]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:38:58.369989]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:39:17.680333]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:39:17.797698]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:40:29.195699]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:40:29.341306]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:43:53.723957]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:43:53.855558]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:45:26.469910]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:45:26.665352]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:50:49.397314]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:50:49.541895]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:51:05.633498]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:51:05.790511]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [12.0, 0.0], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=11, microseconds=72314), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:51:30.517956]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:51:30.740315]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 14:55:06.764142]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 14:55:06.919520]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [23.700000000000006, 1.25], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=107, microseconds=186074), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 15:01:07.968237]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 15:01:08.101438]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [25.000000000000007, 3.75], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=195, microseconds=812554), 'numMaxRamps': 0, 'avgFilCur': 0.0}
+[Manual Xray OFF 
+            2020-07-16 15:04:28.577123]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 15:07:25.814096]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 15:07:25.944958]
+[Conditiong Mode, 
+                Filament Current Limit: 3.5 
+                2020-07-16 15:13:26.049327]
+[Conditiong Mode,
+                Filament Preheat Set  : 0.9
+                2020-07-16 15:13:26.182971]
+{'startDate': datetime.date(2020, 7, 16), 'endDate': datetime.date(2020, 7, 16), 'tubeSNum': '123CRESS', 'supplyModel': 'X4087', 'maxLvlsReached': [25.000000000000007, 3.0], 'timeAtMax': [0.0, 0.0], 'totalCondTime': datetime.timedelta(seconds=185, microseconds=203149), 'numMaxRamps': 1, 'avgFilCur': 0.0}
+[Manual Xray On, 
+            set target KV: 15 
+            set target KV: 0.5
+            2020-07-16 15:16:44.989623]
+[Manual Xray OFF 
+            2020-07-16 15:16:46.388193]

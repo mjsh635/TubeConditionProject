@@ -1,0 +1,45 @@
+Powersupply used: X4087 
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 13:59:44.034065]
+[Manual Xray OFF 
+            2020-07-16 13:59:47.003111]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 13:59:50.204413]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:00:15.932588]
+[Manual KV/MA Adjustment, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:00:19.829035]
+[Manual Xray OFF 
+            2020-07-16 14:00:27.037500]
+[Manual KV/MA Adjustment, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:00:30.299723]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:00:35.648126]
+[Manual Xray OFF 
+            2020-07-16 14:00:51.045984]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:01:12.547903]
+[Manual KV/MA Adjustment, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:01:54.851572]
+[Manual Xray On, 
+            set target KV: 12 
+            set target KV: 1
+            2020-07-16 14:01:56.567827]
+[Manual Xray OFF 
+            2020-07-16 14:02:27.386888]
