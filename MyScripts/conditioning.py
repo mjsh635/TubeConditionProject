@@ -116,11 +116,15 @@ class conditioning_Controller():
                 self.currentKVset = float(self.settings["condKVStart"])
                 self.currentMAset = float(self.settings["condMAStart"])
                 self.currentMAsetArced = float(self.currentMAset)
+                self.currentKVsetArced = float(self.currentKVset)
                 self.currentStepNumber = 0
                 self.runKVLoop = True
+                self.arcCount = 0
+                self.maxArcCount = 5
 
         def tearDown():
             with self.HV:
+                time.sleep(1)
                 self.HV.xray_off()
                 self.end_time = datetime.datetime.today()
                 self.records["totalCondTime"] = self.end_time - self.start_time
@@ -137,27 +141,39 @@ class conditioning_Controller():
         while not self.kill_sig.is_set():
             # Conditioning Algo here
             while not self.kill_sig.is_set():
+                #kv ramping loop with arc detection
                 if (self.currentKVset < self.condKVTarget + self.kvStepSize):
                     with self.HV:
                         self.HV.set_voltage(self.currentKVset)
                         self.HV.set_current(self.currentMAset)
                         self.HV.xray_on()
                     end_time_loop_1 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
+                    self.currentMAsetArced = self.currentMAset + 1
                     while ((datetime.datetime.now() < end_time_loop_1) and (not self.kill_sig.is_set())):
                         with self.HV:
                             print(self.HV.read_voltage_out(),self.HV.read_current_out())
                             if self.HV.is_ArcPresent():
-                                if self.currentStepNumber == 0:
+                                if (self.arcCount <= self.maxArcCount+1):
                                     self.currentMAsetArced += 1
-                                    if self.HV.is_emitting():
+                                    if self.currentStepNumber == 0:
                                         
-                                        self.HV.set_current(self.currentMAsetArced)
+                                        if not self.HV.is_emitting():
+                                            self.HV.xray_on()
+                                        self.HV.set_current(self.currentMAsetArced)                    
+                                            
                                     else:
-                                        
+                                        if not self.HV.is_emitting():
+                                            self.HV.xray_on()
+                                        self.HV.set_voltage(self.currentKVset - self.kvStepSize)
                                         self.HV.set_current(self.currentMAsetArced)
-                                        self.HV.xray_on()
-                                
+                                        self.arcCount += 1
+                                else:
+                                    self.kill_sig.set()                                    
                             else:
+                                if self.arcCount != 0:
+                                    self.arcCount = 0
+                                    self.currentMAset = self.currentMAsetArced - 1
+                                self.HV.set_current(self.currentMAset)
                                 time.sleep(1)
                     #update maxs and step
                     self.maxKVReached = self.currentKVset
@@ -177,11 +193,10 @@ class conditioning_Controller():
                     self.currentStepNumber = 0
                     break
 
-            print("inwhile loop 2")    
+            print("Starting MA Ramp Loop 75% KV")    
             while not self.kill_sig.is_set():
-                        
+                self.currentKVsetArced = self.currentKVset        
                 if self.currentMAset < (self.condMATarget + self.maStepSize):
-                    print(self.condMATarget+self.maStepSize)
                     with self.HV:
                         self.HV.set_current(self.currentMAset)
                     end_time_loop_2 = (datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell))
@@ -189,16 +204,19 @@ class conditioning_Controller():
                         with self.HV:
                             print(self.HV.read_voltage_out(),self.HV.read_current_out())
                             if self.HV.is_ArcPresent():
-                                pass
-                                # if self.currentStepNumber == 0:
-                                #     if self.HV.is_emitting():
-                                #         pass
-                                #     else:
-                                #         self.HV.xray_on()
-                                
-                                #     self.currentMAsetArced += 1
-                                #     self.HV.set_current(self.currentMAsetArced)
+                                if (self.arcCount <= self.maxArcCount+1):
+                                    self.currentKVsetArced -= self.kvStepSize
+                                    
+                                    if not self.HV.is_emitting():
+                                        self.HV.xray_on()
+                                    self.HV.set_voltage(self.currentKVsetArced)
+                                    self.arcCount += 1
+                                else:
+                                    self.kill_sig.set()                                    
                             else:
+                                if self.arcCount != 0:
+                                    self.arcCount = 0
+                                self.HV.set_voltage(self.currentKVset)
                                 time.sleep(1)
                     #update maxs and step
                     self.maxMAReached = self.currentMAset
@@ -211,7 +229,45 @@ class conditioning_Controller():
                     
                     break
             
-            print("in loop 3")
+            print("Starting Max MA KV Ramp to Max")
+            while not self.kill_sig.is_set():
+                #kv ramping loop with arc detection
+                if (self.currentKVset < self.condKVTarget + self.kvStepSize):
+                    end_time_loop_1 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
+                    self.currentMAsetArced = self.currentMAset
+                    while ((datetime.datetime.now() < end_time_loop_1) and (not self.kill_sig.is_set())):
+                        with self.HV:
+                            print(self.HV.read_voltage_out(),self.HV.read_current_out())
+                            if self.HV.is_ArcPresent():
+                                if (self.arcCount <= self.maxArcCount+1):
+                                    self.currentMAsetArced -= 1
+
+                                    if not self.HV.is_emitting():
+                                        self.HV.xray_on()
+
+                                    self.HV.set_current(self.currentMAsetArced)
+                                    self.arcCount += 1
+                                else:
+                                    self.kill_sig.set()                                    
+                            else:
+                                if self.arcCount != 0:
+                                    self.arcCount = 0
+                                self.HV.set_current(self.currentMAset)
+                                time.sleep(1)
+                    #update maxs and step
+                    self.maxKVReached = self.currentKVset
+                    self.currentStepNumber += 1
+                    #set KV to next value
+                    print(self.currentStepNumber)
+                    self.currentKVset += self.kvStepSize
+                    with self.HV:
+                        self.HV.set_voltage(self.currentKVset)
+
+                else:
+                    self.currentStepNumber = 0
+                    break
+
+            print("Starting max KV MA ONOFF Cycle")
             for loop in range (4):
                 if not self.kill_sig.is_set():
                     while ((datetime.datetime.now() < (datetime.datetime.now()+ datetime.timedelta(minutes=self.condAtMaxDwell))) and not self.kill_sig.is_set()): 
