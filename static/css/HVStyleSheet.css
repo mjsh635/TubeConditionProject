@@ -37,7 +37,7 @@ header{
     border-width: 10;
    
 }
-.settings{
+.grayable{
     color: whitesmoke;
     background-color: rgb(156, 156, 156);
     border-radius: 30px;
@@ -63,12 +63,6 @@ header{
     padding: 10px;
 }
 
-.grayable{
-    border: 0.2px darkslategray;
-    border-radius: 12px;
-    padding: 10px;
-
-}
 .paragraph{
     color: oldlace;
     background-color: black;
