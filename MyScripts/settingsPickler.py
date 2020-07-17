@@ -15,6 +15,7 @@ class SettingsPickle():
                         "currKV" : 0.0,
                         "currMA" : 0.0,
                         "tubeSNum" : "",
+                        "tubeType" : "",
                         "filCurLim" : 0.0,
                         "filPreHeat" : 0.0,
                         "condKVStart" : 0.0,
@@ -27,7 +28,9 @@ class SettingsPickle():
                         "condOffDwell" : 0.0,
                         "condStepCount" : 0.0,
                         "maxKV" : 0.0,
-                        "maxMA" : 0.0      
+                        "maxMA" : 0.0,
+                        "maxTubeMA" : 12,
+                        "maxTubeKV" : 0.5    
                         }
                     pickle.dump(self.settings,f)
         settings_File_creation()

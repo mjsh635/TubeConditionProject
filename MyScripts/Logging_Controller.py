@@ -18,13 +18,14 @@ class Conditioning_Logger():
         """
         self.folder_path = folder_path 
         self.supply_model = supply
+        self.file_name = "MissingSerialNumbers"
 
     def logfile_creation(self, file_name = "MissingSerialNumber"):
         """ Create a file if file does not exist
         
         :param file_name: (str) name for the file
         """
-        if file_name == "":
+        if file_name == None:
             self.file_name = "MissingSerialNumbers"
         else:
             self.file_name = file_name
