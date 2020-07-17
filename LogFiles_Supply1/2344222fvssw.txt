@@ -1,7 +1,0 @@
-Powersupply used: X4087 
-[Conditiong Mode, 
-            Filament Current Limit: 3.5 
-            2020-07-16 12:59:27.881357]
-[Conditiong Mode,
-            Filament Preheat Set  : 0.9
-            2020-07-16 12:59:27.892878]
