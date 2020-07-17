@@ -15,6 +15,8 @@ class DXM_Supply:
         
 
     def is_emitting(self):
+        """
+        :return: (bool) is the supply emitting"""
         resp = self.read_status_signals()
         print("emitting")
         if int(resp[1]) == 1:
@@ -24,6 +26,7 @@ class DXM_Supply:
         return bool_is_emitting
     def is_ArcPresent(self):
         """Poll the supply and see if an Arc is present
+        :return: (bool) if the supply has an arc present
         """
         faults = self.request_faults()
         if int(faults[1]) == 1:
@@ -32,15 +35,24 @@ class DXM_Supply:
         else:
             return False        
     def xray_on(self):
+        """ send command for xray_on
+        :return: response from supply"""
         return self.__send_command(98, 1)
 
     def xray_off(self):
+        """ send command for xray_off
+        :return: response from supply"""
         return self.__send_command(98, 0)
 
     def reset_faults(self):
+        """ send command to reset supply faults
+        :return: response from supply"""
         return self.__send_command(31, '')
 
     def read_voltage_out(self):
+        """ send command to read voltage
+
+        :return: (float) KV readout from supply"""
         response = self.__send_command(19, '')
         if self.model == 'X4087':
             scaled_voltage = float(response[1]) * 0.00976
@@ -53,9 +65,15 @@ class DXM_Supply:
         return scaled_voltage
 
     def read_model_type(self):
+        """ send command to read model number
+
+        :return: (str) model number from supply"""
         return self.__send_command(26, '')
 
     def read_current_out(self):
+        """ send command to read current
+
+        :return: (float) MA readout from supply"""
         response = self.__send_command(19, '')
         if self.model == 'X4087':
             scaled_current = float(response[2]) * 0.007326
@@ -68,12 +86,18 @@ class DXM_Supply:
         return scaled_current
 
     def read_filament_current_out(self):
+        """ send command to read filament current
+
+        :return: (float) fil current readout from supply"""
         response = self.__send_command(19, '')
       #  if self.model == 1200:
         scaled_fil = float(response[3]) * 0.001221
         return scaled_fil
 
     def request_voltage_set(self):
+        """ send command to read voltage setpoint
+
+        :return: (float) KV readout from supply"""
         response = self.__send_command(14, '')
         if self.model == 'X4087':
             scaled_voltage = float(response[1]) * 0.00976
@@ -86,6 +110,9 @@ class DXM_Supply:
         return scaled_voltage
 
     def request_current_set(self):
+        """ send command to read current setpoint
+
+        :return: (float) MA readout from supply"""
         response = self.__send_command(15, '')
         if self.model == 'X4087':
             scaled_current = float(response[2]) * 0.007326
@@ -98,19 +125,25 @@ class DXM_Supply:
         return scaled_current
 
     def request_filament_limit_set(self):
+        """ send command to read filament limit setpoint
+
+        :return: (float) Filament current setpoint readout from supply"""
         response = self.__send_command(16, '')
         #if self.model == 1200:
         scaled_fil = float(response[1]) * 0.001221
         return scaled_fil
 
     def request_Pre_Heat_set(self):
+        """ send command to read filament preheat setpoint
+
+        :return: (float) Filament preheat setpoint readout from supply"""
         response = self.__send_command(17, '')
         #if self.model == 1200:
         scaled_fil = float(response[1]) * 0.0006105
         return scaled_fil
 
     def set_voltage(self, voltage_to_set):
-        """
+        """ command to set voltage
         :param voltage_to_set: (float) 0-40
         """
         if self.model == 'X4087':
@@ -124,7 +157,7 @@ class DXM_Supply:
         return self.__send_command(10, raw_voltage_to_set)
 
     def set_current(self, current_to_set):
-        """
+        """ Command to set current on supply
         :param current_to_set: (float) 0-30
         """
         if self.model == 'X4087':
@@ -139,14 +172,14 @@ class DXM_Supply:
         return self.__send_command(11, raw_current_to_set)
 
     def set_filament_limit(self, fil_limit_to_set):
-        """
+        """ Command to set filament current on supply
         :param fil_limit_to_set: (float) 0-5
         """
         raw_fil_limit_to_set = math.trunc(float(fil_limit_to_set) / 0.001221)
         return self.__send_command(12, raw_fil_limit_to_set)
 
     def set_filament_preheat(self, fil_preheat_to_set):
-        """
+        """Command to set filament preheat on supply
         :param fil_preheat_to_set: (float) 0-2.5
         """
         
@@ -175,7 +208,7 @@ class DXM_Supply:
         return self.__send_command(68, '')
 
     def read_status_signals(self):
-        """
+        """ Command to read status
         <ARG1>  1 = HvOn, 0 = HvOff
         <ARG2>  1 = Interlock 1 Open, 0 = Interlock 1 Closed
         <ARG3>  1 = Fault Condition, 0 = No Fault
@@ -183,6 +216,8 @@ class DXM_Supply:
         return self.__send_command(22, '')
 
     def read_interlock_status(self):
+        """Command to read interlock status on supply
+        """
         return self.__send_command(55, '')
 
     def __enter__(self):
@@ -193,11 +228,13 @@ class DXM_Supply:
         self.socket.close()
 
     def connect(self):
+        """ manually connect to the Supply"""
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print('Attempting to connect...')
         self.socket.connect(self.address)
 
     def disconnect(self):
+        """ manually disconnect from the supply"""
         self.socket.close()
 
     def __send_command(self, cmd, argm=''):

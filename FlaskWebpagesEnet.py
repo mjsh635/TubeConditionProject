@@ -27,16 +27,19 @@ def add_header(response):
 
 @app.route("/", methods=["GET"])
 def redirect_to_main_page():
+    # redirect to the main page
     return redirect("/Quick_Access")
     
 
 @app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
+    # Main page, loading in the required variables for the document
     return render_template("QuickAccess.html", currKV = settings["currKV"], currMA = settings["currMA"], grayOut = conditioner1.CondStarted, tubeSNum = settings["tubeSNum"],tubeType= settings["tubeType"])
     
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
+    # HVSettings page, loading in the required variables for the page
     with supply1:
         model = supply1.read_model_type()[1]
     if model == 'X4087':
@@ -55,6 +58,9 @@ def HVSettings():
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
+    # Log File Downloader, on the quicklaunch page is a button that
+    # calls this function, it takes all the log files, zips them, and
+    # returns the zip file for downloading
     timestamp = time.strftime("%Y_%m_%d_%H_%M_%S")
     zip_path = Logger_1.zip_files(f"All_Log_files_as_of{timestamp}", Logger_1.search_directory())
     
@@ -62,11 +68,15 @@ def downloadLog():
 
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
+    # xray on and off control
     compresp = ""
+    # check statment for ensuring that the setpoints
+    # are lower than the maximums
     if ((float(request.form["kvSet"]) <= float(settings['maxKV']) and float(request.form["kvSet"]) <= float(settings['maxTubeKV'] )) and (
     float(request.form["mASet"]) <= float(settings['maxMA']) and float(request.form["kvSet"]) <= float(settings['maxTubeMA']))):
 
         if "Xray_On" in request.form.keys():
+            # this is executed if post is for Xray on
             with supply1:
                 supply1.set_filament_limit(settings['filCurLim'])
                 supply1.set_filament_preheat(settings['filPreHeat'])
@@ -85,6 +95,7 @@ def XrayONOFF():
             compresp = "Xrays Turned On"
 
         elif "Set_KVMA" in request.form.keys():
+            # this is executed if post is for setting KVMA
             print("setting")
             with supply1:
                 supply1.set_voltage(request.form["kvSet"])
@@ -100,14 +111,23 @@ def XrayONOFF():
             compresp = "Successfully Set"
 
         elif "Xray_Off" in request.form.keys():
+            # this is executed if post is for xray off
             with supply1:
                 supply1.xray_off()
+                while True:
+                    time.sleep(1)
+                    if (supply1.is_emitting()):
+                        pass
+                    else:
+                        break
+
                 
             Logger_1.append_to_log(f"""[Manual Xray OFF 
             {datetime.datetime.today()}]""")
             compresp = "Xrays Turned Off"
         
         elif "CurrentValues" in request.form.keys():
+            # this is executed if post is for current values
             try:
                 with supply1:
                     print(supply1.is_emitting())
@@ -120,7 +140,7 @@ def XrayONOFF():
                 compresp = "an error occured"
     else:
         compresp = "KV or MA higher than set Max, check HV Settings for limit. Is the right tube type chosen?"
-
+    # display messages to used
     flash(compresp)
 
     return redirect("/Quick_Access")
@@ -181,17 +201,20 @@ def updateTube():
     settings["tubeSNum"] = request.form["tubeSNum"]
     settings["tubeType"] = request.form["tubeType"]
     if settings["tubeType"] == '16':
-        settings['maxTubeKV'] = 25
-        settings['maxTubeMA'] = 5
+        settings['maxTubeKV'] = 20
+        settings['maxTubeMA'] = 4
+    elif settings["tubeType"] == '16s':
+        settings['maxTubeKV'] = 20
+        settings['maxTubeMA'] = 2
     elif settings["tubeType"] == '32':
         settings['maxTubeKV'] = 30
         settings['maxTubeMA'] = 10
     elif settings["tubeType"] == '60':
-        settings['maxTubeKV'] = 40
-        settings['maxTubeMA'] = 30
+        settings['maxTubeKV'] = 60
+        settings['maxTubeMA'] = 50
     elif settings["tubeType"] == 'EMP':
-        settings['maxTubeKV'] = 10
-        settings['maxTubeMA'] = 5
+        settings['maxTubeKV'] = 60
+        settings['maxTubeMA'] = 50
     print(settings["tubeType"])
     Logger_1.logfile_creation(settings["tubeSNum"])
     return redirect("/Quick_Access")
