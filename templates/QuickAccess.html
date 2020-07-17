@@ -87,6 +87,15 @@
             <div >
                 <form action="/settingTubes" method="post">
                     <input class="grayable" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{tubeSNum}}>
+                    <label>Choose tube type: </label>
+                    <select class="grayable" name="tubeType" value={{tubeType}}>
+                        <option value="16" >16mm Tube</option>
+                        <option value="32">32mm Tube</option>
+                        <option value="60">60mm Tube</option>
+                        <option value="EMP">Empirium Tube</option>
+                    </select>
+
+                    <br>
                     <input  class="grayable"type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
                     <br><br>
                 </form>
