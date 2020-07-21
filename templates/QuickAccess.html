@@ -18,24 +18,22 @@
             return true; 
         } 
         var grayout = '{{grayOut}}';
+        var choice = '{{tubeType}}';
+
         function grayerOuter(){    
-                   
+            var elm =  document.getElementsByClassName("grayable")
             if (grayout == "True"){
                 alert("Certain Elements are blocked because a conditioning routine is in progress");
-                var elm =  document.getElementsByClassName("grayable")
                 for (var i = 0; i < elm.length; i++) { 
                     elm[i].disabled = true;
             }}
             else{
-                for (var i = 0; i < elm.length; i++) { 
-                elm[i].disabled = false;
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
             }
-            }
+            document.getElementById('tubeType').value = choice;
             
-        }
-        var choice = '{{tubeType}}';
-        function selection(){
-            document.getElementsByName('tubeType').options[choice].selected = True;
         }
     </script>
 
@@ -54,7 +52,7 @@
     <header>
         <h1>Quick Access</h1>
     </header>
-    <body onload=grayerOuter()>
+    <body onload="grayerOuter()">
     <!-- <div class="PSU_Nav">
         <h2>Power Supply 1</h2>
             <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
@@ -88,20 +86,20 @@
             </div>
         <h2>Power Supply 1</h2>
             <br>
-            <div >
+            <div>
                 <form action="/settingTubes" method="post">
                     <input class="grayable" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{tubeSNum}}>
                     <label>Choose tube type: </label>
-                    <select onload=selection() class="grayable" name="tubeType" value={{tubeType}}>
-                        <option value="16" >16mm</option>
-                        <option value="16s">16mm Stubby</option>
-                        <option value="32">32mm</option>
-                        <option value="60">60mm</option>
-                        <option value="EMP">RDS Emp</option>
+                    <select class="grayable" ID="tubeType" name='tubeType' value={{tubeType}}>
+                        <option ID = "16" value="16" >16mm</option>
+                        <option ID = "16s" value="16s">16mm Stubby</option>
+                        <option ID = "32" value="32">32mm</option>
+                        <option ID = "60" value="60">60mm</option>
+                        <option ID = "EMP" value="EMP">RDS Emp</option>
                     </select>
 
                     <br>
-                    <input  class="grayable"type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                    <input class="grayable" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
                     <br><br>
                 </form>
                 <form  action="/ManualXrayControl" method="post">
