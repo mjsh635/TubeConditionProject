@@ -2,6 +2,8 @@
 that will start/stop conditioning, and configure the power supplies
 to the correct values for the type of conditioning. This will be for
 the Ethernet based supplies
+
+To set this up, file locations need to be given for the settings file location, and the log file locations
 """
 
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory, flash
