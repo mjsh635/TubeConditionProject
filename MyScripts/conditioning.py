@@ -35,6 +35,9 @@ class conditioning_Controller():
         self.Log = Logger
         self.CondStarted = False
         self.kill_sig = threading.Event()
+        self.currentReadKV = 0.0
+        self.currentReadMA = 0.0
+        self.currentReadFilcur = 0.0
         
         
 
@@ -86,68 +89,74 @@ class conditioning_Controller():
                         "condOffDwell" : 0.0,
                         "condStepCount" : 0.0,
                         "maxKV" : 0.0,
-                        "maxMA" : 0.0      
+                        "maxMA" : 0.0 ,
+                        "totalArcCount" : 0    
                         }
         """
+    
+        
         def setup():
             # set Filament Current Limit and Log it
-            with self.HV:
+            self.Log.append_to_log(f"""[Conditiong Mode, Starting Conditioning Cycle ||{datetime.datetime.today()}] \n""")
+            self.HV.set_filament_limit(float(self.settings["filCurLim"]))
+            self.Log.append_to_log((f"""[Conditiong Mode, Filament Current Limit: {self.settings["filCurLim"]}||{datetime.datetime.today()}]\n"""))
 
-                self.HV.set_filament_limit(float(self.settings["filCurLim"]))
-                self.Log.append_to_log((f"""[Conditiong Mode, 
-                Filament Current Limit: {self.settings["filCurLim"]} 
-                {datetime.datetime.today()}]"""))
-
-                # set Filament Preheat and log it
-                self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
-                self.Log.append_to_log((f"""[Conditiong Mode,
-                Filament Preheat Set  : {self.settings["filPreHeat"]}
-                {datetime.datetime.today()}]"""))    
-                self.start_time = datetime.datetime.now()
-                self.records["startDate"] = datetime.date.today()
-                self.CondStarted = True
-                self.condStepCount = float(self.settings["condStepCount"])
-                self.condKVTarget = float(self.settings["condKVTarget"])
-                self.condKVStart = float(self.settings["condKVStart"])
-                self.condMATarget = float(self.settings["condMATarget"])
-                self.condMAStart = float(self.settings["condMAStart"])
-                self.condPostArcDwell = float(self.settings["condPostArcDwell"])
-                self.condOffDwell = float(self.settings["condOffDwell"])
-                self.kvStepSize = (float(self.condKVTarget) - float(self.condKVStart))/self.condStepCount
-                self.maStepSize = (float(self.condMATarget) - float(self.condMAStart))/self.condStepCount
-                self.condStepDwell = float(self.settings["condStepDwell"])
-                self.condAtMaxDwell = float(self.settings["condAtMaxDwell"])
-                self.maxKVReached = 0.0
-                self.maxMAReached = 0.0
-                self.kvTimeAtMax = 0.0
-                self.maTimeAtMax = 0.0
-                self.numMaxRamps = 0
-                self.avgFilCur = 0.0
-                self.currentKVset = float(self.settings["condKVStart"])
-                self.currentMAset = float(self.settings["condMAStart"])
-                self.currentMAsetArced = float(self.currentMAset)
-                self.currentKVsetArced = float(self.currentKVset)
-                self.currentStepNumber = 0
-                self.runKVLoop = True
-                self.arcCount = 0
-                self.maxArcCount = 5
+            # set Filament Preheat and log it
+            self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
+            self.Log.append_to_log((f"""[Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]} ||{datetime.datetime.today()}]\n"""))    
+            self.start_time = datetime.datetime.today()
+            self.records["startDate"] = datetime.date.today()
+            self.CondStarted = True
+            self.condStepCount = float(self.settings["condStepCount"])
+            self.condKVTarget = float(self.settings["condKVTarget"])
+            self.condKVStart = float(self.settings["condKVStart"])
+            self.condMATarget = float(self.settings["condMATarget"])
+            self.condMAStart = float(self.settings["condMAStart"])
+            self.condPostArcDwell = float(self.settings["condPostArcDwell"])
+            self.condOffDwell = float(self.settings["condOffDwell"])
+            self.kvStepSize = (float(self.condKVTarget) - float(self.condKVStart))/self.condStepCount
+            self.maStepSize = (float(self.condMATarget) - float(self.condMAStart))/self.condStepCount
+            self.condStepDwell = float(self.settings["condStepDwell"])
+            self.condAtMaxDwell = float(self.settings["condAtMaxDwell"])
+            self.maxKVReached = 0.0
+            self.maxMAReached = 0.0
+            self.kvTimeAtMax = 0.0
+            self.maTimeAtMax = 0.0
+            self.numMaxRamps = 0
+            self.avgFilCur = 0.0
+            self.filCurPoles = 0
+            self.currentKVset = float(self.settings["condKVStart"])
+            self.currentMAset = float(self.settings["condMAStart"])
+            self.currentMAsetArced = float(self.currentMAset)
+            self.currentKVsetArced = float(self.currentKVset)
+            self.currentStepNumber = 0
+            self.totalArcCount = 0
+            self.runKVLoop = True
+            self.arcCount = 0
+            self.maxArcCount = 5
 
         def tearDown():
-            with self.HV:
-                time.sleep(1)
-                self.HV.xray_off()
-                self.end_time = datetime.datetime.today()
-                self.records["totalCondTime"] = self.end_time - self.start_time
-                self.records["endDate"] = datetime.date.today()
-                self.CondStarted = False
-                self.records["tubeSNum"] = self.settings["tubeSNum"]
-                self.records["supplyModel"] = self.HV.model
-                self.records["maxLvlsReached"] = [self.maxKVReached, self.maxMAReached]
-                self.records["timeAtMax"] = [self.kvTimeAtMax, self.maTimeAtMax]
-                self.records["numMaxRamps"] = self.numMaxRamps
-                self.records["avgFilCur"] = self.avgFilCur
+            self.CondStarted = False
+        
+            time.sleep(1)
+            self.HV.xray_off()
+            self.end_time = datetime.datetime.today()
+            self.records["totalCondTime"] = (self.end_time - self.start_time)
+            self.records["endDate"] = datetime.date.today()
+            self.records["tubeSNum"] = self.settings["tubeSNum"]
+            self.records["supplyModel"] = self.HV.model
+            self.records["maxLvlsReached"] = [self.maxKVReached, self.maxMAReached]
+            self.records["timeAtMax"] = [self.kvTimeAtMax, self.maTimeAtMax]
+            self.records["numMaxRamps"] = self.numMaxRamps
+            self.records["avgFilCur"] = self.avgFilCur
+            self.records["totalArcCount"] = self.totalArcCount
+
+       
+             
 
         setup()
+        print("started")
+        
         while not self.kill_sig.is_set():
             # Conditioning Algo here
             while not self.kill_sig.is_set():
