@@ -58,7 +58,17 @@ class conditioning_Controller():
         self.CondStarted = False
         print(" Done")
         self.Log.append_to_log(self.records)
-
+        
+    def __updateKVMA(self):
+        resp = self.HV.read_volt_curr_filCur()
+        self.currentReadKV = resp[0]
+        self.currentReadMA = resp[1]
+        self.currentReadFilcur = resp[2]
+        return [self.currentReadKV, self.currentReadMA, self.currentReadFilcur]
+    def __whileRamping(self):
+        while self.HV.read_voltage_out() < (self.currentKVset * 0.90):
+            self.__updateKVMA()
+            time.sleep(0.33)
     def __conditioning(self):
         """The algorithm for the conditioning of tubes
         """
