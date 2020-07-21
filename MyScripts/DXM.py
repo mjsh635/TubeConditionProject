@@ -7,53 +7,58 @@ class DXM_Supply:
     def __init__(self, IP_address='192.168.1.4', port=50001):
         self.address = (
          IP_address, port)
-        self.connect()
+        # self.connect()
         self.remote_mode()
         raw_model = self.read_model_type()
         self.model = raw_model[1]
-        self.disconnect()
+        # self.disconnect()
         
 
     def is_emitting(self):
         """
         :return: (bool) is the supply emitting"""
-        resp = self.read_status_signals()
-        print("emitting")
-        if int(resp[1]) == 1:
-            bool_is_emitting = True
-        else:
-            bool_is_emitting = False 
-        return bool_is_emitting
+        with self:
+            resp = self.read_status_signals()
+            if int(resp[1]) == 1:
+                bool_is_emitting = True
+            else:
+                bool_is_emitting = False 
+            return bool_is_emitting
     def is_ArcPresent(self):
         """Poll the supply and see if an Arc is present
         :return: (bool) if the supply has an arc present
         """
-        faults = self.request_faults()
-        if int(faults[1]) == 1:
-            print("arc detected")
-            return True
-        else:
-            return False        
+        with self:
+            faults = self.request_faults()
+            if int(faults[1]) == 1:
+                print("arc detected")
+                return True
+            else:
+                return False      
     def xray_on(self):
         """ send command for xray_on
         :return: response from supply"""
-        return self.__send_command(98, 1)
+        with self:
+            return self.__send_command(98, 1)
 
     def xray_off(self):
         """ send command for xray_off
         :return: response from supply"""
-        return self.__send_command(98, 0)
+        with self:
+            return self.__send_command(98, 0)
 
     def reset_faults(self):
         """ send command to reset supply faults
         :return: response from supply"""
-        return self.__send_command(31, '')
+        with self:
+            return self.__send_command(31, '')
 
     def read_voltage_out(self):
         """ send command to read voltage
 
         :return: (float) KV readout from supply"""
-        response = self.__send_command(19, '')
+        with self:
+            response = self.__send_command(19, '')
         if self.model == 'X4087':
             scaled_voltage = float(response[1]) * 0.00976
         elif self.model == 'X3481':
