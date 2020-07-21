@@ -40,8 +40,7 @@ def Home_Load():
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
     # HVSettings page, loading in the required variables for the page
-    with supply1:
-        model = supply1.read_model_type()[1]
+    model = supply1.model
     if model == 'X4087':
         settings["maxKV"]= 40
         settings["maxMA"]= 30  
@@ -54,7 +53,7 @@ def HVSettings():
     elif model == 'X4313':
         settings["maxKV"]= 30
         settings["maxMA"]= 20
-    return render_template("HVSettings.html",filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'], condAtMaxDwell = settings["condAtMaxDwell"], maxTubeMA=settings["maxTubeMA"],maxTubeKV = settings["maxTubeKV"],grayOut = conditioner1.CondStarted)
+    return render_template("HVSettings.html",grayOut = conditioner1.CondStarted,filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'], condAtMaxDwell = settings["condAtMaxDwell"], maxTubeMA=settings["maxTubeMA"],maxTubeKV = settings["maxTubeKV"])
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
@@ -66,14 +65,19 @@ def downloadLog():
     
     return send_file(f"{zip_path}", as_attachment=True, mimetype="application/zip")
 
+@app.route("/kvmaUpdate", methods= ["GET"])
+def kvmaUpdate():
+    return f"KV :{conditioner1.currentReadKV:.2f} MA: {conditioner1.currentReadMA:.2f} Filcur: {conditioner1.currentReadFilcur:.2f}"
+
 @app.route("/ManualXrayControl", methods = ["POST"])
 def XrayONOFF():
     # xray on and off control
     compresp = ""
     # check statment for ensuring that the setpoints
     # are lower than the maximums
+
     if ((float(request.form["kvSet"]) <= float(settings['maxKV']) and float(request.form["kvSet"]) <= float(settings['maxTubeKV'] )) and (
-    float(request.form["mASet"]) <= float(settings['maxMA']) and float(request.form["kvSet"]) <= float(settings['maxTubeMA']))):
+    float(request.form["mASet"]) <= float(settings['maxMA']) and float(request.form["mASet"]) <= float(settings['maxTubeMA']))):
 
         if "Xray_On" in request.form.keys():
             # this is executed if post is for Xray on
@@ -130,9 +134,9 @@ def XrayONOFF():
             # this is executed if post is for current values
             try:
                 with supply1:
-                    print(supply1.is_emitting())
+                    resp = supply1.read_volt_curr_filCur()
                     if supply1.is_emitting():
-                        compresp = "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(supply1.read_voltage_out(),supply1.read_current_out(),supply1.read_filament_current_out())
+                        compresp = "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
                     else:
                         
                         compresp = "Xrays are OFF"
@@ -215,8 +219,9 @@ def updateTube():
     elif settings["tubeType"] == 'EMP':
         settings['maxTubeKV'] = 60
         settings['maxTubeMA'] = 50
-    print(settings["tubeType"])
+    print(settings["tubeType"], settings['maxTubeKV'],settings['maxTubeMA'])
     Logger_1.logfile_creation(settings["tubeSNum"])
+    flash("Tube type and serial number set")
     return redirect("/Quick_Access")
 
 @app.route("/SCond", methods = ["POST"])
@@ -224,9 +229,11 @@ def Conditioning_Start_Stop():
     msg = ""
     if "StartCond" in request.form.keys():
         conditioner1.start_cycle()
+        conditioner1.CondStarted = True
         msg = "Starting Conditioning"
     elif "StopCond" in request.form.keys():
         conditioner1.stop_cycle()
+        conditioner1.CondStarted = False
         msg = "Stopping Conditioning"
     flash(msg)
     return redirect("/hvsupplypage")
