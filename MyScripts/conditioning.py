@@ -50,7 +50,7 @@ class conditioning_Controller():
     def stop_cycle(self):
         # Set the kill_sig to end the conditioning routine
         self.kill_sig.set()
-        
+
     def __updateKVMA(self):
         resp = self.HV.read_volt_curr_filCur()
         self.currentReadKV = resp[0]
@@ -64,27 +64,17 @@ class conditioning_Controller():
     def __conditioning(self):
         """The algorithm for the conditioning of tubes
         """
-        """self.settings = {
-                        "tubeSNum" : "",
-                        "filCurLim" : 0.0,
-                        "filPreHeat" : 0.0,
-                        "condKVStart" : 0.0,
-                        "condKVTarget" : 0.0,
-                        "condMAStart" : 0.0,
-                        "condMATarget" : 0.0,
-                        "condStepDwell" : 0.0,
-                        "condPostArcDwell" : 0.0,
-                        "condAtMaxDwell : 0.0,
-                        "condOffDwell" : 0.0,
-                        "condStepCount" : 0.0,
-                        "maxKV" : 0.0,
-                        "maxMA" : 0.0 ,
-                        "totalArcCount" : 0    
-                        }
-        """
-    
-        
         def setup():
+           ##### # when at max, every X seconds poll the fil current, and the 
+           ##### # fil_Cur_To_Avg = []
+           ##### # for poll in fil_Cur_To_Avg:
+           ##### #     avgFilCur += poll
+           ##### # avgFilCur / fil_Cur_To_Avg.count()
+
+            #totalCondTime = currentTime + (condStepSize * 2) + (4 *(dwellOntime + dwellofftime))
+            
+
+
             # set Filament Current Limit and Log it
             self.Log.append_to_log(f"""[Conditiong Mode, Starting Conditioning Cycle ||{datetime.datetime.today()}] \n""")
             self.HV.set_filament_limit(float(self.settings["filCurLim"]))
@@ -93,7 +83,7 @@ class conditioning_Controller():
             # set Filament Preheat and log it
             self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
             self.Log.append_to_log((f"""[Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]} ||{datetime.datetime.today()}]\n"""))    
-            self.start_time = datetime.datetime.today()
+            self.start_time = str(datetime.datetime.today())
             self.records["startDate"] = datetime.date.today()
             self.CondStarted = True
             self.condStepCount = float(self.settings["condStepCount"])
@@ -130,8 +120,8 @@ class conditioning_Controller():
             time.sleep(1)
             self.HV.xray_off()
             self.end_time = datetime.datetime.today()
-            self.records["totalCondTime"] = (self.end_time - self.start_time)
-            self.records["endDate"] = datetime.date.today()
+            self.records["totalCondTime"] = str((self.end_time - self.start_time))
+            self.records["endDate"] = str(datetime.date.today())
             self.records["tubeSNum"] = self.settings["tubeSNum"]
             self.records["supplyModel"] = self.HV.model
             self.records["maxLvlsReached"] = [self.maxKVReached, self.maxMAReached]
@@ -254,15 +244,7 @@ class conditioning_Controller():
                                     self.Log.append_to_log(f"""[Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs ||{datetime.datetime.today()}]\n""")
                                     self.kill_sig.set()                                    
                             else:
-                                # no arc was detected
-                                if self.arcCount != 0:
-                                    # there has been an arc at some point
-                                    # keep a total arc count and log the recovery
-                                    self.totalArcCount += self.arcCount
-                                    self.Log.append_to_log(f"""[Conditiong Mode, Recovered ||{datetime.datetime.today()}]\n""")
-                                    # reset the arc count
-                                    self.arcCount = 0
-                                    self.currentMAset = self.currentMAsetArced - 1
+                                
 
                                 self.HV.set_current(self.currentMAset)  
                                 time.sleep(1)
@@ -281,7 +263,15 @@ class conditioning_Controller():
                                 self.__whileRamping()
                                 self.Log.append_to_log(f"""[Conditiong Mode, HV Ramping Complete  ||{datetime.datetime.today()}]\n""")
                                 time.sleep(0.5)
-                            
+                    
+                    if self.arcCount != 0:
+                        # there has been an arc at some point
+                        # keep a total arc count and log the recovery
+                        self.totalArcCount += self.arcCount
+                        # reset the arc count
+                        self.arcCount = 0
+                        self.currentMAset = self.currentMAsetArced - 1        
+
                     #update maxs and step
                     self.maxKVReached = self.currentKVset
                     self.maxMAReached = self.currentKVset
@@ -391,15 +381,7 @@ class conditioning_Controller():
                                     self.Log.append_to_log(f"""[Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs ||{datetime.datetime.today()}]\n""")
                                     self.kill_sig.set()                                    
                             else:
-                                # no arc was detected
-                                if self.arcCount != 0:
-                                    # there has been an arc at some point
-                                    # keep a total arc count and log the recovery
-                                    self.totalArcCount += self.arcCount
-                                    self.Log.append_to_log(f"""[Conditiong Mode, Recovered ||{datetime.datetime.today()}]\n""")
-                                    # reset the arc count
-                                    self.arcCount = 0
-                                
+                                # no arc was detected 
                                 self.HV.set_voltage(self.currentKVset)
                                 time.sleep(1)
                         else:
@@ -425,7 +407,15 @@ class conditioning_Controller():
                     #set KV to next value
                     print("step number: ",self.currentStepNumber)
                     self.currentMAset += self.maStepSize
+
+                    if self.arcCount != 0:
+                        # there has been an arc at some point
+                        # keep a total arc count and log the recovery
+                        self.totalArcCount += self.arcCount
+                        # reset the arc count
+                        self.arcCount = 0
                 else:
+                    
                     #if issue with over shooting target?
                     self.currentMAset -= self.maStepSize # can remove to have 1 step higher than target
                     # the MA has hit its target
@@ -434,6 +424,7 @@ class conditioning_Controller():
                     self.currentStepNumber = 0
                     # break out of the MA loop
                     break
+            
             self.Log.append_to_log(f"""[Conditioning Mode, starting KV ramp with max MA : {self.currentKVset} ||{datetime.datetime.today()}]\n""")
 
             print("Starting Max MA KV Ramp to Max")
@@ -536,6 +527,13 @@ class conditioning_Controller():
                                 self.__whileRamping()
                                 self.Log.append_to_log(f"""[Conditiong Mode, HV Ramping Complete  ||{datetime.datetime.today()}]\n""")
                                 time.sleep(0.5)
+
+                    if self.arcCount != 0:
+                        # there has been an arc at some point
+                        # keep a total arc count and log the recovery
+                        self.totalArcCount += self.arcCount
+                        # reset the arc count
+                        self.arcCount = 0
 
                     #update maxs and step
                     self.maxKVReached = self.currentKVset
