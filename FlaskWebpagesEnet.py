@@ -9,22 +9,27 @@ To set this up, file locations need to be given for the settings file location, 
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory, flash
 import time,datetime
 import os
-from MyScripts import Logging_Controller, DXM, settingsPickler, conditioning
+from MyScripts import settingsPickler, Logging_Controller, DXM, conditioning
 
 settingsFile1 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file.pkl")
-supply1 = DXM.DXM_Supply()
-Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles_Supply1", supply=supply1.model)
+settings = settingsFile1.read_pickle()
+
+Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles_Supply1")
+
 app = Flask(__name__)
 app.secret_key = 'random string'
-settings = settingsFile1.read_pickle()
+
+supply1 = DXM.DXM_Supply()
 conditioner1 = conditioning.conditioning_Controller(HVSupply = supply1,Logger = Logger_1, HVSettings=settings)
+
+
+conditioningStarted = False
 
 @app.after_request
 def add_header(response):
    
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
-     
     return response
 
 @app.route("/", methods=["GET"])
@@ -36,8 +41,14 @@ def redirect_to_main_page():
 @app.route("/Quick_Access", methods=["GET", "POST"])
 def Home_Load():
     # Main page, loading in the required variables for the document
-    return render_template("QuickAccess.html", currKV = settings["currKV"], currMA = settings["currMA"], grayOut = conditioner1.CondStarted, tubeSNum = settings["tubeSNum"],tubeType= settings["tubeType"])
+    if not supply1.connected:
+        flash("No connection to Supply 1")
+    return render_template("QuickAccess.html", settings1 = settings)
     
+@app.route("/supplyConnection", methods=["GET"])
+def SupplyConnect():
+    supply1.try_connect()
+    return str(supply1.connected)
 
 @app.route("/hvsupplypage", methods=["GET", "POST"])
 def HVSettings():
@@ -55,7 +66,14 @@ def HVSettings():
     elif model == 'X4313':
         settings["maxKV"]= 30
         settings["maxMA"]= 20
-    return render_template("HVSettings.html",grayOut = conditioner1.CondStarted,filCurLim = settings['filCurLim'],filPreHeat = settings['filPreHeat'],condKVStart = settings['condKVStart'], condKVTarget = settings['condKVTarget'],condMAStart = settings['condMAStart'], condMATarget =settings['condMATarget'],condStepDwell=settings['condStepDwell'], condPostArcDwell = settings['condPostArcDwell'],condOffDwell = settings['condOffDwell'],condStepCount = settings['condStepCount'], maxKV = settings['maxKV'], maxMA = settings['maxMA'], condAtMaxDwell = settings["condAtMaxDwell"], maxTubeMA=settings["maxTubeMA"],maxTubeKV = settings["maxTubeKV"])
+    else:
+        settings["maxKV"]= 0
+        settings["maxMA"]= 0
+
+    if not supply1.connected:
+        flash("No connection to Supply 1, some functions will be missing")
+
+    return render_template("HVSettings.html", settings1 = settings)
 
 @app.route("/LogFileDownloaderPSU1", methods = ['GET'])
 def downloadLog():
@@ -69,6 +87,8 @@ def downloadLog():
 
 @app.route("/kvmaUpdate", methods= ["GET"])
 def kvmaUpdate():
+    
+    # this is called when a conditioning routine is in progress to allow an updated KV MA readout to be displayed
     return f"KV :{conditioner1.currentReadKV:.2f} MA: {conditioner1.currentReadMA:.2f} Filcur: {conditioner1.currentReadFilcur:.2f}"
 
 @app.route("/ManualXrayControl", methods = ["POST"])
@@ -229,16 +249,20 @@ def updateTube():
 @app.route("/SCond", methods = ["POST"])
 def Conditioning_Start_Stop():
     msg = ""
-    if "StartCond" in request.form.keys():
-        conditioner1.start_cycle()
-        conditioner1.CondStarted = True
-        msg = "Starting Conditioning"
-    elif "StopCond" in request.form.keys():
-        conditioner1.stop_cycle()
-        conditioner1.CondStarted = False
-        msg = "Stopping Conditioning"
-    flash(msg)
-    return redirect("/hvsupplypage")
+    if not supply1.connected:
+        flash("No connection to Supply 1, some functions will be missing")
+        return redirect("/hvsupplypage")
+    else:    
+        if "StartCond" in request.form.keys():
+            conditioner1.start_cycle()
+            settings["condStarted"] = True
+            msg = "Starting Conditioning"
+        elif "StopCond" in request.form.keys():
+            conditioner1.stop_cycle()
+            settings["condStarted"] = False
+            msg = "Stopping Conditioning"
+        flash(msg)
+        return redirect("/hvsupplypage")
 
 def get_IP():
     import socket
