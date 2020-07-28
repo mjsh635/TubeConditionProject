@@ -17,13 +17,22 @@
                 return false; 
             return true; 
         } 
-        var grayout = '{{settings1.condStarted}}';
-        var choice = '{{settings1.tubeType}}';
-
-        function grayerOuter(){    
-            var elm =  document.getElementsByClassName("grayable")
-            if (grayout == "True"){
-                alert("Certain Elements are blocked because a conditioning routine is in progress");
+        var grayout1 = '{{settings1.condStarted}}';
+        var choice1 = '{{settings1.tubeType}}';
+        var grayout2 = '{{settings2.condStarted}}';
+        var choice2 = '{{settings2.tubeType}}';
+        var grayout3 = '{{settings3.condStarted}}';
+        var choice3 = '{{settings3.tubeType}}';
+        var grayout4 = '{{settings4.condStarted}}';
+        var choice4 = '{{settings4.tubeType}}';
+        var connected1 = '{{connected1}}';
+        var connected2 = '{{connected2}}';
+        var connected3 = '{{connected3}}';
+        var connected4 = '{{connected4}}';
+        function grayerOuter1(){    
+            var elm =  document.getElementsByClassName("grayable1")
+            if (grayout1 == "True"){
+                
                 for (var i = 0; i < elm.length; i++) { 
                     elm[i].disabled = true;
             }}
@@ -32,24 +41,73 @@
                     elm[j].disabled = false;
              }
             }
-            document.getElementById('tubeType').value = choice;
+            document.getElementById('tubeType1').value = choice1;
+            document.getElementById('tryConnect1').disabled = connected1;
+            
+        }
+        function grayerOuter2(){    
+            var elm =  document.getElementsByClassName("grayable2")
+            if (grayout2 == "True"){
+                
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }
+            document.getElementById('tubeType2').value = choice2;
+            document.getElementById('tryConnect2').disabled = connected2;
+            
+        }
+        function grayerOuter3(){    
+            var elm =  document.getElementsByClassName("grayable3")
+            if (grayout3 == "True"){
+                
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }
+            document.getElementById('tubeType3').value = choice3;
+            document.getElementById('tryConnect3').disabled = connected3;
+            
+        }
+        function grayerOuter4(){    
+            var elm =  document.getElementsByClassName("grayable4")
+            if (grayout4 == "True"){
+                
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }
+            document.getElementById('tubeType4').value = choice4;
+            document.getElementById('tryConnect4').disabled = connected4;
             
         }
 
-        function attemptConnect(){
-            var btn = document.getElementById("tryConnect")
+        function attemptConnect(supplyNumber){
+            var btn = document.getElementById("tryConnect"+supplyNumber)
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 btn.disabled = true;
                 if (this.readyState == 4 && this.status == 200) {
                     if (this.responseText == 'False'){
                         btn.disabled = false;
-                        alert("Failed to Connect");
+                        alert("Failed to Connect to supply: " + supplyNumber);
                     }  
                 }
                 
             };
-            xhttp.open("GET", "/supplyConnection", true);
+            xhttp.open("GET", "/supplyConnection"+supplyNumber, true);
             xhttp.send();
             
         }
@@ -72,51 +130,33 @@
     <header>
         <h1>Quick Access</h1>
     </header>
-    <body onload="grayerOuter()">
-    <!-- <div class="PSU_Nav">
-        <h2>Power Supply 1</h2>
-            <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
-            <a href="LogFileDownloaderPSU1"><button class='b1'>Download Log File</button></a>
-            <br>
-            <div >
-                <form action="/ManualXrayControl" method="post">
-                    <label>Quick HV and mA set.</label>
-                    <br>
-                    <span class="tst">
-                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{currKV}}>
-                    <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{currMA}}>
-                    </span >
-                    <br>
-                    <input type="submit" name="Set_KVMA" value="Click to set KV and MA">
-                    <br>
-                    <input type="submit" name="Xray_Off" value="Xray Off" >
-                    <input type="submit" name="Xray_On" value="Xray On">
-                    <br>
-                    <input type="submit" name="CurrentValues" value="Check Current KV/MA Values">
-                    <p>"Xray Off" turns the Xray off. "Xray On" turns Xray on with the current values in the boxes above. If Xray is already on,it changes the value to new value
-                    </p>
-                </form>
-            </div>
-    </div> -->
+    <body onload="grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4()">
     <div class="PSUNAV">
         
         <div class = "navbar">
             <a href="hvsupplypage"><button class="b1">GoTo HV Settings</button></a>
-        
+            <a href="LogFileDownloaderAll"><button class='b1'>Download All Log Files</button></a>
+            <br>
+            <p1>"Xray Off" turns the Xray off. "Xray On" turns Xray on with the current values in the boxes above. If Xray is already on,it changes the value to new value
+            </p1>
         </div>
-
-        <h2>Power Supply 1</h2>
-        <input class="grayable" type="button" id="tryConnect" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect()">
-        <br>
-        <a href="LogFileDownloaderPSU1"><button class='b1'>Download Log File</button></a>
-        <br>
-        <br>
-
-        <div>
-            <form action="/settingTubes" method="post">
-                <input class="grayable" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{settings1.tubeSNum}}>
+        <div class="G">
+            <div class="g">
+                
+        
+        
+                    <h2>Power Supply 1</h2>
+                    
+                    <input class="grayable1" type="button" id="tryConnect1" 
+                    value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(1)">
+                    <br>
+                    <br>
+                    
+            <div class="block">            <div >
+            <form action="/settingTubes1" method="post">
+                <input class="grayable1" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{settings1.tubeSNum}}>
                 <label>Choose tube type: </label>
-                <select class="grayable" ID="tubeType" name='tubeType' value={{settings1.tubeType}}>
+                <select class="grayable1" ID="tubeType1" name='tubeType' value={{settings1.tubeType}}>
                     <option ID = "16" value="16" >16mm</option>
                     <option ID = "16s" value="16s">16mm Stubby</option>
                     <option ID = "32" value="32">32mm</option>
@@ -124,30 +164,169 @@
                     <option ID = "EMP" value="EMP">RDS Emp</option>
                 </select>
 
-                <br>
-                <input class="grayable" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                <input class="grayable1" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
                 <br><br>
             </form>
-            <form  action="/ManualXrayControl" method="post">
+            <form  action="/ManualXrayControl1" method="post">
                 <label>Quick HV and mA set.</label>
                 <br>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{settings1.currKV}}>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{settings1.currMA}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{settings1.currKV}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{settings1.currMA}}>
+                <input class="grayable1" type="submit" name="Set_KVMA" value="Click to set KV and MA">
                 <br>
-                <input class="grayable" type="submit" name="Set_KVMA" value="Click to set KV and MA">
                 <br>
-                <input class="grayable" type="submit" name="Xray_Off" value="Xray Off" >
-                <input class="grayable" type="submit" name="Xray_On" value="Xray On">
+                <input class="grayable1" type="submit" name="Xray_Off" value="Xray Off" >
+                <input class="grayable1" type="submit" name="Xray_On" value="Xray On">
                 <br>
-                <input  class="grayable"type="submit" name="CurrentValues" value="Check Current KV/MA Values">
                 <br>
-                <div class = paragraph>
-                <p1>"Xray Off" turns the Xray off. "Xray On" turns Xray on with the current values in the boxes above. If Xray is already on,it changes the value to new value
-                </p1>
+                <input  class="grayable1"type="submit" name="CurrentValues" value="Check Current KV/MA Values">
             </div>
             </form>
+            </div>
+            </div>
+            <div class="g">
+                
+            <h2>Power Supply 2</h2>
+            
+            <input class="grayable2" type="button" id="tryConnect2" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(2)">
+            <br>
+            <br>
+            
+            <div class="block">
+            <div>
+                <form action="/settingTubes2" method="post">
+                    <input class="grayable2" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{settings2.tubeSNum}}>
+                    <label>Choose tube type: </label>
+                    <select class="grayable2" ID="tubeType2" name='tubeType' value={{settings2.tubeType}}>
+                        <option ID = "16" value="16" >16mm</option>
+                        <option ID = "16s" value="16s">16mm Stubby</option>
+                        <option ID = "32" value="32">32mm</option>
+                        <option ID = "60" value="60">60mm</option>
+                        <option ID = "EMP" value="EMP">RDS Emp</option>
+                    </select>
+    
+                    
+                    <input class="grayable2" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                    <br><br>
+                </form>
+                <form  action="/ManualXrayControl2" method="post">
+                    <label>Quick HV and mA set.</label>
+                    <br>
+                    <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{settings2.currKV}}>
+                    <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{settings2.currMA}}>
+                    
+                    <input class="grayable2" type="submit" name="Set_KVMA" value="Click to set KV and MA">
+                    <br>
+                    <br>
+                    <input class="grayable2" type="submit" name="Xray_Off" value="Xray Off" >
+                    <input class="grayable2" type="submit" name="Xray_On" value="Xray On">
+                    <br>
+                    <br>
+                    <input  class="grayable2" type="submit" name="CurrentValues" value="Check Current KV/MA Values">
+                    
+                    
+                
+                </form>
+                </div>
+            </div>
+            </div>
+            <div class="g">
+                
+            <h2>Power Supply 3</h2>
+            
+            <input class="grayable3" type="button" id="tryConnect3" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(3)">
+            <br>
+            <br>
+            <div class="block">
+            <div>
+                <form action="/settingTubes3" method="post">
+                    <input class="grayable3" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{settings3.tubeSNum}}>
+                    <label>Choose tube type: </label>
+                    <select class="grayable3" ID="tubeType3" name='tubeType' value={{settings3.tubeType}}>
+                        <option ID = "16" value="16" >16mm</option>
+                        <option ID = "16s" value="16s">16mm Stubby</option>
+                        <option ID = "32" value="32">32mm</option>
+                        <option ID = "60" value="60">60mm</option>
+                        <option ID = "EMP" value="EMP">RDS Emp</option>
+                    </select>
+    
+                
+                    <input class="grayable3" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                    <br><br>
+                </form>
+                <form  action="/ManualXrayControl3" method="post">
+                    <label>Quick HV and mA set.</label>
+                    <br>
+                    <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{settings3.currKV}}>
+                    <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{settings3.currMA}}>
+                    
+                    <input class="grayable3" type="submit" name="Set_KVMA" value="Click to set KV and MA">
+                    <br>
+                    <br>
+                    <input class="grayable3" type="submit" name="Xray_Off" value="Xray Off" >
+                    <input class="grayable3" type="submit" name="Xray_On" value="Xray On">
+                    <br>
+                    <br>
+                    <input  class="grayable3" type="submit" name="CurrentValues" value="Check Current KV/MA Values">
+                   
+                    
+                </div>
+                </form>
+            </div>
+            </div>
+
+            <div class="g">
+                
+                    <h2>Power Supply 4</h2>
+                    
+                    <input class="grayable4" type="button" id="tryConnect4" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(4)">
+                    <br>
+                    <br>
+                    <div class="block">
+                
+            
+                    <div>
+                        <form action="/settingTubes4" method="post">
+                            <input class="grayable4" type="text" placeholder="Tube Serial Number" name="tubeSNum" value={{settings4.tubeSNum}}>
+                            <label>Choose tube type: </label>
+                            <select class="grayable4" ID="tubeType4" name='tubeType' value={{settings4.tubeType}}>
+                                <option ID = "16" value="16" >16mm</option>
+                                <option ID = "16s" value="16s">16mm Stubby</option>
+                                <option ID = "32" value="32">32mm</option>
+                                <option ID = "60" value="60">60mm</option>
+                                <option ID = "EMP" value="EMP">RDS Emp</option>
+                            </select>
+            
+                            
+                            <input class="grayable4" type="submit" name="tubeSNumSetBtn" value="Click to set Tube Serial Number">
+                            <br><br>
+                        </form>
+                        <form  action="/ManualXrayControl4" method="post">
+                            <label>Quick HV and mA set.</label>
+                            <br>
+                            <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="HV setpoint" name="kvSet" value={{settings4.currKV}}>
+                            <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA setpoint" name="mASet" value={{settings4.currMA}}>
+                            
+                            <input class="grayable4" type="submit" name="Set_KVMA" value="Click to set KV and MA">
+                            <br>
+                            <br>
+                            <input class="grayable4" type="submit" name="Xray_Off" value="Xray Off" >
+                            <input class="grayable4" type="submit" name="Xray_On" value="Xray On">
+                            <br>
+                            <br>
+                            <input  class="grayable4" type="submit" name="CurrentValues" value="Check Current KV/MA Values">
+                            
+                            
+                        
+                        </form>
+                    </div>
+                    </div>
+            </div>
         </div>
         
+        
+    </div>
+
     </div>
     </body>
 </html>

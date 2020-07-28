@@ -35,22 +35,65 @@
                 return false; 
             return true; 
         } 
-        var grayout = '{{settings1.condStarted}}';
-        function grayerOuter(){    
-                   
-            if (grayout == "True"){
-                alert("Certain Elements are blocked because a conditioning routine is in progress");
-                var elm =  document.getElementsByClassName("grayable")
+        var grayout1 = '{{settings1.condStarted}}';
+        var grayout2 = '{{settings2.condStarted}}';
+        var grayout3 = '{{settings3.condStarted}}';
+        var grayout4 = '{{settings4.condStarted}}';
+
+        function grayerOuter1(){    
+            var elm =  document.getElementsByClassName("grayable1")
+            if (grayout1 == "True"){
+                
                 for (var i = 0; i < elm.length; i++) { 
                     elm[i].disabled = true;
             }}
             else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }
+                    }
+        function grayerOuter2(){    
+            var elm =  document.getElementsByClassName("grayable2")
+            if (grayout2 == "True"){
+                
                 for (var i = 0; i < elm.length; i++) { 
-                elm[i].disabled = false;
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
             }
-            }
-            
+                    }
+        function grayerOuter3(){    
+            var elm =  document.getElementsByClassName("grayable3")
+            if (grayout3 == "True"){
+                
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }            
         }
+        function grayerOuter4(){    
+            var elm =  document.getElementsByClassName("grayable4")
+            if (grayout4 == "True"){
+                
+                for (var i = 0; i < elm.length; i++) { 
+                    elm[i].disabled = true;
+            }}
+            else{
+                for (var j = 0; j < elm.length; j++) { 
+                    elm[j].disabled = false;
+             }
+            }            
+        }
+
+
         function runInterval(){
             if (grayout == "True"){
             setInterval(loadKVMA,1000)
@@ -71,83 +114,254 @@
     </script>
 
     <h1><a href="Quick_Access"><button class="b1">Return to Quick Access</button></a></h1>
-    <body  onload='grayerOuter(); runInterval()'>
-    <article>
-        <section >
+    <body  onload='grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4(); runInterval()'>
+    <div class="G">
+        <section class="g" >
             <h1>Power Supply 1 Settings</h1>
             <p ID="displayKVMA"></p>
-            <br>
             <div class="variables">
-            <form action="/updateHV" method="POST">
+            <form action="/updateHV1" method="POST">
                 <label>Filament Current Limit:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings1.filCurLim}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings1.filCurLim}}>
                 <br>
                 <label>Filament Pre-Heat:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{settings1.filPreHeat}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{settings1.filPreHeat}}>
                 <br>
                 <label>Max Allowed Supply KV:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{settings1.maxKV}} disabled>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{settings1.maxKV}} disabled>
                 <br>
                 <label>Max Allowed Supply MA:</label>
-                <input class="grayable"type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{settings1.maxMA}} disabled>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{settings1.maxMA}} disabled>
                 <br>
                 <label>Max Allowed Tube KV:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{settings1.maxTubeKV}} disabled>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{settings1.maxTubeKV}} disabled>
                 <br>
                 <label>Max Allowed Tube MA:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{settings1.maxTubeMA}} disabled>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{settings1.maxTubeMA}} disabled>
                 <br>
                 <label>kV Starting Voltage:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{settings1.condKVStart}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{settings1.condKVStart}}>
                 <br>
                 <label>kV Target Voltage:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{settings1.condKVTarget}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{settings1.condKVTarget}}>
                 <br>
                 <label>mA Starting Current:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{settings1.condMAStart}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{settings1.condMAStart}}>
                 <br>
                 <label>mA Target Current:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings1.condMATarget}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings1.condMATarget}}>
                 <br>
                 <label>Conditioning Step Dwell:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings1.condStepDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings1.condStepDwell}}>
                 <br>
                 <label>Dwell Time at Max:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings1.condAtMaxDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings1.condAtMaxDwell}}>
                 <br>
                 <label>Post Arc Dwell:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings1.condPostArcDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings1.condPostArcDwell}}>
                 <br>
                 <label>Off Dwell:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings1.condOffDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings1.condOffDwell}}>
                 <br>
                 <label>Number of Steps:</label>
-                <input class="grayable" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings1.condStepCount}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings1.condStepCount}}>
                 <br>
-                <input class="grayable"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+                <input class="grayable1"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
             </form>
-            </div>
-            <div class="Conditioning">
-            <form action="/SCond" method="POST">
+            
+            <form action="/SCond1" method="POST">
                 <br>
-                <input class="grayable" type="submit" name="StartCond" value="Click to Start Conditioning" >
+                <input class="grayable1" type="submit" name="StartCond" value="Click to Start Conditioning" >
                 <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
             </form>
             </div>
-
-            <br>
-            <!-- <form action="/updateHV" method="GET">
-                <label>Total Time</label>
-                <br>
-                <label value="this is a test"></label>
-                <br>
-                <label>Total Time Remaining</label>
-                <br>
-                <label value="this is a test"></label>
-
-                <input type="button" name="update_time" value="Calculate Time">
-            </form> -->
         </section>
-</article>
-</body>
+
+        <section class="g">
+            <h1>Power Supply 2 Settings</h1>
+            <p ID="displayKVMA"></p>
+            
+            <div class="variables">
+            <form action="/updateHV2" method="POST">
+                <label>Filament Current Limit:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings2.filCurLim}}>
+                <br>
+                <label>Filament Pre-Heat:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{settings2.filPreHeat}}>
+                <br>
+                <label>Max Allowed Supply KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{settings2.maxKV}} disabled>
+                <br>
+                <label>Max Allowed Supply MA:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{settings2.maxMA}} disabled>
+                <br>
+                <label>Max Allowed Tube KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{settings2.maxTubeKV}} disabled>
+                <br>
+                <label>Max Allowed Tube MA:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{settings2.maxTubeMA}} disabled>
+                <br>
+                <label>kV Starting Voltage:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{settings2.condKVStart}}>
+                <br>
+                <label>kV Target Voltage:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{settings2.condKVTarget}}>
+                <br>
+                <label>mA Starting Current:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{settings2.condMAStart}}>
+                <br>
+                <label>mA Target Current:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings2.condMATarget}}>
+                <br>
+                <label>Conditioning Step Dwell:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings2.condStepDwell}}>
+                <br>
+                <label>Dwell Time at Max:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings2.condAtMaxDwell}}>
+                <br>
+                <label>Post Arc Dwell:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings2.condPostArcDwell}}>
+                <br>
+                <label>Off Dwell:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings2.condOffDwell}}>
+                <br>
+                <label>Number of Steps:</label>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings2.condStepCount}}>
+                <br>
+                <input class="grayable2"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+            </form>
+            
+            <form action="/SCond2" method="POST">
+                <br>
+                <input class="grayable2" type="submit" name="StartCond" value="Click to Start Conditioning" >
+                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+            </form>
+            </div>
+        </section>
+
+        <section class="g">
+            <h1>Power Supply 3 Settings</h1>
+            <p ID="displayKVMA"></p>
+            
+            <div class="variables">
+            <form action="/updateHV3" method="POST">
+                <label>Filament Current Limit:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings3.filCurLim}}>
+                <br>
+                <label>Filament Pre-Heat:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{settings3.filPreHeat}}>
+                <br>
+                <label>Max Allowed Supply KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{settings3.maxKV}} disabled>
+                <br>
+                <label>Max Allowed Supply MA:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{settings3.maxMA}} disabled>
+                <br>
+                <label>Max Allowed Tube KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{settings3.maxTubeKV}} disabled>
+                <br>
+                <label>Max Allowed Tube MA:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{settings3.maxTubeMA}} disabled>
+                <br>
+                <label>kV Starting Voltage:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{settings3.condKVStart}}>
+                <br>
+                <label>kV Target Voltage:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{settings3.condKVTarget}}>
+                <br>
+                <label>mA Starting Current:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{settings3.condMAStart}}>
+                <br>
+                <label>mA Target Current:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings3.condMATarget}}>
+                <br>
+                <label>Conditioning Step Dwell:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings3.condStepDwell}}>
+                <br>
+                <label>Dwell Time at Max:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings3.condAtMaxDwell}}>
+                <br>
+                <label>Post Arc Dwell:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings3.condPostArcDwell}}>
+                <br>
+                <label>Off Dwell:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings3.condOffDwell}}>
+                <br>
+                <label>Number of Steps:</label>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings3.condStepCount}}>
+                <br>
+                <input class="grayable3"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+            </form>
+            
+            <form action="/SCond3" method="POST">
+                <br>
+                <input class="grayable3" type="submit" name="StartCond" value="Click to Start Conditioning" >
+                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+            </form>
+            </div>
+        </section>
+
+        <section class="g" >
+            <h1>Power Supply 4 Settings</h1>
+            <p ID="displayKVMA"></p>
+            
+            <div class="variables">
+            <form action="/updateHV4" method="POST">
+                <label>Filament Current Limit:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings4.filCurLim}}>
+                <br>
+                <label>Filament Pre-Heat:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Pre-Heat" name="filPreHeat" value={{settings4.filPreHeat}}>
+                <br>
+                <label>Max Allowed Supply KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed KV" name="maxKV" value={{settings4.maxKV}} disabled>
+                <br>
+                <label>Max Allowed Supply MA:</label>
+                <input type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed MA" name="maxMA" value={{settings4.maxMA}} disabled>
+                <br>
+                <label>Max Allowed Tube KV:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube KV" name="maxTubeKV" value={{settings4.maxTubeKV}} disabled>
+                <br>
+                <label>Max Allowed Tube MA:</label>
+                <input  type="text" onkeypress="return onlyNumberKey(event)" placeholder="Max Allowed Tube MA" name="maxTubeMA" value={{settings4.maxTubeMA}} disabled>
+                <br>
+                <label>kV Starting Voltage:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Starting Voltage" name="condKVStart" value={{settings4.condKVStart}}>
+                <br>
+                <label>kV Target Voltage:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="kV Target Voltage" name="condKVTarget" value={{settings4.condKVTarget}}>
+                <br>
+                <label>mA Starting Current:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Starting Current" name="condMAStart" value={{settings4.condMAStart}}>
+                <br>
+                <label>mA Target Current:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings4.condMATarget}}>
+                <br>
+                <label>Conditioning Step Dwell:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings4.condStepDwell}}>
+                <br>
+                <label>Dwell Time at Max:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings4.condAtMaxDwell}}>
+                <br>
+                <label>Post Arc Dwell:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings4.condPostArcDwell}}>
+                <br>
+                <label>Off Dwell:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings4.condOffDwell}}>
+                <br>
+                <label>Number of Steps:</label>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings4.condStepCount}}>
+                <br>
+                <input class="grayable4"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+            </form>
+            
+            <form action="/SCond4" method="POST">
+                <br>
+                <input class="grayable4" type="submit" name="StartCond" value="Click to Start Conditioning" >
+                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+            </form>
+            </div>
+        </section>
+    </div>
+</body4
 </html>
