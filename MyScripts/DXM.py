@@ -7,11 +7,19 @@ class DXM_Supply:
     def __init__(self, IP_address='192.168.1.4', port=50001):
         self.address = (
          IP_address, port)
-        # self.connect()
-        self.remote_mode()
-        raw_model = self.read_model_type()
-        self.model = raw_model[1]
-        # self.disconnect()
+        # # self.connect()
+        # self.remote_mode()
+        # raw_model = self.read_model_type()
+        self.model = ""
+        self.connected = False
+        try:
+            with self:
+                self.read_model_type()
+                self.connected = True
+        except WindowsError as we:
+            print(we)
+            self.connected = False
+        # # self.disconnect()
         
 
     def is_emitting(self):
@@ -74,7 +82,9 @@ class DXM_Supply:
 
         :return: (str) model number from supply"""
         with self:
-            return self.__send_command(26, '')
+            resp = self.__send_command(26, '')
+            self.model = resp[1]
+            return resp[1]
 
     def read_current_out(self):
         """ send command to read current
@@ -265,23 +275,23 @@ class DXM_Supply:
         else:
             return False
 
-
     def __enter__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect(self.address)
+        
 
     def __exit__(self, e_type, e_val, e_traceback):
         self.socket.close()
 
-    def connect(self):
-        """ manually connect to the Supply"""
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print('Attempting to connect...')
-        self.socket.connect(self.address)
-    def disconnect(self):
-
-        """ manually disconnect from the supply"""
-        self.socket.close()
+    def try_connect(self):
+        """Attempt connection with Powersupply"""
+        try:
+            with self:
+                self.read_model_type()
+                self.connected = True
+        except WindowsError as we:
+            print(we)
+            self.connected = False
 
     def __send_command(self, cmd, argm=''):
         """
@@ -308,6 +318,3 @@ class DXM_Supply:
             finally:
                 e = None
                 del e
-
-d = DXM_Supply()
-print (d.read_interlock_status())
