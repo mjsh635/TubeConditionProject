@@ -39,7 +39,7 @@ class SettingsPickle():
                         "maxMA" : 0.0,
                         "maxTubeMA" : 12,
                         "maxTubeKV" : 0.5,
-                        "condStarted" : False   
+                        "condStarted" : False
                         }
                     # pickle the file 
                     pickle.dump(self.settings,f)
