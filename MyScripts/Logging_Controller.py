@@ -11,13 +11,12 @@ class Conditioning_Logger():
     zip folder containing all the log files
     """
 
-    def __init__(self, folder_path, supply="noSupplyNumber"):
+    def __init__(self, folder_path):
         """ Construct a logger and give it a location for its files
 
         :param folder: (str) folder path for file dir
         """
         self.folder_path = folder_path 
-        self.supply_model = supply
         self.file_name = "MissingSerialNumbers"
 
     def logfile_creation(self, file_name = "MissingSerialNumber"):
@@ -33,8 +32,8 @@ class Conditioning_Logger():
         if os.path.exists(f"{self.folder_path}\\{self.file_name}.txt"):
             return
         else:
-            with open(f"{self.folder_path}\\{self.file_name}.txt", mode="w+") as f:
-                f.writelines(f"Powersupply used: {self.supply_model} \n")
+            with open(f"{self.folder_path}\\{self.file_name}.txt", mode="w+"):
+                pass
 
     def append_to_log(self, log_data):
         """ Append to the end of the file
