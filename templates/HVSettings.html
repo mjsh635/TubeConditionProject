@@ -27,6 +27,26 @@
     
 
     <script> 
+        function condStart(supplyNumber){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            }
+            xhttp.open("POST", "/ajaxCondStart", true);
+            xhttp.send(supplyNumber);
+        }
+        function condStop(supplyNumber){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            }
+            xhttp.open("POST", "/ajaxCondStop", true);
+            xhttp.send(supplyNumber);
+        }
         function onlyNumberKey(evt) { 
               
             // Only ASCII charactar in that range allowed NUMBERS AND .
@@ -35,10 +55,10 @@
                 return false; 
             return true; 
         } 
-        var grayout1 = '{{settings1.condStarted}}';
-        var grayout2 = '{{settings2.condStarted}}';
-        var grayout3 = '{{settings3.condStarted}}';
-        var grayout4 = '{{settings4.condStarted}}';
+        var grayout1 ='{{settings1.condStarted}}';
+        var grayout2 ='{{settings2.condStarted}}';
+        var grayout3 ='{{settings3.condStarted}}';
+        var grayout4 ='{{settings4.condStarted}}';
 
         function grayerOuter1(){    
             var elm =  document.getElementsByClassName("grayable1")
@@ -93,34 +113,86 @@
             }            
         }
 
-
         function runInterval(){
-            if (grayout == "True"){
+            if (grayout1 == "True"){
+            setInterval(loadKVMA,1000)
+            }
+            if (grayout2 == "True"){
+            setInterval(loadKVMA,1000)
+            }
+            if (grayout3 == "True"){
+            setInterval(loadKVMA,1000)
+            }
+            if (grayout4 == "True"){
             setInterval(loadKVMA,1000)
             }
         }
 
         function loadKVMA() {
+            if (grayout1 == "True"){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("displayKVMA").innerHTML = this.responseText;
+                        document.getElementById("displayKVMA"+1).innerText = this.responseText;
                     }
                 };
-                xhttp.open("GET", "/kvmaUpdate", true);
-                xhttp.send();
+                xhttp.open("POST", "/ajaxGetReadouts", true);
+                xhttp.send(1);}
+            if (grayout2 == "True"){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("displayKVMA2").innerText = this.responseText;
+                    }
+                };
+                xhttp.open("POST", "/ajaxGetReadouts", true);
+                xhttp.send(2);
             }
-        
+            if (grayout3 == "True"){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("displayKVMA"+3).innerText = this.responseText;
+                    }
+                };
+                xhttp.open("POST", "/ajaxGetReadouts", true);
+                xhttp.send(3);
+            }
+            if (grayout4 == "True"){ 
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("displayKVMA"+4).innerText = this.responseText;
+                    }
+                };
+                xhttp.open("POST", "/ajaxGetReadouts", true);
+                xhttp.send(4);
+            }
+                
+            }
+        function hvUpdater(supplyNumber) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText);
+                }
+            }
+            var fd = new FormData(document.getElementById("HVSettings"+supplyNumber));
+            fd.append("supplyNumber", supplyNumber);
+            xhttp.open("POST", "/ajaxUpdateHV", true);
+            xhttp.send(fd);
+        }
     </script>
 
     <h1><a href="Quick_Access"><button class="b1">Return to Quick Access</button></a></h1>
-    <body  onload='grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4(); runInterval()'>
+    <body  onload='grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4();runInterval()''>
     <div class="G">
         <section class="g" >
             <h1>Power Supply 1 Settings</h1>
-            <p ID="displayKVMA"></p>
+            <p ID="displayKVMA1"></p>
             <div class="variables">
-            <form action="/updateHV1" method="POST">
+            <form id="HVSettings1" method="POST">
                 <label>Filament Current Limit:</label>
                 <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings1.filCurLim}}>
                 <br>
@@ -166,23 +238,23 @@
                 <label>Number of Steps:</label>
                 <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings1.condStepCount}}>
                 <br>
-                <input class="grayable1"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+                <input class="grayable1"  type="button" onclick="hvUpdater(1)" name="UpdatePSU1" value="Click to Update Params" >
             </form>
             
-            <form action="/SCond1" method="POST">
+            <form onclick="grayerOuter1();runInterval()">
                 <br>
-                <input class="grayable1" type="submit" name="StartCond" value="Click to Start Conditioning" >
-                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+                <input class="grayable1" type="button" onclick="condStart(1)" name="StartCond" value="Click to Start Conditioning" >
+                <input type="button" onclick="condStop(1)" name="StopCond" value="Click to Stop Conditioning" >
             </form>
             </div>
         </section>
 
         <section class="g">
             <h1>Power Supply 2 Settings</h1>
-            <p ID="displayKVMA"></p>
+            <p ID="displayKVMA2"></p>
             
             <div class="variables">
-            <form action="/updateHV2" method="POST">
+            <form id="HVSettings2" method="POST">
                 <label>Filament Current Limit:</label>
                 <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings2.filCurLim}}>
                 <br>
@@ -228,23 +300,23 @@
                 <label>Number of Steps:</label>
                 <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings2.condStepCount}}>
                 <br>
-                <input class="grayable2"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+                <input class="grayable2"  type="button" onclick="hvUpdater(2)" name="UpdatePSU1" value="Click to Update Params" >
             </form>
             
-            <form action="/SCond2" method="POST">
+            <form onclick="grayerOuter2();runInterval()">
                 <br>
-                <input class="grayable2" type="submit" name="StartCond" value="Click to Start Conditioning" >
-                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+                <input class="grayable2" type="button" onclick="condStart(2)" name="StartCond" value="Click to Start Conditioning" >
+                <input type="button" onclick="condStop(2)" name="StopCond" value="Click to Stop Conditioning" >
             </form>
             </div>
         </section>
 
         <section class="g">
             <h1>Power Supply 3 Settings</h1>
-            <p ID="displayKVMA"></p>
+            <p ID="displayKVMA3"></p>
             
             <div class="variables">
-            <form action="/updateHV3" method="POST">
+            <form id="HVSettings3" method="POST">
                 <label>Filament Current Limit:</label>
                 <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings3.filCurLim}}>
                 <br>
@@ -290,23 +362,23 @@
                 <label>Number of Steps:</label>
                 <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings3.condStepCount}}>
                 <br>
-                <input class="grayable3"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+                <input class="grayable3"  type="button" onclick="hvUpdater(3)" name="UpdatePSU1" value="Click to Update Params" >
             </form>
             
-            <form action="/SCond3" method="POST">
+            <form onclick="grayerOuter3();runInterval()">
                 <br>
-                <input class="grayable3" type="submit" name="StartCond" value="Click to Start Conditioning" >
-                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+                <input class="grayable3" type="button" onclick="condStart(3)" name="StartCond" value="Click to Start Conditioning" >
+                <input type="button" onclick="condStop(3)" name="StopCond" value="Click to Stop Conditioning" >
             </form>
             </div>
         </section>
 
         <section class="g" >
             <h1>Power Supply 4 Settings</h1>
-            <p ID="displayKVMA"></p>
+            <p ID="displayKVMA4"></p>
             
             <div class="variables">
-            <form action="/updateHV4" method="POST">
+            <form id="HVSettings4" method="POST">
                 <label>Filament Current Limit:</label>
                 <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Filament Current Limit" name="filCurLim" value={{settings4.filCurLim}}>
                 <br>
@@ -352,16 +424,16 @@
                 <label>Number of Steps:</label>
                 <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings4.condStepCount}}>
                 <br>
-                <input class="grayable4"  type="submit" name="UpdatePSU1" value="Click to Update Params" >
+                <input class="grayable4"  type="button" onclick="hvUpdater(4)" name="UpdatePSU1" value="Click to Update Params" >
             </form>
             
-            <form action="/SCond4" method="POST">
+            <form onclick="grayerOuter4();runInterval();" >
                 <br>
-                <input class="grayable4" type="submit" name="StartCond" value="Click to Start Conditioning" >
-                <input type="submit" name="StopCond" value="Click to Stop Conditioning" >
+                <input class="grayable4" type="button" onclick="condStart(4)" name="StartCond" value="Click to Start Conditioning" >
+                <input type="button" onclick="condStop(4)" name="StopCond" value="Click to Stop Conditioning" >
             </form>
             </div>
         </section>
     </div>
-</body4
+</body>
 </html>
