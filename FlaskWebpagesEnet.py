@@ -10,6 +10,7 @@ from flask import Flask, render_template, request, redirect, send_file, send_fro
 import time,datetime
 import os
 from MyScripts import settingsPickler, Logging_Controller, DXM, conditioning
+import random
 
 settingsFile1 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file1.pkl")
 settings1 = settingsFile1.read_pickle()
@@ -42,6 +43,7 @@ conditioningStarted1 = False
 conditioningStarted2 = False
 conditioningStarted3 = False
 conditioningStarted4 = False
+
 
 
 @app.after_request # done
@@ -171,7 +173,7 @@ def HVSettings():
         flash("No connection to Supply 3, some functions will be missing")
     if not supply4.connected:
         flash("No connection to Supply 4, some functions will be missing")
-
+    
     return render_template("HVSettings.html", settings1 = settings1, settings2 = settings2, settings3 = settings3, settings4 = settings4)
 
 @app.route("/LogFileDownloaderAll", methods = ['GET']) # done
@@ -477,29 +479,41 @@ def SetKVMA():
         else:
             return "KV or MA higher than set Max, check HV Settings for limit. Is the right tube type chosen?"
 
-@app.route("/ajaxUpdateHV", methods = ["POST", "GET"])
+@app.route("/ajaxUpdateHV", methods = ["POST", "GET"]) # Done
 def HVUpdate1():
     supply_number =  request.form["supplyNumber"]
     supply_number = int(supply_number)
     if supply_number == 1:
         if not supply1.connected:
             return "Supply 1 is not connected"
-        return "settings have been set on Supply 1"
-    if supply_number == 2:
-        if not supply2.connected:
-            return "Supply 2 is not connected"
-        return "settings have been set on Supply 2"
-    if supply_number == 3:
-        if not supply3.connected:
-            return "Supply 3 is not connected"
-        return "settings have been set on Supply 3"
-    if supply_number == 4:
-        if not supply4.connected:
-            return "Supply 4 is not connected"
-        return "settings have been set on Supply 4"
-
-    if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
-        if (float(request.form["condKVTarget"]) >= settings1['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings1['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings1['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings1['maxTubeMA']):
+        if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
+            if (float(request.form["condKVTarget"]) >= settings1['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings1['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings1['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings1['maxTubeMA']):
+                settings1["filCurLim"] = request.form["filCurLim"]
+                settings1["filPreHeat"] = request.form["filPreHeat"]
+                settings1["condKVStart"] = 0
+                settings1["condMAStart" ]= 0
+                settings1["condMATarget"]= 1
+                settings1["condKVTarget" ]= 1
+                settings1["condStepDwell"]= request.form["condStepDwell"]
+                settings1["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings1["condOffDwell"]= request.form["condOffDwell"]
+                settings1["condStepCount"]= request.form["condStepCount"]
+                return "KV and MA Targets set higher than tubes allowable power rating"
+            else:
+                settings1["filCurLim"] = request.form["filCurLim"]
+                settings1["filPreHeat"] = request.form["filPreHeat"]
+                settings1["condKVStart"] = request.form["condKVStart"]
+                settings1["condKVTarget" ]= request.form["condKVTarget"]
+                settings1["condMAStart" ]= request.form["condMAStart"]
+                settings1["condMATarget"]= request.form["condMATarget"]
+                settings1["condStepDwell"]= request.form["condStepDwell"]
+                settings1["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings1["condOffDwell"]= request.form["condOffDwell"]
+                settings1["condStepCount"]= request.form["condStepCount"]
+                return "Set values successfully"
+        else:
             settings1["filCurLim"] = request.form["filCurLim"]
             settings1["filPreHeat"] = request.form["filPreHeat"]
             settings1["condKVStart"] = 0
@@ -511,40 +525,145 @@ def HVUpdate1():
             settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
             settings1["condOffDwell"]= request.form["condOffDwell"]
             settings1["condStepCount"]= request.form["condStepCount"]
-            mes = "KV and MA Targets set higher than tubes allowable power rating"
+            return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
+        settingsFile1.write_pickle(settings1)
+        return "settings have been set on Supply 1"
+    if supply_number == 2:
+        if not supply2.connected:
+            return "Supply 2 is not connected"
+        if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
+            if (float(request.form["condKVTarget"]) >= settings2['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings2['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings2['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings2['maxTubeMA']):
+                settings2["filCurLim"] = request.form["filCurLim"]
+                settings2["filPreHeat"] = request.form["filPreHeat"]
+                settings2["condKVStart"] = 0
+                settings2["condMAStart" ]= 0
+                settings2["condMATarget"]= 1
+                settings2["condKVTarget" ]= 1
+                settings2["condStepDwell"]= request.form["condStepDwell"]
+                settings2["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings2["condOffDwell"]= request.form["condOffDwell"]
+                settings2["condStepCount"]= request.form["condStepCount"]
+                return "KV and MA Targets set higher than tubes allowable power rating"
+            else:
+                settings2["filCurLim"] = request.form["filCurLim"]
+                settings2["filPreHeat"] = request.form["filPreHeat"]
+                settings2["condKVStart"] = request.form["condKVStart"]
+                settings2["condKVTarget" ]= request.form["condKVTarget"]
+                settings2["condMAStart" ]= request.form["condMAStart"]
+                settings2["condMATarget"]= request.form["condMATarget"]
+                settings2["condStepDwell"]= request.form["condStepDwell"]
+                settings2["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings2["condOffDwell"]= request.form["condOffDwell"]
+                settings2["condStepCount"]= request.form["condStepCount"]
+                return "Set values successfully"
         else:
-            settings1["filCurLim"] = request.form["filCurLim"]
-            settings1["filPreHeat"] = request.form["filPreHeat"]
-            settings1["condKVStart"] = request.form["condKVStart"]
-            settings1["condKVTarget" ]= request.form["condKVTarget"]
-            settings1["condMAStart" ]= request.form["condMAStart"]
-            settings1["condMATarget"]= request.form["condMATarget"]
-            settings1["condStepDwell"]= request.form["condStepDwell"]
-            settings1["condAtMaxDwell"] = request.form["condAtMaxDwell"]
-            settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
-            settings1["condOffDwell"]= request.form["condOffDwell"]
-            settings1["condStepCount"]= request.form["condStepCount"]
-            # settings["maxKV"]= request.form["maxKV"]
-            # settings["maxMA"]= request.form["maxMA"]
-            mes = "Set values successfully"
-    else:
-        settings1["filCurLim"] = request.form["filCurLim"]
-        settings1["filPreHeat"] = request.form["filPreHeat"]
-        settings1["condKVStart"] = 0
-        settings1["condMAStart" ]= 0
-        settings1["condMATarget"]= 1
-        settings1["condKVTarget" ]= 1
-        settings1["condStepDwell"]= request.form["condStepDwell"]
-        settings1["condAtMaxDwell"] = request.form["condAtMaxDwell"]
-        settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
-        settings1["condOffDwell"]= request.form["condOffDwell"]
-        settings1["condStepCount"]= request.form["condStepCount"]
-        mes = "KV and MA Targets set higher than tubes allowable power rating"
-        mes = "KV Target and MA Target must be higher than KV Start and MA Start"
+            settings2["filCurLim"] = request.form["filCurLim"]
+            settings2["filPreHeat"] = request.form["filPreHeat"]
+            settings2["condKVStart"] = 0
+            settings2["condMAStart" ]= 0
+            settings2["condMATarget"]= 1
+            settings2["condKVTarget" ]= 1
+            settings2["condStepDwell"]= request.form["condStepDwell"]
+            settings2["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+            settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
+            settings2["condOffDwell"]= request.form["condOffDwell"]
+            settings2["condStepCount"]= request.form["condStepCount"]
+            return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
+        settingsFile2.write_pickle(settings2)
+        return "settings have been set on Supply 2"
+    if supply_number == 3:
+        if not supply3.connected:
+            return "Supply 3 is not connected"
+        if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
+            if (float(request.form["condKVTarget"]) >= settings3['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings3['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings3['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings3['maxTubeMA']):
+                settings3["filCurLim"] = request.form["filCurLim"]
+                settings3["filPreHeat"] = request.form["filPreHeat"]
+                settings3["condKVStart"] = 0
+                settings3["condMAStart" ]= 0
+                settings3["condMATarget"]= 1
+                settings3["condKVTarget" ]= 1
+                settings3["condStepDwell"]= request.form["condStepDwell"]
+                settings3["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings3["condOffDwell"]= request.form["condOffDwell"]
+                settings3["condStepCount"]= request.form["condStepCount"]
+                return "KV and MA Targets set higher than tubes allowable power rating"
+            else:
+                settings3["filCurLim"] = request.form["filCurLim"]
+                settings3["filPreHeat"] = request.form["filPreHeat"]
+                settings3["condKVStart"] = request.form["condKVStart"]
+                settings3["condKVTarget" ]= request.form["condKVTarget"]
+                settings3["condMAStart" ]= request.form["condMAStart"]
+                settings3["condMATarget"]= request.form["condMATarget"]
+                settings3["condStepDwell"]= request.form["condStepDwell"]
+                settings3["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings3["condOffDwell"]= request.form["condOffDwell"]
+                settings3["condStepCount"]= request.form["condStepCount"]
+                return "Set values successfully"
+        else:
+            settings3["filCurLim"] = request.form["filCurLim"]
+            settings3["filPreHeat"] = request.form["filPreHeat"]
+            settings3["condKVStart"] = 0
+            settings3["condMAStart" ]= 0
+            settings3["condMATarget"]= 1
+            settings3["condKVTarget" ]= 1
+            settings3["condStepDwell"]= request.form["condStepDwell"]
+            settings3["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+            settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
+            settings3["condOffDwell"]= request.form["condOffDwell"]
+            settings3["condStepCount"]= request.form["condStepCount"]
+            return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
+        settingsFile3.write_pickle(settings3)
+        return "settings have been set on Supply 3"
+    if supply_number == 4:
+        if not supply4.connected:
+            return "Supply 4 is not connected"
+        if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
+            if (float(request.form["condKVTarget"]) >= settings4['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings4['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings4['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings4['maxTubeMA']):
+                settings4["filCurLim"] = request.form["filCurLim"]
+                settings4["filPreHeat"] = request.form["filPreHeat"]
+                settings4["condKVStart"] = 0
+                settings4["condMAStart" ]= 0
+                settings4["condMATarget"]= 1
+                settings4["condKVTarget" ]= 1
+                settings4["condStepDwell"]= request.form["condStepDwell"]
+                settings4["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings4["condOffDwell"]= request.form["condOffDwell"]
+                settings4["condStepCount"]= request.form["condStepCount"]
+                return "KV and MA Targets set higher than tubes allowable power rating"
+            else:
+                settings4["filCurLim"] = request.form["filCurLim"]
+                settings4["filPreHeat"] = request.form["filPreHeat"]
+                settings4["condKVStart"] = request.form["condKVStart"]
+                settings4["condKVTarget" ]= request.form["condKVTarget"]
+                settings4["condMAStart" ]= request.form["condMAStart"]
+                settings4["condMATarget"]= request.form["condMATarget"]
+                settings4["condStepDwell"]= request.form["condStepDwell"]
+                settings4["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+                settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
+                settings4["condOffDwell"]= request.form["condOffDwell"]
+                settings4["condStepCount"]= request.form["condStepCount"]
+                return "Set values successfully"
+        else:
+            settings4["filCurLim"] = request.form["filCurLim"]
+            settings4["filPreHeat"] = request.form["filPreHeat"]
+            settings4["condKVStart"] = 0
+            settings4["condMAStart" ]= 0
+            settings4["condMATarget"]= 1
+            settings4["condKVTarget" ]= 1
+            settings4["condStepDwell"]= request.form["condStepDwell"]
+            settings4["condAtMaxDwell"] = request.form["condAtMaxDwell"]
+            settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
+            settings4["condOffDwell"]= request.form["condOffDwell"]
+            settings4["condStepCount"]= request.form["condStepCount"]
+            return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
+        settingsFile4.write_pickle(settings4)
+        return "settings have been set on Supply 4"
 
-    settingsFile1.write_pickle(settings1)
-    flash(mes)
-    return redirect("/hvsupplypage")
 
 @app.route("/ajaxSettingTubes", methods = ["POST"]) # Done
 def updateTube():
@@ -704,7 +823,36 @@ def Conditioning_Stop():
             settings4["condStarted"] = False
             return "Condition Stopped on Supply 4"
 
-
+@app.route("/ajaxGraphValues", methods = ["POST"]) # Done
+def GraphValues():
+    # supply_number = request.data.decode()
+    # supply_number = int(supply_number)
+    # if supply_number == 1:
+    #     voltData = conditioner1.VoltageOverTime
+    #     currData = conditioner1.CurrentOverTime
+    #     filData =  conditioner1.FilamentOverTime
+    #     data = [voltData,currData,filData]
+    #     return data
+    # if supply_number == 2:
+    #     voltData = conditioner2.VoltageOverTime
+    #     currData = conditioner2.CurrentOverTime
+    #     filData =  conditioner2.FilamentOverTime
+    #     data = [voltData,currData,filData]
+    #     return data
+    # if supply_number == 3:
+    #     voltData = conditioner3.VoltageOverTime
+    #     currData = conditioner3.CurrentOverTime
+    #     filData =  conditioner3.FilamentOverTime
+    #     data = [voltData,currData,filData]
+    #     return data
+    # if supply_number == 4:
+        # voltData = conditioner4.VoltageOverTime
+        # currData = conditioner4.CurrentOverTime
+        # filData =  conditioner4.FilamentOverTime
+        # data = [voltData,currData,filData]
+        # return data
+    data = {"voltData":{1:1},"currData":{2:2},"filData":{3:3}}
+    return data    
 #done
 def get_IP(): 
     import socket
