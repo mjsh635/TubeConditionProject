@@ -31,6 +31,9 @@ class conditioning_Controller():
         self.currentReadKV = 0.0
         self.currentReadMA = 0.0
         self.currentReadFilcur = 0.0
+        self.VoltageOverTime = {}
+        self.CurrentOverTime = {}
+        self.FilamentOverTime = {}
         
         
 
@@ -69,7 +72,10 @@ class conditioning_Controller():
             #totalCondTime = currentTime + (condStepSize * 2) + (4 *(dwellOntime + dwellofftime))
             
 
-
+            
+            self.VoltageOverTime.clear()
+            self.CurrentOverTime.clear()
+            self.FilamentOverTime.clear()
             # set Filament Current Limit and Log it
             self.Log.append_to_log(f"""[Conditiong Mode, Starting Conditioning Cycle ||{datetime.datetime.today()}] \n""")
             self.HV.set_filament_limit(float(self.settings["filCurLim"]))
@@ -577,3 +583,8 @@ class conditioning_Controller():
                 self.Log.append_to_log(f"""[Conditioning Mode, HV Ramping  ||{datetime.datetime.today()}]\n""") 
                 self.__whileRamping()
                 self.Log.append_to_log(f"""[Conditioning Mode, HV Ramping Complete  ||{datetime.datetime.today()}]\n""")
+
+    def _update_Graph_Values(self):
+        self.VoltageOverTime.update()
+        self.CurrentOverTime.update()
+        self.FilamentOverTime.update()
