@@ -5,6 +5,107 @@
         <title>HVPSU</title>
         <link rel="stylesheet" href="static\css\HVStyleSheet.css"/>
         <link rel = "icon" href ="static\img\icon.ico" type="image/icon"/>
+        <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script type="text/javascript"> 
+            
+            // function mychart(supplyNumber) {
+                
+            //     if (supplyNumber == 0){
+            //         document.getElementById("charts").hidden = true;
+                    
+            //         return;
+            //     }
+
+            //     var xhttp = new XMLHttpRequest();
+            //     xhttp.onreadystatechange = function() {
+            //         if (this.readyState == 4 && this.status == 200) {
+            //             for (key in this.response){
+
+            //             }
+                    
+
+
+
+                    var chartVoltage = new CanvasJS.Chart("chartContainer1",
+                    {
+                        zoomEnabled: true,
+                        
+                    title:{
+                    text: "Voltage/Current/Filament readouts from Supply " + supplyNumber
+                    },
+                    axisX:{
+                        title:"Conditioning time"
+                        
+                    },
+                    axisY:{
+                        title:"Voltage(kV)"
+                        ,gridThickness: 1
+                    },
+                    data: [
+                        {
+                            lineDashType: "Line",
+                            lineColor: "red",
+                            type: "line",
+                            dataPoints: voltage
+                        }
+                        ]
+                    });
+                    var chartCurrent = new CanvasJS.Chart("chartContainer2",
+                    {
+                        zoomEnabled: true,
+                        
+                    
+                    axisX:{
+                        title:"Conditioning time"
+                        
+                    },
+                    axisY:{
+                        title:"Current(mA)"
+                        ,gridThickness: 1
+                    },
+                    data: [
+                        {
+                            lineDashType: "Line",
+                            lineColor: "blue",
+                            type: "line",
+                            dataPoints: current
+                        }
+                        ]
+                    });
+                    var chartFilCurrent = new CanvasJS.Chart("chartContainer3",
+                    {
+                        zoomEnabled: true,
+                    
+                    
+                    axisX:{
+                        title:"Conditioning time"
+                        
+                    },
+                    axisY:{
+                        title:"Filament Current(mA)"
+                        ,gridThickness: 1
+                    },
+                    data: [
+                        {
+                            lineDashType: "Line",
+                            lineColor: "green",
+                            type: "line",
+                            dataPoints: Filcurrent
+                        }
+                        ]
+                    });
+                    
+                    chartVoltage.render();
+                    chartCurrent.render();
+                    chartFilCurrent.render();
+                }
+            }
+            xhttp.open("POST", "/ajaxCondStart", true);
+            xhttp.send(supplyNumber);
+            document.getElementById("charts").hidden = false;
+            }
+        </script> -->
+        
     </head>
 
     <div>
@@ -25,8 +126,9 @@
     </header>
 
     
-
-    <script> 
+    
+    
+<script>
         function condStart(supplyNumber){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -186,10 +288,17 @@
     </script>
 
     <h1><a href="Quick_Access"><button class="b1">Return to Quick Access</button></a></h1>
-    <body  onload='grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4();runInterval()''>
+    <!-- <input type="button" onclick="mychart(0)" value="Close Graphs"> -->
+    <body  onload='grayerOuter1();grayerOuter2();grayerOuter3();grayerOuter4();runInterval()'>
+    <div id="charts" hidden>
+        <div  id="chartContainer1" style="height: 300px; width: 100%;"></div>
+        <div  id="chartContainer2" style="height: 300px; width: 100%;"></div>
+        <div  id="chartContainer3" style="height: 300px; width: 100%;"></div>
+    </div>
     <div class="G">
         <section class="g" >
             <h1>Power Supply 1 Settings</h1>
+            <!-- <input type="button" onclick="mychart(1)" value="Show Graphs"> -->
             <p ID="displayKVMA1"></p>
             <div class="variables">
             <form id="HVSettings1" method="POST">
@@ -251,6 +360,7 @@
 
         <section class="g">
             <h1>Power Supply 2 Settings</h1>
+            <!-- <input type="button" onclick="mychart(2)" value="Show Graphs"> -->
             <p ID="displayKVMA2"></p>
             
             <div class="variables">
@@ -313,6 +423,7 @@
 
         <section class="g">
             <h1>Power Supply 3 Settings</h1>
+            <!-- <input type="button" onclick="mychart(3)" value="Show Graphs"> -->
             <p ID="displayKVMA3"></p>
             
             <div class="variables">
@@ -375,6 +486,7 @@
 
         <section class="g" >
             <h1>Power Supply 4 Settings</h1>
+            <!-- <input type="button" onclick="mychart(4)" value="Show Graphs"> -->
             <p ID="displayKVMA4"></p>
             
             <div class="variables">

@@ -823,7 +823,7 @@ def Conditioning_Stop():
             settings4["condStarted"] = False
             return "Condition Stopped on Supply 4"
 
-@app.route("/ajaxGraphValues", methods = ["POST"]) # Done
+@app.route("/ajaxGraphValues", methods = ["POST"]) # Unused
 def GraphValues():
     # supply_number = request.data.decode()
     # supply_number = int(supply_number)
