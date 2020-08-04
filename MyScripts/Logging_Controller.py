@@ -45,21 +45,8 @@ class Conditioning_Logger():
             if OpenedLogFile.writable():
                 OpenedLogFile.writelines(f"{log_data}\n")
 
-    def search_directory(self):
-        """ Search path and return list of files 
-        
-        :returns: (list) returns list of files in constructors directory
-        """
-        files_in_dir = []
 
-        # r=>root, d=>directories, f=>files
-        for r, d, f in os.walk(self.folder_path):
-            for item in f:
-                if '.txt' in item:
-                    files_in_dir.append(os.path.join(r, item))
-        return files_in_dir
-
-    def zip_files(self, foldername, files):
+    def zip_files(self, foldername):
         """take all files return a zip'd folder containing them
         
         :param files: (list) files to be zipped
@@ -67,7 +54,18 @@ class Conditioning_Logger():
         :param foldername: (str) name of zip'd folder
         """
         with ZipFile((f"{self.folder_path}\\{foldername}.zip"), 'w') as zip:
-            for txtfile in files:
-                zip.write(txtfile)
+            rootdir = os.path.basename(self.folder_path)
+            for r, d, f in os.walk(self.folder_path):
+                for item in f:
+                    if '.txt' in item:
+                        print(item)
+                        filepath = os.path.join(r, item)
+                        print(filepath)
+                        parentpath = os.path.relpath(filepath, self.folder_path)
+                        print(parentpath)
+                        arcname = os.path.join(rootdir,parentpath)
+                        print(arcname)
+                        zip.write(filepath, arcname)
+   
         return f"{self.folder_path}\\{foldername}.zip"
 

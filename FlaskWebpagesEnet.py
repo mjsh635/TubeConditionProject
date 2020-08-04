@@ -182,7 +182,7 @@ def downloadAllLog():
     # calls this function, it takes all the log files, zips them, and
     # returns the zip file for downloading
     timestamp = time.strftime("%Y_%m_%d_%H_%M_%S")
-    zip_path = Logger_1.zip_files(f"All_Log_files_as_of{timestamp}", Logger_1.search_directory())
+    zip_path = Logger_1.zip_files(f"All_Log_files_as_of{timestamp}")
     
     return send_file(f"{zip_path}", as_attachment=True, mimetype="application/zip")
 
@@ -856,4 +856,4 @@ def get_IP():
 
 
 app.templates_auto_reload = True
-app.run('10.0.0.8', port=5000)
+app.run(get_IP(), port=5000)
