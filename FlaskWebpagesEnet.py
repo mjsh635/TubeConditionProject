@@ -483,9 +483,7 @@ def SetKVMA():
 def HVUpdate1():
     supply_number =  request.form["supplyNumber"]
     supply_number = int(supply_number)
-    if supply_number == 1:
-        if not supply1.connected:
-            return "Supply 1 is not connected"
+    if supply_number == 1:  
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
             if (float(request.form["condKVTarget"]) >= settings1['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings1['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings1['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings1['maxTubeMA']):
                 settings1["filCurLim"] = request.form["filCurLim"]
@@ -528,9 +526,7 @@ def HVUpdate1():
             return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
         settingsFile1.write_pickle(settings1)
         return "settings have been set on Supply 1"
-    if supply_number == 2:
-        if not supply2.connected:
-            return "Supply 2 is not connected"
+    if supply_number == 2:  
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
             if (float(request.form["condKVTarget"]) >= settings2['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings2['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings2['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings2['maxTubeMA']):
                 settings2["filCurLim"] = request.form["filCurLim"]
@@ -574,8 +570,6 @@ def HVUpdate1():
         settingsFile2.write_pickle(settings2)
         return "settings have been set on Supply 2"
     if supply_number == 3:
-        if not supply3.connected:
-            return "Supply 3 is not connected"
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
             if (float(request.form["condKVTarget"]) >= settings3['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings3['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings3['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings3['maxTubeMA']):
                 settings3["filCurLim"] = request.form["filCurLim"]
@@ -619,8 +613,6 @@ def HVUpdate1():
         settingsFile3.write_pickle(settings3)
         return "settings have been set on Supply 3"
     if supply_number == 4:
-        if not supply4.connected:
-            return "Supply 4 is not connected"
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
             if (float(request.form["condKVTarget"]) >= settings4['maxTubeKV'])  or (float(request.form["condMATarget"]) >= settings4['maxTubeMA']) or (float(request.form["condKVStart"]) >= settings4['maxTubeKV']) or (float(request.form["condMAStart"]) >= settings4['maxTubeMA']):
                 settings4["filCurLim"] = request.form["filCurLim"]
