@@ -58,13 +58,10 @@ class Conditioning_Logger():
             for r, d, f in os.walk(self.folder_path):
                 for item in f:
                     if '.txt' in item:
-                        print(item)
                         filepath = os.path.join(r, item)
                         print(filepath)
                         parentpath = os.path.relpath(filepath, self.folder_path)
-                        print(parentpath)
                         arcname = os.path.join(rootdir,parentpath)
-                        print(arcname)
                         zip.write(filepath, arcname)
    
         return f"{self.folder_path}\\{foldername}.zip"
