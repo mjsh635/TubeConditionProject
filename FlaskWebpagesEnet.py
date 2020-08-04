@@ -864,4 +864,4 @@ def get_IP():
 
 
 app.templates_auto_reload = True
-app.run(host=get_IP())
+app.run('10.0.0.8', port=5000)

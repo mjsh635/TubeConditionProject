@@ -1,6 +1,7 @@
 import sys, platform, socket, signal, math, time
 from contextlib import contextmanager
 import _thread
+import stopit
 
 class DXM_Supply:
 
@@ -18,9 +19,11 @@ class DXM_Supply:
             with self:
                 self.read_model_type()
                 self.connected = True
-        except WindowsError as we:
-            print(we)
+        except stopit.TimeoutException as TOE:
+            print(TOE)
             self.connected = False
+        except Exception as e:
+            print(e)
         # # self.disconnect()
         
 
@@ -277,28 +280,26 @@ class DXM_Supply:
         else:
             return False
 
-    @contextmanager
-    def _time_limit(self,time_length):
-        if platform.version == "Linux":
-            import signal
-            def signal_handler(signum, frame):
-                raise TimeoutError("timed out!")
-            signal.signal(signal.SIGALRM,signal_handler)
-            signal.alarm(time_length)
-            try:
-                yield
-            finally:
-                signal.alarm(0)
-        else:
-            yield
+    # @contextmanager
+    # def _time_limit(self,time_length):
+    #     if sys.platform.startswith("linux"):
+    #         import signal
+    #         def signal_handler(signum, frame):
+    #             raise OSError("timed out! Could not connect to supply")
+    #         signal.signal(signal.SIGALRM,signal_handler)
+    #         signal.alarm(time_length)
+    #         try:
+    #             yield
+    #         finally:
+    #             signal.alarm(0)
+    #     else:
+    #         yield
 
+    
     def __enter__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            with self._time_limit(3):
-                self.socket.connect(self.address)
-        except TimeoutError as te:
-            print(te)
+        with stopit.ThreadingTimeout(5,swallow_exc=False):
+            self.socket.connect(self.address)
         
 
     def __exit__(self, e_type, e_val, e_traceback):
@@ -310,9 +311,10 @@ class DXM_Supply:
             with self:
                 self.read_model_type()
                 self.connected = True
-        except WindowsError as we:
+        except OSError as we:
             print(we)
             self.connected = False
+
 
     def __send_command(self, cmd, argm=''):
         """
