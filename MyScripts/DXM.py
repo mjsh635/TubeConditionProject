@@ -19,11 +19,9 @@ class DXM_Supply:
             with self:
                 self.read_model_type()
                 self.connected = True
-        except stopit.TimeoutException as TOE:
+        except socket.timeout as TOE:
             print(TOE)
             self.connected = False
-        except Exception as e:
-            print(e)
         # # self.disconnect()
         
 
@@ -295,14 +293,16 @@ class DXM_Supply:
     #     else:
     #         yield
 
-    
     def __enter__(self):
+
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        with stopit.ThreadingTimeout(5,swallow_exc=False):
-            self.socket.connect(self.address)
+        self.socket.settimeout(5)
+        self.socket.connect(self.address)
+
         
 
     def __exit__(self, e_type, e_val, e_traceback):
+        print('exiting')
         self.socket.close()
 
     def try_connect(self):
@@ -311,7 +311,7 @@ class DXM_Supply:
             with self:
                 self.read_model_type()
                 self.connected = True
-        except OSError as we:
+        except socket.timeout as we:
             print(we)
             self.connected = False
 
