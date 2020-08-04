@@ -5,6 +5,8 @@ import _thread
 class DXM_Supply:
 
     def __init__(self, IP_address='192.168.1.4', port=50001):
+        
+
         self.address = (
          IP_address, port)
         # # self.connect()
@@ -275,9 +277,28 @@ class DXM_Supply:
         else:
             return False
 
+    @contextmanager
+    def _time_limit(self,time_length):
+        if platform.version == "Linux":
+            import signal
+            def signal_handler(signum, frame):
+                raise TimeoutError("timed out!")
+            signal.signal(signal.SIGALRM,signal_handler)
+            signal.alarm(time_length)
+            try:
+                yield
+            finally:
+                signal.alarm(0)
+        else:
+            yield
+
     def __enter__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect(self.address)
+        try:
+            with self._time_limit(3):
+                self.socket.connect(self.address)
+        except TimeoutError as te:
+            print(te)
         
 
     def __exit__(self, e_type, e_val, e_traceback):
