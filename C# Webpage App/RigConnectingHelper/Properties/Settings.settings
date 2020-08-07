@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RigConnectingHelper.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Rack1IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.0.0.8</Value>
+    </Setting>
+    <Setting Name="Rack2IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.0.0.9</Value>
+    </Setting>
+    <Setting Name="Rack3IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.0.0.10</Value>
+    </Setting>
+    <Setting Name="Rack4IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.0.0.11</Value>
+    </Setting>
+    <Setting Name="Rack5IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.0.0.12</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

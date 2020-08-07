@@ -1,0 +1,10 @@
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\bin\Debug\RigConnectingHelper.exe.config
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\bin\Debug\RigConnectingHelper.exe
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\bin\Debug\RigConnectingHelper.pdb
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.csprojAssemblyReference.cache
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.Form1.resources
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.Properties.Resources.resources
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.csproj.GenerateResource.cache
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.csproj.CoreCompileInputs.cache
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.exe
+Z:\MiscWorkJunk\TubeCondition\C# Webpage App\RigConnectingHelper\obj\Debug\RigConnectingHelper.pdb

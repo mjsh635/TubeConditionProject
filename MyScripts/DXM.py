@@ -294,10 +294,13 @@ class DXM_Supply:
     #         yield
 
     def __enter__(self):
-
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.settimeout(5)
-        self.socket.connect(self.address)
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.settimeout(5)
+            self.socket.connect(self.address)
+        except Exception as e:
+            print(e)
+            raise socket.timeout
 
         
 
