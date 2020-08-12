@@ -29,10 +29,10 @@ class Conditioning_Logger():
         else:
             self.file_name = file_name
 
-        if os.path.exists(f"{self.folder_path}\\{self.file_name}.txt"):
+        if os.path.exists(f"{self.folder_path}/{self.file_name}.txt"):
             return
         else:
-            with open(f"{self.folder_path}\\{self.file_name}.txt", mode="w+"):
+            with open(f"{self.folder_path}/{self.file_name}.txt", mode="w+"):
                 pass
 
     def append_to_log(self, log_data):
@@ -41,7 +41,7 @@ class Conditioning_Logger():
         :param log_data: (str) data to be appeneded to the end of log file created
         by logfile_creation()
         """
-        with open(f"{self.folder_path}\\{self.file_name}.txt", mode="a") as OpenedLogFile:
+        with open(f"{self.folder_path}/{self.file_name}.txt", mode="a") as OpenedLogFile:
             if OpenedLogFile.writable():
                 OpenedLogFile.writelines(f"{log_data}\n")
 
@@ -53,7 +53,7 @@ class Conditioning_Logger():
         
         :param foldername: (str) name of zip'd folder
         """
-        with ZipFile((f"{self.folder_path}\\{foldername}.zip"), 'w') as zip:
+        with ZipFile((f"{self.folder_path}/{foldername}.zip"), 'w') as zip:
             rootdir = os.path.basename(self.folder_path)
             for r, d, f in os.walk(self.folder_path):
                 for item in f:
@@ -64,5 +64,5 @@ class Conditioning_Logger():
                         arcname = os.path.join(rootdir,parentpath)
                         zip.write(filepath, arcname)
    
-        return f"{self.folder_path}\\{foldername}.zip"
+        return f"{self.folder_path}/{foldername}.zip"
 
