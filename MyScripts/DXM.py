@@ -1,7 +1,7 @@
 import sys, platform, socket, signal, math, time
 from contextlib import contextmanager
 import _thread
-import stopit
+
 
 class DXM_Supply:
 
