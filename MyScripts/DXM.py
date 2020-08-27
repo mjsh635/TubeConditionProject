@@ -245,6 +245,20 @@ class DXM_Supply:
         """
         with self:
             return self.__send_command(99, 1)
+    
+    def read_network_settings(self):
+        """ read the network settings from the supply
+        """
+        with self:
+            return self.__send_command(50, 1)
+
+    def write_network_settings(self,device_name="DefaultSpellman", ip_addr='192.168.1.4',port=50001, subnet='255.0.0.0',gate_way="192.168.1.1", mac_default='00:40:9D:35:7C:B7'):
+        """ Write new network settings to the supply
+        """
+        with self:
+            arg = f"{device_name},{ip_addr},{port},{subnet},{gate_way},{mac_default}" 
+            print(arg)
+            return self.__send_command(51, arg)
 
     def request_faults(self):
         """return args of faults
