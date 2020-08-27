@@ -12,19 +12,19 @@ import os
 from MyScripts import settingsPickler, Logging_Controller, DXM, conditioning
 import random
 
-settingsFile1 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file1.pkl")
+settingsFile1 = settingsPickler.SettingsPickle(r"/home/pi/Desktop/TubeConditionProject/settings_file1.pkl")
 settings1 = settingsFile1.read_pickle()
-settingsFile2 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file2.pkl")
+settingsFile2 = settingsPickler.SettingsPickle(r"/home/pi/Desktop/TubeConditionProject/settings_file2.pkl")
 settings2 = settingsFile1.read_pickle()
-settingsFile3 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file3.pkl")
+settingsFile3 = settingsPickler.SettingsPickle(r"/home/pi/Desktop/TubeConditionProject/settings_file3.pkl")
 settings3 = settingsFile1.read_pickle()
-settingsFile4 = settingsPickler.SettingsPickle(r"Z:\MiscWorkJunk\TubeCondition\settings_file4.pkl")
+settingsFile4 = settingsPickler.SettingsPickle(r"/home/pi/Desktop/TubeConditionProject/settings_file4.pkl")
 settings4 = settingsFile1.read_pickle()
 
-Logger_1 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles")
-Logger_2 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles")
-Logger_3 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles")
-Logger_4 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeCondition\LogFiles")
+Logger_1 = Logging_Controller.Conditioning_Logger(r"/home/pi/Desktop/TubeConditionProject/LogFiles/")
+Logger_3 = Logging_Controller.Conditioning_Logger(r"/home/pi/Desktop/TubeConditionProject/LogFiles/")
+Logger_4 = Logging_Controller.Conditioning_Logger(r"/home/pi/Desktop/TubeConditionProject/LogFiles/")
+Logger_2 = Logging_Controller.Conditioning_Logger(r"/home/pi/Desktop/TubeConditionProject/LogFiles/")
 
 app = Flask(__name__)
 app.secret_key = 'random string'
