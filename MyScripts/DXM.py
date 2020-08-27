@@ -5,7 +5,7 @@ import _thread
 
 class DXM_Supply:
 
-    def __init__(self, IP_address='192.168.1.4', port=50001):
+    def __init__(self, IP_address='192.168.2.4', port=50001):
         
 
         self.address = (

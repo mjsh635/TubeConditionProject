@@ -1,0 +1,11 @@
+[Unit]
+Description=Tube Conditioner Service for RPI
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/Desktop/TubeConditionProject/FlaskWebpagesEnet.py
+Restart=always
+RestatSec=5
+
+[Install]
+WantedBy=multi-user.target
