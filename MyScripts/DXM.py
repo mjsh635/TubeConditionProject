@@ -313,13 +313,12 @@ class DXM_Supply:
             self.socket.settimeout(5)
             self.socket.connect(self.address)
         except Exception as e:
-            print(e)
+            print(e ,self.address)
             raise socket.timeout
 
         
 
     def __exit__(self, e_type, e_val, e_traceback):
-        print('exiting')
         self.socket.close()
 
     def try_connect(self):
@@ -329,7 +328,7 @@ class DXM_Supply:
                 self.read_model_type()
                 self.connected = True
         except socket.timeout as we:
-            print(we)
+            print(we,self.address)
             self.connected = False
 
 

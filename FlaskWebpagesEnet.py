@@ -29,13 +29,13 @@ Logger_4 = Logging_Controller.Conditioning_Logger(r"Z:\MiscWorkJunk\TubeConditio
 app = Flask(__name__)
 app.secret_key = 'random string'
 
-supply1 = DXM.DXM_Supply(IP_address='192.168.2.4')
+supply1 = DXM.DXM_Supply(IP_address='192.168.1.4')
 conditioner1 = conditioning.conditioning_Controller(HVSupply = supply1,Logger = Logger_1, HVSettings=settings1)
-supply2 = DXM.DXM_Supply(IP_address='192.168.2.5')
+supply2 = DXM.DXM_Supply(IP_address='192.168.1.5')
 conditioner2 = conditioning.conditioning_Controller(HVSupply = supply2,Logger = Logger_2, HVSettings=settings2)
-supply3 = DXM.DXM_Supply(IP_address='192.168.2.6')
+supply3 = DXM.DXM_Supply(IP_address='192.168.1.6')
 conditioner3 = conditioning.conditioning_Controller(HVSupply = supply3,Logger = Logger_3, HVSettings=settings3)
-supply4 = DXM.DXM_Supply(IP_address='192.168.2.7')
+supply4 = DXM.DXM_Supply(IP_address='192.168.1.7')
 conditioner4 = conditioning.conditioning_Controller(HVSupply = supply4,Logger = Logger_4, HVSettings=settings4)
 
 
