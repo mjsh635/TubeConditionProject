@@ -19,8 +19,9 @@ class DXM_Supply:
             with self:
                 self.read_model_type()
                 self.connected = True
+                print(f"{self.address} Connected as {self.model}")
         except socket.timeout as TOE:
-            print(TOE)
+            print(TOE, self.address)
             self.connected = False
         # # self.disconnect()
         

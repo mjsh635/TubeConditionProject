@@ -129,7 +129,11 @@
                     if (this.responseText == 'False'){
                         btn.disabled = false;
                         alert("Failed to Connect to supply: " + supplyNumber);
-                    }  
+                    }
+                    if (this.responseText == 'True'){
+                        btn.disabled = true;
+                        alert("Connected to Supply " + supplyNumber);
+                    } 
                 }
                 
             };
