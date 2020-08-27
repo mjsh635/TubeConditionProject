@@ -98,6 +98,7 @@ class DXM_Supply:
                     ans = "X4911"
                 elif ans == "DXM33":
                     ans = "X4087"
+            self.model = ans
             return ans
 
     def read_current_out(self):
