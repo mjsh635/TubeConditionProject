@@ -349,7 +349,7 @@ def xrayOn():
 def GetReadouts():
     supply_number = request.data.decode()
     supply_number = int(supply_number)
-
+    print("get readouts supply number :", supply_number)
     if supply_number == 1:
         if not supply1.connected:
             return "Supply 1 is not connected"
@@ -391,14 +391,14 @@ def GetReadouts():
             return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
         else:
             return "Xrays are OFF on Supply 4"
-
+    return "error, No_Supply_Condition_Statement"
 @app.route("/ajaxSetKVMA", methods=["POST"]) # Done
 def SetKVMA():
     supply_number =  request.form["supplyNumber"]
     supply_number = int(supply_number)
     print(supply_number)
     print(request.form["kvSet"],request.form["mASet"])
-    
+
     if supply_number == 1:
         if not supply1.connected:
             return "Supply 1 is not connected"

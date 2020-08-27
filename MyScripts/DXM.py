@@ -85,6 +85,7 @@ class DXM_Supply:
         """ send command to read model number
 
         :return: (str) model number from supply"""
+        self.remote_mode()
         with self:
             resp = self.__send_command(26, '')
             ans = resp[1]
