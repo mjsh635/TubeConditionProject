@@ -87,8 +87,18 @@ class DXM_Supply:
         :return: (str) model number from supply"""
         with self:
             resp = self.__send_command(26, '')
-            self.model = resp[1]
-            return resp[1]
+            ans = resp[1]
+            if (ans[0] == "D"): # this is to handle the fact spellman is stupid
+                                # and decided to have some supplies with different Model styles
+                if ans == "DXM02":
+                    ans = "X3481"
+                elif ans == "DXM20":
+                    ans = "X4313"
+                elif ans == "DXM21":
+                    ans = "X4911"
+                elif ans == "DXM33":
+                    ans = "X4087"
+            return ans
 
     def read_current_out(self):
         """ send command to read current
