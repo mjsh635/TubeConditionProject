@@ -186,6 +186,7 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText)
                     document.getElementById("KVMADisplay"+supplyNumber).innerText = this.responseText;
                     
                 }
@@ -223,7 +224,7 @@
         </div>
         <div class="G">
             <div class="g">      
-                    <h2>Power Supply 1 (192.168.1.4)</h2>
+                    <h2>Power Supply 1 (192.168.2.4)</h2>
                     <p class="KVMADisplay1"></p>
                     <input class="grayable1" type="button" id="tryConnect1" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(1)" >
                     <br>
@@ -262,7 +263,7 @@
             </div>
             <div class="g">
                 
-            <h2>Power Supply 2 (192.168.1.5)</h2>
+            <h2>Power Supply 2 (192.168.2.5)</h2>
             <p class="KVMADisplay2"></p>
             <input class="grayable2" type="button" id="tryConnect2" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(2)">
             <br>
@@ -303,7 +304,7 @@
             </div>
             <div class="g">
                 
-            <h2>Power Supply 3 (192.168.1.6)</h2>
+            <h2>Power Supply 3 (192.168.2.6)</h2>
             <p class="KVMADisplay3"></p>
             <input class="grayable3" type="button" id="tryConnect3" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(3)">
             <br>
@@ -343,7 +344,7 @@
             </div>
             <div class="g">
                 
-                <h2>Power Supply 4 (192.168.1.7)</h2>
+                <h2>Power Supply 4 (192.168.2.7)</h2>
                 <p class="KVMADisplay4"></p>
                 <input class="grayable4" type="button" id="tryConnect4" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(4)">
                 <br>
