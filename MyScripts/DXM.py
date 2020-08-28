@@ -36,6 +36,7 @@ class DXM_Supply:
             else:
                 bool_is_emitting = False 
             return bool_is_emitting
+
     def is_ArcPresent(self):
         """Poll the supply and see if an Arc is present
         :return: (bool) if the supply has an arc present
@@ -46,7 +47,8 @@ class DXM_Supply:
                 print("arc detected")
                 return True
             else:
-                return False      
+                return False  
+
     def xray_on(self):
         """ send command for xray_on
         :return: response from supply"""

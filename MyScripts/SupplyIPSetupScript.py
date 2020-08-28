@@ -1,7 +1,7 @@
 import sys, pathlib, time
 PARENT_DIR = pathlib.Path(__file__).resolve().parents[1]
 sys.path.append(str(PARENT_DIR))
-from MyScripts.DXM import DXM_Supply #disable=pylint(import-error)
+from MyScripts.DXM import DXM_Supply # pylint: disable=import-error
 
 # This script will handle 3 functions, it will read a supply and determine what it's IP is 
 # should you have forgotten what it was. Lets you program the network settings of the controller to
@@ -32,6 +32,9 @@ try:
                 you are required to know the current IP address and the Port
                 that the supply is using. If you do not know this information
                 you can run this script again instead using the (r) subfunction.
+                
+                !!!! Note, that one Ethernet Connection should be made otherwise
+                unknown errors may occur!!!!!!
 
                 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 """)            

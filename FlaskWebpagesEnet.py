@@ -97,74 +97,7 @@ def SupplyConnect():
 @app.route("/hvsupplypage", methods=["GET", "POST"]) # done
 def HVSettings():
     # HVSettings page, loading in the required variables for the page
-    model1 = supply1.model
-    if model1 == 'X4087':
-        settings1["maxKV"]= 40
-        settings1["maxMA"]= 30  
-    elif model1 == 'X3481':
-        settings1["maxKV"]= 30
-        settings1["maxMA"]= 10
-    elif model1 == 'X4911':
-        settings1["maxKV"]= 40
-        settings1["maxMA"]= 15
-    elif model1 == 'X4313':
-        settings1["maxKV"]= 30
-        settings1["maxMA"]= 20
-    else:
-        settings1["maxKV"]= 0
-        settings1["maxMA"]= 0
-
-    model2 = supply2.model
-    if model2 == 'X4087':
-        settings2["maxKV"]= 40
-        settings2["maxMA"]= 30  
-    elif model2 == 'X3481':
-        settings2["maxKV"]= 30
-        settings2["maxMA"]= 10
-    elif model2 == 'X4911':
-        settings2["maxKV"]= 40
-        settings2["maxMA"]= 15
-    elif model2 == 'X4313':
-        settings2["maxKV"]= 30
-        settings2["maxMA"]= 20
-    else:
-        settings2["maxKV"]= 0
-        settings2["maxMA"]= 0
-
-    model3 = supply3.model
-    if model3 == 'X4087':
-        settings3["maxKV"]= 40
-        settings3["maxMA"]= 30  
-    elif model3 == 'X3481':
-        settings3["maxKV"]= 30
-        settings3["maxMA"]= 10
-    elif model3 == 'X4911':
-        settings3["maxKV"]= 40
-        settings3["maxMA"]= 15
-    elif model3 == 'X4313':
-        settings3["maxKV"]= 30
-        settings3["maxMA"]= 20
-    else:
-        settings3["maxKV"]= 0
-        settings3["maxMA"]= 0
-
-    model4 = supply4.model
-    if model4 == 'X4087':
-        settings4["maxKV"]= 40
-        settings4["maxMA"]= 30  
-    elif model4 == 'X3481':
-        settings1["maxKV"]= 30
-        settings1["maxMA"]= 10
-    elif model4 == 'X4911':
-        settings4["maxKV"]= 40
-        settings4["maxMA"]= 15
-    elif model4 == 'X4313':
-        settings4["maxKV"]= 30
-        settings4["maxMA"]= 20
-    else:
-        settings4["maxKV"]= 0
-        settings4["maxMA"]= 0
-
+    
     if not supply1.connected:
         flash("No connection to Supply 1, some functions will be missing")
     if not supply2.connected:
@@ -660,6 +593,74 @@ def HVUpdate1():
 
 @app.route("/ajaxSettingTubes", methods = ["POST"]) # Done
 def updateTube():
+    model1 = supply1.model
+    if model1 == 'X4087':
+        settings1["maxKV"]= 40
+        settings1["maxMA"]= 30  
+    elif model1 == 'X3481':
+        settings1["maxKV"]= 30
+        settings1["maxMA"]= 10
+    elif model1 == 'X4911':
+        settings1["maxKV"]= 40
+        settings1["maxMA"]= 15
+    elif model1 == 'X4313':
+        settings1["maxKV"]= 30
+        settings1["maxMA"]= 20
+    else:
+        settings1["maxKV"]= 0
+        settings1["maxMA"]= 0
+
+    model2 = supply2.model
+    if model2 == 'X4087':
+        settings2["maxKV"]= 40
+        settings2["maxMA"]= 30  
+    elif model2 == 'X3481':
+        settings2["maxKV"]= 30
+        settings2["maxMA"]= 10
+    elif model2 == 'X4911':
+        settings2["maxKV"]= 40
+        settings2["maxMA"]= 15
+    elif model2 == 'X4313':
+        settings2["maxKV"]= 30
+        settings2["maxMA"]= 20
+    else:
+        settings2["maxKV"]= 0
+        settings2["maxMA"]= 0
+
+    model3 = supply3.model
+    if model3 == 'X4087':
+        settings3["maxKV"]= 40
+        settings3["maxMA"]= 30  
+    elif model3 == 'X3481':
+        settings3["maxKV"]= 30
+        settings3["maxMA"]= 10
+    elif model3 == 'X4911':
+        settings3["maxKV"]= 40
+        settings3["maxMA"]= 15
+    elif model3 == 'X4313':
+        settings3["maxKV"]= 30
+        settings3["maxMA"]= 20
+    else:
+        settings3["maxKV"]= 0
+        settings3["maxMA"]= 0
+
+    model4 = supply4.model
+    if model4 == 'X4087':
+        settings4["maxKV"]= 40
+        settings4["maxMA"]= 30  
+    elif model4 == 'X3481':
+        settings1["maxKV"]= 30
+        settings1["maxMA"]= 10
+    elif model4 == 'X4911':
+        settings4["maxKV"]= 40
+        settings4["maxMA"]= 15
+    elif model4 == 'X4313':
+        settings4["maxKV"]= 30
+        settings4["maxMA"]= 20
+    else:
+        settings4["maxKV"]= 0
+        settings4["maxMA"]= 0
+
     supplyNumber = int(request.form["supplyNumber"])
     if supplyNumber == 1:
         settings1["tubeSNum"] = request.form["tubeSNum"]
