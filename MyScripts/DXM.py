@@ -359,7 +359,7 @@ class DXM_Supply:
         try:
             mes = '\x02{0},{1}\x03'.format(str(cmd), self.argm).encode('ascii')
             self.socket.send(mes)
-            time.sleep(0.1)
+            time.sleep(0.3)
             response = self.socket.recv(1024).decode('ascii')
             split_resp = response.split(sep=',')
             return split_resp
