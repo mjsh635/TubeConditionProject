@@ -367,10 +367,12 @@ class DXM_Supply:
             split_resp = response.split(sep=',')
             if split_resp == None:
                 raise TypeError
+            else:
+                return split_resp
             
         except TypeError as t:
-            print(e)
-            
+            print(t)
+
         except Exception as e:
             try:
                 print(e)
