@@ -133,6 +133,9 @@ class DXM_Supply:
     def read_volt_curr_filCur(self):
         with self:
             response = self.__send_command(19, '')
+        if response == "Err0":
+            return [0,0,0]
+            
         if self.model == 'X4087':
             scaled_voltage = float(response[1]) * 0.00976 #40kv
             scaled_current = float(response[2]) * 0.007326 #30ma
@@ -371,7 +374,8 @@ class DXM_Supply:
                 return split_resp
             
         except TypeError as t:
-            print(t)
+            print("Type error:", t)
+            return "Err0"
 
         except Exception as e:
             try:
