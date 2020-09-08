@@ -383,4 +383,5 @@ class DXM_Supply:
                 finally:
                     e = None
                     del e
+        raise socket.timeout
 
