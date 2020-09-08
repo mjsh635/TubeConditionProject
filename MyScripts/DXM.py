@@ -365,15 +365,17 @@ class DXM_Supply:
             self.socket
             response = self.socket.recv(1024).decode('ascii')
             split_resp = response.split(sep=',')
-            if split_resp != None:
+            if split_resp == None:
                 raise TypeError
             
-
+        except TypeError as t:
+            print(e)
+            
         except Exception as e:
             try:
                 print(e)
             finally:
                 e = None
                 del e
-        except TypeError as t:
-            print(e)
+
+        
