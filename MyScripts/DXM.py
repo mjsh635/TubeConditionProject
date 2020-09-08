@@ -354,34 +354,26 @@ class DXM_Supply:
         :param *argm: Command Argument
         """
         argm = str(argm)
-        count = 0
-        # should try sending the command 3 times and waiting for a valid response
-        while count<=3:
-            if argm != '':
-                self.argm = argm + ','
-            else:
-                self.argm = argm
+        if argm != '':
+            self.argm = argm + ','
+        else:
+            self.argm = argm
+        try:
+            mes = '\x02{0},{1}\x03'.format(str(cmd), self.argm).encode('ascii')
+            self.socket.send(mes)
+            time.sleep(0.3)
+            self.socket
+            response = self.socket.recv(1024).decode('ascii')
+            split_resp = response.split(sep=',')
+            if split_resp != None:
+                raise TypeError
+            
+
+        except Exception as e:
             try:
-                mes = '\x02{0},{1}\x03'.format(str(cmd), self.argm).encode('ascii')
-                self.socket.send(mes)
-                time.sleep(0.3)
-                self.socket
-                response = self.socket.recv(1024).decode('ascii')
-                split_resp = response.split(sep=',')
-                if split_resp != None:
-                    return split_resp
-                else:
-                    raise TypeError
-
-            except TypeError:
-                print("no response, try again")
-                count += 1
-
-            except Exception as e:
-                try:
-                    print(e)
-                finally:
-                    e = None
-                    del e
-        raise socket.timeout
-
+                print(e)
+            finally:
+                e = None
+                del e
+        except TypeError as t:
+            print(e)
