@@ -416,6 +416,7 @@ def HVUpdate1():
                 settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings1["condOffDwell"]= request.form["condOffDwell"]
                 settings1["condStepCount"]= request.form["condStepCount"]
+                settingsFile1.write_pickle(settings1)
                 return "KV and MA Targets set higher than tubes allowable power rating"
             else:
                 settings1["filCurLim"] = request.form["filCurLim"]
@@ -429,6 +430,7 @@ def HVUpdate1():
                 settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings1["condOffDwell"]= request.form["condOffDwell"]
                 settings1["condStepCount"]= request.form["condStepCount"]
+                settingsFile1.write_pickle(settings1)
                 return "Set values successfully"
         else:
             settings1["filCurLim"] = request.form["filCurLim"]
@@ -442,8 +444,9 @@ def HVUpdate1():
             settings1["condPostArcDwell"]= request.form["condPostArcDwell"]
             settings1["condOffDwell"]= request.form["condOffDwell"]
             settings1["condStepCount"]= request.form["condStepCount"]
+            settingsFile1.write_pickle(settings1)
             return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
-        settingsFile1.write_pickle(settings1)
+        
         return "settings have been set on Supply 1"
     if supply_number == 2:  
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
@@ -459,6 +462,7 @@ def HVUpdate1():
                 settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings2["condOffDwell"]= request.form["condOffDwell"]
                 settings2["condStepCount"]= request.form["condStepCount"]
+                settingsFile2.write_pickle(settings2)
                 return "KV and MA Targets set higher than tubes allowable power rating"
             else:
                 settings2["filCurLim"] = request.form["filCurLim"]
@@ -472,6 +476,7 @@ def HVUpdate1():
                 settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings2["condOffDwell"]= request.form["condOffDwell"]
                 settings2["condStepCount"]= request.form["condStepCount"]
+                settingsFile2.write_pickle(settings2)
                 return "Set values successfully"
         else:
             settings2["filCurLim"] = request.form["filCurLim"]
@@ -485,8 +490,9 @@ def HVUpdate1():
             settings2["condPostArcDwell"]= request.form["condPostArcDwell"]
             settings2["condOffDwell"]= request.form["condOffDwell"]
             settings2["condStepCount"]= request.form["condStepCount"]
+            settingsFile2.write_pickle(settings2)
             return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
-        settingsFile2.write_pickle(settings2)
+        
         return "settings have been set on Supply 2"
     if supply_number == 3:
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
@@ -502,6 +508,7 @@ def HVUpdate1():
                 settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings3["condOffDwell"]= request.form["condOffDwell"]
                 settings3["condStepCount"]= request.form["condStepCount"]
+                settingsFile3.write_pickle(settings3)
                 return "KV and MA Targets set higher than tubes allowable power rating"
             else:
                 settings3["filCurLim"] = request.form["filCurLim"]
@@ -515,6 +522,7 @@ def HVUpdate1():
                 settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings3["condOffDwell"]= request.form["condOffDwell"]
                 settings3["condStepCount"]= request.form["condStepCount"]
+                settingsFile3.write_pickle(settings3)
                 return "Set values successfully"
         else:
             settings3["filCurLim"] = request.form["filCurLim"]
@@ -528,8 +536,9 @@ def HVUpdate1():
             settings3["condPostArcDwell"]= request.form["condPostArcDwell"]
             settings3["condOffDwell"]= request.form["condOffDwell"]
             settings3["condStepCount"]= request.form["condStepCount"]
+            settingsFile3.write_pickle(settings3)
             return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
-        settingsFile3.write_pickle(settings3)
+        
         return "settings have been set on Supply 3"
     if supply_number == 4:
         if (float(request.form["condMAStart"]) <= float(request.form["condMATarget"])) and (float(request.form["condKVStart"])<= float(request.form["condKVStart"])):
@@ -545,6 +554,7 @@ def HVUpdate1():
                 settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings4["condOffDwell"]= request.form["condOffDwell"]
                 settings4["condStepCount"]= request.form["condStepCount"]
+                settingsFile4.write_pickle(settings4)
                 return "KV and MA Targets set higher than tubes allowable power rating"
             else:
                 settings4["filCurLim"] = request.form["filCurLim"]
@@ -558,6 +568,7 @@ def HVUpdate1():
                 settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
                 settings4["condOffDwell"]= request.form["condOffDwell"]
                 settings4["condStepCount"]= request.form["condStepCount"]
+                settingsFile4.write_pickle(settings4)
                 return "Set values successfully"
         else:
             settings4["filCurLim"] = request.form["filCurLim"]
@@ -571,8 +582,9 @@ def HVUpdate1():
             settings4["condPostArcDwell"]= request.form["condPostArcDwell"]
             settings4["condOffDwell"]= request.form["condOffDwell"]
             settings4["condStepCount"]= request.form["condStepCount"]
+            settingsFile4.write_pickle(settings4)
             return """KV and MA Targets set higher than tubes allowable power rating and KV Target and MA Target must be higher than KV Start and MA Start"""
-        settingsFile4.write_pickle(settings4)
+        
         return "settings have been set on Supply 4"
 
 
