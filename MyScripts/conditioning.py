@@ -307,7 +307,7 @@ class conditioning_Controller():
         end_time_loop_1 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
         while ((datetime.datetime.now() < end_time_loop_1) and (not self.kill_sig.is_set())):
             # while loop until the current time is greater than the target endtime
-           # print(self.__updateKVMA())
+            print(self.__updateKVMA())
             if self.HV.is_emitting():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():
@@ -397,7 +397,7 @@ class conditioning_Controller():
         end_time_loop_2 = (datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell))
         while ((datetime.datetime.now() < end_time_loop_2) and not self.kill_sig.is_set()) :
         # while loop until the current time is greater than the target end time
-          #  print(self.__updateKVMA())
+            print(self.__updateKVMA())
             if self.HV.is_emitting():
                     # is the xray still emitting?
                 if self.HV.is_ArcPresent():
@@ -463,7 +463,7 @@ class conditioning_Controller():
         end_time_loop_3 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
         while ((datetime.datetime.now() < end_time_loop_3) and (not self.kill_sig.is_set())):
             # while loop until the current time is greater than the target end time
-          #  print(self.__updateKVMA())
+            print(self.__updateKVMA())
             if self.HV.is_emitting():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():

@@ -285,44 +285,29 @@ def GetReadouts():
     if supply_number == 1:
         if not supply1.connected:
             return "Supply 1 is not connected"
-
-        resp = supply1.read_volt_curr_filCur()
-        if supply1.is_emitting():
-            return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
-        else:
-            
-            return "Xrays are OFF on Supply 1"
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(conditioner1.currentReadKV,conditioner1.currentReadMA,conditioner1.currentReadFilcur)
+        
 
     if supply_number == 2:
         if not supply2.connected:
             return "Supply 2 is not connected"
 
-        resp = supply2.read_volt_curr_filCur()
-        if supply2.is_emitting():
-            return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
-        else:
-            
-            return "Xrays are OFF on Supply 2"
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(conditioner2.currentReadKV,conditioner2.currentReadMA,conditioner2.currentReadFilcur)
+        
 
     if supply_number == 3:
         if not supply3.connected:
             return "Supply 3 is not connected"
 
-        resp = supply3.read_volt_curr_filCur()
-        if supply3.is_emitting():
-            return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
-        else:
-            return "Xrays are OFF on Supply 3" 
+       
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(conditioner3.currentReadKV,conditioner3.currentReadMA,conditioner3.currentReadFilcur)
+        
 
     if supply_number == 4:
         if not supply4.connected:
             return "Supply 4 is not connected"
-
-        resp = supply4.read_volt_curr_filCur()
-        if supply4.is_emitting():
-            return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
-        else:
-            return "Xrays are OFF on Supply 4"
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(conditioner4.currentReadKV,conditioner4.currentReadMA,conditioner4.currentReadFilcur)
+        
     return "error, No_Supply_Condition_Statement"
 @app.route("/ajaxSetKVMA", methods=["POST"]) # Done
 def SetKVMA():
