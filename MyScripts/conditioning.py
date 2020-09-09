@@ -84,7 +84,7 @@ class conditioning_Controller():
             # set Filament Preheat and log it
             self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
             self.Log.append_to_log((f"""[Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]} ||{datetime.datetime.today()}]\n"""))    
-            self.start_time = str(datetime.datetime.today())
+            self.start_time = datetime.datetime.today()
             self.records["startDate"] = datetime.date.today()
             self.condStepCount = float(self.settings["condStepCount"])
             self.condKVTarget = float(self.settings["condKVTarget"])
@@ -276,6 +276,7 @@ class conditioning_Controller():
                 self.currentKVset += self.kvStepSize
                 
                 self.HV.set_voltage(self.currentKVset)
+                self.Log.append_to_log(f"""[Conditioning Mode, voltage set to : {self.currentKVset}||{datetime.datetime.today()}]\n""")
 
             else:
                 self.currentKVset -= self.currentKVset # can remove to have 1 step higher than target
@@ -291,6 +292,9 @@ class conditioning_Controller():
         
         self._on_off_cycles()
         
+        self.Log.append_to_log(f"""[Conditioning Mode, On/Off Cycles Completed ||{datetime.datetime.today()}]\n""")
+        print("Starting max KV MA ONOFF Cycle")
+
         if self.kill_sig.is_set():
             # received the kill signal, log that it ocurred
             self.Log.append_to_log(f"""[Conditiong Mode, Requested Condition Stop ||{datetime.datetime.today()}]""")
@@ -303,7 +307,7 @@ class conditioning_Controller():
         end_time_loop_1 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
         while ((datetime.datetime.now() < end_time_loop_1) and (not self.kill_sig.is_set())):
             # while loop until the current time is greater than the target endtime
-            print(self.__updateKVMA())
+           # print(self.__updateKVMA())
             if self.HV.is_emitting():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():
@@ -393,7 +397,7 @@ class conditioning_Controller():
         end_time_loop_2 = (datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell))
         while ((datetime.datetime.now() < end_time_loop_2) and not self.kill_sig.is_set()) :
         # while loop until the current time is greater than the target end time
-            print(self.__updateKVMA())
+          #  print(self.__updateKVMA())
             if self.HV.is_emitting():
                     # is the xray still emitting?
                 if self.HV.is_ArcPresent():
@@ -459,7 +463,7 @@ class conditioning_Controller():
         end_time_loop_3 = datetime.datetime.now()+datetime.timedelta(minutes=self.condStepDwell)
         while ((datetime.datetime.now() < end_time_loop_3) and (not self.kill_sig.is_set())):
             # while loop until the current time is greater than the target end time
-            print(self.__updateKVMA())
+          #  print(self.__updateKVMA())
             if self.HV.is_emitting():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():
