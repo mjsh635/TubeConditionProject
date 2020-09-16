@@ -147,7 +147,7 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
-                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = "XRAYS OFF";
+                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = this.responseText;
                 }
             }
             xhttp.open("POST", "/ajaxXrayOff", true);
@@ -160,7 +160,7 @@
                 
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
-                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = "XRAYS ON";
+                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = this.responseText;
                 }
             }
             var fd = new FormData(document.getElementById("manualXrayControlForm"+supplyNumber));
