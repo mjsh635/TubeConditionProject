@@ -219,24 +219,29 @@
 
         function runInterval(){
             if (grayout1 == "True"){
-            setInterval(loadKVMA,2000)
+            var id1 = setInterval(loadKVMA(id1),3000)
             }
             if (grayout2 == "True"){
-            setInterval(loadKVMA,2000)
+            var id2 = setInterval(loadKVMA(id2),3000)
             }
             if (grayout3 == "True"){
-            setInterval(loadKVMA,2000)
+            var id3 = setInterval(loadKVMA(id3),3000)
             }
             if (grayout4 == "True"){
-            setInterval(loadKVMA,2000)
+            var id4 = setInterval(loadKVMA(id4),3000)
             }
         }
 
-        function loadKVMA() {
+        function loadKVMA(num) {
             if (grayout1 == "True"){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText == "COMPLETE"){
+                            document.getElementById("displayKVMA"+1).innerText = this.responseText;
+                            clearInterval(num);
+                            document.location.reload() = true;
+                        }
                         document.getElementById("displayKVMA"+1).innerText = this.responseText;
                     }
                 };
@@ -336,16 +341,16 @@
                 <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings1.condMATarget}}>
                 <br>
                 <label>Conditioning Step Dwell:</label>
-                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings1.condStepDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell (min)" name="condStepDwell" value={{settings1.condStepDwell}}>
                 <br>
                 <label>Dwell Time at Max:</label>
-                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings1.condAtMaxDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max (min)" name="condAtMaxDwell" value={{settings1.condAtMaxDwell}}>
                 <br>
                 <label>Post Arc Dwell:</label>
-                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings1.condPostArcDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell (min)" name="condPostArcDwell" value={{settings1.condPostArcDwell}}>
                 <br>
                 <label>Off Dwell:</label>
-                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings1.condOffDwell}}>
+                <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="On/Off Cycle Dwell (min)" name="condOffDwell" value={{settings1.condOffDwell}}>
                 <br>
                 <label>Number of Steps:</label>
                 <input class="grayable1" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings1.condStepCount}}>
@@ -399,16 +404,16 @@
                 <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings2.condMATarget}}>
                 <br>
                 <label>Conditioning Step Dwell:</label>
-                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings2.condStepDwell}}>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell (min)" name="condStepDwell" value={{settings2.condStepDwell}}>
                 <br>
                 <label>Dwell Time at Max:</label>
-                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings2.condAtMaxDwell}}>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max (min)" name="condAtMaxDwell" value={{settings2.condAtMaxDwell}}>
                 <br>
                 <label>Post Arc Dwell:</label>
-                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings2.condPostArcDwell}}>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell (min)" name="condPostArcDwell" value={{settings2.condPostArcDwell}}>
                 <br>
                 <label>Off Dwell:</label>
-                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings2.condOffDwell}}>
+                <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="On/Off Cycle Dwell (min)" name="condOffDwell" value={{settings2.condOffDwell}}>
                 <br>
                 <label>Number of Steps:</label>
                 <input class="grayable2" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings2.condStepCount}}>
@@ -462,16 +467,16 @@
                 <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings3.condMATarget}}>
                 <br>
                 <label>Conditioning Step Dwell:</label>
-                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings3.condStepDwell}}>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell (min)" name="condStepDwell" value={{settings3.condStepDwell}}>
                 <br>
                 <label>Dwell Time at Max:</label>
-                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings3.condAtMaxDwell}}>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max (min)" name="condAtMaxDwell" value={{settings3.condAtMaxDwell}}>
                 <br>
                 <label>Post Arc Dwell:</label>
-                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings3.condPostArcDwell}}>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell (min)" name="condPostArcDwell" value={{settings3.condPostArcDwell}}>
                 <br>
                 <label>Off Dwell:</label>
-                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings3.condOffDwell}}>
+                <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="On/Off Cycle Dwell (min)" name="condOffDwell" value={{settings3.condOffDwell}}>
                 <br>
                 <label>Number of Steps:</label>
                 <input class="grayable3" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings3.condStepCount}}>
@@ -525,16 +530,16 @@
                 <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="mA Target Current" name="condMATarget" value={{settings4.condMATarget}}>
                 <br>
                 <label>Conditioning Step Dwell:</label>
-                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell" name="condStepDwell" value={{settings4.condStepDwell}}>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Conditioning Step Dwell (min)" name="condStepDwell" value={{settings4.condStepDwell}}>
                 <br>
                 <label>Dwell Time at Max:</label>
-                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max" name="condAtMaxDwell" value={{settings4.condAtMaxDwell}}>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Dwell Time at Max (min)" name="condAtMaxDwell" value={{settings4.condAtMaxDwell}}>
                 <br>
                 <label>Post Arc Dwell:</label>
-                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell" name="condPostArcDwell" value={{settings4.condPostArcDwell}}>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Post Arc Dwell (min)" name="condPostArcDwell" value={{settings4.condPostArcDwell}}>
                 <br>
                 <label>Off Dwell:</label>
-                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Off Dwell" name="condOffDwell" value={{settings4.condOffDwell}}>
+                <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="On/Off Cycle Dwell (min)" name="condOffDwell" value={{settings4.condOffDwell}}>
                 <br>
                 <label>Number of Steps:</label>
                 <input class="grayable4" type="text" onkeypress="return onlyNumberKey(event)" placeholder="Number of Steps" name="condStepCount" value={{settings4.condStepCount}}>

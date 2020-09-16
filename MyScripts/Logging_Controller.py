@@ -1,5 +1,6 @@
 import io
 import os
+import time,datetime
 from zipfile import ZipFile
 
 
@@ -43,7 +44,7 @@ class Conditioning_Logger():
         """
         with open(f"{self.folder_path}/{self.file_name}.txt", mode="a") as OpenedLogFile:
             if OpenedLogFile.writable():
-                OpenedLogFile.writelines(f"{log_data}\n")
+                OpenedLogFile.writelines(f"[{datetime.datetime.today()}|||{log_data}\n")
 
 
     def zip_files(self, foldername):

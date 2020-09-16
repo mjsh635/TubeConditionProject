@@ -278,13 +278,51 @@ def xrayOn():
         else:
             return "KV or MA higher than set Max, check HV Settings for limit. Is the right tube type chosen?"
 
-@app.route("/ajaxGetReadouts", methods=["POST"]) # Done
+@app.route("/ajaxGetKVMA", methods=["POST"]) # Done
 def GetReadouts():
     supply_number = request.data.decode()
     supply_number = int(supply_number)
     if supply_number == 1:
         if not supply1.connected:
-            return "Supply 1 is not connected"
+            return "Supply 1 is not connected" 
+        resp = supply1.read_volt_curr_filCur()
+
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
+        
+
+    if supply_number == 2:
+        if not supply2.connected:
+            return "Supply 2 is not connected"
+        resp = supply2.read_volt_curr_filCur()
+
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
+        
+
+    if supply_number == 3:
+        if not supply3.connected:
+            return "Supply 3 is not connected"
+        resp = supply3.read_volt_curr_filCur()
+
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
+        
+
+    if supply_number == 4:
+        if not supply4.connected:
+            return "Supply 4 is not connected"
+        resp = supply4.read_volt_curr_filCur()
+        return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(resp[0],resp[1],resp[2])
+        
+    return "error, No_Supply_Condition_Statement"
+
+@app.route("/ajaxGetReadouts", methods=["POST"]) # Done
+def GetKVMA():
+    supply_number = request.data.decode()
+    supply_number = int(supply_number)
+    if supply_number == 1:
+        if not supply1.connected:
+            return "Supply 1 is not connected" 
+        if conditioner1.condComplete == True:
+            return "COMPLETE"
         return  "KV: {0:.2f}, MA: {1:.2f}, FL {2:.2f}".format(conditioner1.currentReadKV,conditioner1.currentReadMA,conditioner1.currentReadFilcur)
         
 
