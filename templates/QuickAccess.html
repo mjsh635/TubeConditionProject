@@ -147,7 +147,7 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
-                    document.location.reload = true;
+                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = "XRAYS OFF";
                 }
             }
             xhttp.open("POST", "/ajaxXrayOff", true);
@@ -160,6 +160,7 @@
                 
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
+                    document.getElementById("XrayON/OFF"+supplyNumber).innerText = "XRAYS ON";
                 }
             }
             var fd = new FormData(document.getElementById("manualXrayControlForm"+supplyNumber));
@@ -226,6 +227,7 @@
             <div class="g">      
                     <h2>Power Supply 1 (192.168.2.4)</h2>
                     <p id="KVMADisplay1"></p>
+                    <p id="XrayON/OFF1"></p>
                     <input class="grayable1" type="button" id="tryConnect1" value="Click Here To Try Reconnect To Supply" onclick="attemptConnect(1)" >
                     <br>
                     <br>
