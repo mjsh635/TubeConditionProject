@@ -219,29 +219,24 @@
 
         function runInterval(){
             if (grayout1 == "True"){
-            setInterval(loadKVMA(1),3000)
+            setInterval(loadKVMA(),3000)
             }
             if (grayout2 == "True"){
-            setInterval(loadKVMA(1),3000)
+            setInterval(loadKVMA(),3000)
             }
             if (grayout3 == "True"){
-            setInterval(loadKVMA(1),3000)
+            setInterval(loadKVMA(),3000)
             }
             if (grayout4 == "True"){
-            setInterval(loadKVMA(1),3000)
+            setInterval(loadKVMA(),3000)
             }
         }
 
-        function loadKVMA(num) {
+        function loadKVMA() {
             if (grayout1 == "True"){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        if(this.responseText == "COMPLETE"){
-                            document.getElementById("displayKVMA"+1).innerText = this.responseText;
-                            clearInterval(num);
-                            document.location.reload() = true;
-                        }
                         document.getElementById("displayKVMA"+1).innerText = this.responseText;
                     }
                 };
