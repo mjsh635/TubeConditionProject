@@ -78,14 +78,14 @@ class conditioning_Controller():
             self.CurrentOverTime.clear()
             self.FilamentOverTime.clear()
             # set Filament Current Limit and Log it
-            self.Log.append_to_log(f"""\n****************************************************\n""")
-            self.Log.append_to_log(f"""Conditiong Mode, Starting Conditioning Cycle] \n""")
+           
+            self.Log.append_to_log(f"""Conditiong Mode, Starting Conditioning Cycle] """)
             self.HV.set_filament_limit(float(self.settings["filCurLim"]))
-            self.Log.append_to_log((f"""Conditiong Mode, Filament Current Limit: {self.settings["filCurLim"]}]\n"""))
+            self.Log.append_to_log((f"""Conditiong Mode, Filament Current Limit: {self.settings["filCurLim"]}]"""))
 
             # set Filament Preheat and log it
             self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
-            self.Log.append_to_log((f"""Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]}]\n"""))    
+            self.Log.append_to_log((f"""Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]}]"""))    
             self.start_time = datetime.datetime.today()
             self.records["startDate"] = str(datetime.date.today())
             self.condStepCount = float(self.settings["condStepCount"])
@@ -146,10 +146,10 @@ class conditioning_Controller():
             if (self.currentKVset < self.condKVTarget + self.kvStepSize):
             # keep ramping until the kv is at target
                 self.HV.set_voltage(self.currentKVset)
-                self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset}] """)
                 # Set and log KV
                 self.HV.set_current(self.currentMAset)
-                self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAset},]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAset},] """)
                 # Set and log MA
 
                 self._check_emitting()
@@ -161,7 +161,7 @@ class conditioning_Controller():
                 self.__whileRamping()
                 
                 # log the current step number
-                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}] """)
                 self.currentStepNumber += 1
 
                 self._increment_voltage()
@@ -191,7 +191,7 @@ class conditioning_Controller():
 
                 # the KV has hit its target
                 #log the completion
-                self.Log.append_to_log(f"""Conditioning Mode, KV Ramp completed]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, KV Ramp completed] """)
                 # set the KV to 75% of its total for the MA ramp
                 self.currentKVset = self.currentKVset * 0.75
                 self.HV.set_voltage(self.currentKVset)
@@ -202,7 +202,7 @@ class conditioning_Controller():
                 # break out of the KV Ramp loop
                 break
         # log the starting of the MA Ramp loop
-        self.Log.append_to_log(f"""Conditioning Mode, Starting MA Ramp with 75% max KV : {self.currentKVset}]\n""")   
+        self.Log.append_to_log(f"""Conditioning Mode, Starting MA Ramp with 75% max KV : {self.currentKVset}] """)   
 
         while not self.kill_sig.is_set():
             # 75% KV, MA Ramp up Loop
@@ -210,7 +210,7 @@ class conditioning_Controller():
             if self.currentMAset < (self.condMATarget + self.maStepSize):
                 # keep ramping untill MA is at target
                 self.HV.set_current(self.currentMAset)
-                self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAset}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAset}] """)
                 # set and log the current
                 
                 self._check_emitting()
@@ -221,7 +221,7 @@ class conditioning_Controller():
                 self.__whileRamping()
                 
                 # log the current step number
-                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}] """)
                 self.currentStepNumber += 1
 
                 self._increment_Current()
@@ -243,13 +243,13 @@ class conditioning_Controller():
                 #if issue with over shooting target?
                 self.currentMAset -= self.maStepSize # can remove to have 1 step higher than target
                 # the MA has hit its target
-                self.Log.append_to_log(f"""Conditioning Mode, MA Ramp completed]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, MA Ramp completed] """)
                 # reset the step number
                 self.currentStepNumber = 0
                 # break out of the MA loop
                 break
         
-        self.Log.append_to_log(f"""Conditioning Mode, starting KV ramp with max MA : {self.currentKVset}]\n""")
+        self.Log.append_to_log(f"""Conditioning Mode, starting KV ramp with max MA : {self.currentKVset}] """)
 
         print("Starting Max MA KV Ramp to Max")
         while not self.kill_sig.is_set():
@@ -261,7 +261,7 @@ class conditioning_Controller():
                 # since Xrays are on, and havent hit MA Target, set dwell time delta 
                 
                 # log and count current step number
-                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, current step number : {self.currentStepNumber}] """)
                 self.currentStepNumber += 1
 
                 self.currentMAsetArced = self.currentMAset
@@ -283,23 +283,23 @@ class conditioning_Controller():
                 self.currentKVset += self.kvStepSize
                 
                 self.HV.set_voltage(self.currentKVset)
-                self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset}]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset}] """)
 
             else:
                 self.currentKVset -= self.currentKVset # can remove to have 1 step higher than target
                 # the MA has hit its target
-                self.Log.append_to_log(f"""Conditioning Mode, Max MA, KV Ramp completed]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, Max MA, KV Ramp completed] """)
                 # reset the step number
                 self.currentStepNumber = 0
                 # break out of the MA loop
                 break
         
-        self.Log.append_to_log(f"""Conditioning Mode, Starting On/Off Cycles : {self.currentStepNumber}]\n""")
+        self.Log.append_to_log(f"""Conditioning Mode, Starting On/Off Cycles : {self.currentStepNumber}] """)
         print("Starting max KV MA ONOFF Cycle")
         
         self._on_off_cycles()
         
-        self.Log.append_to_log(f"""Conditioning Mode, On/Off Cycles Completed]\n""")
+        self.Log.append_to_log(f"""Conditioning Mode, On/Off Cycles Completed] """)
         print("Starting max KV MA ONOFF Cycle")
 
         if self.kill_sig.is_set():
@@ -308,8 +308,8 @@ class conditioning_Controller():
         # start the tear down
         tearDown()
         # log the final report
-        for item in self.records:
-            self.Log.append_to_log(item)
+        for item, value in self.records:
+            self.Log.append_to_log(f"{item} : {value}")
 
         self.Log.append_to_log(f"""Conditiong Mode, Conditioning Complete]""")
 
@@ -322,7 +322,7 @@ class conditioning_Controller():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():
                     # is there an arc present? yes, so log and check conditions
-                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected]\n""")
+                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected] """)
                     
                     if (self.arcCount <= self.maxArcCount+1):
                         # has there been more arcs than the allowed amount?
@@ -335,20 +335,20 @@ class conditioning_Controller():
                                 # restart the xrays and log everything
                                 if not self.HV.read_interlock_status():
                                     # because the xrays were off due to an interlock, log and end the conditioning routine
-                                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                                     self.kill_sig.set()
 
-                                self.Log.append_to_log(f"""Conditioning Mode, Xrays found to be off]\n""")
-                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on]\n""")
+                                self.Log.append_to_log(f"""Conditioning Mode, Xrays found to be off] """)
+                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on] """)
                                 self.HV.xray_on()
-                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]\n""") 
+                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping] """) 
                                 self.__whileRamping()
-                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]\n""")
+                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete] """)
                                 
 
                             # maintain the current settings and try and ride out the arcs and log 
                             self.HV.set_current(self.currentMAsetArced)
-                            self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAsetArced}]\n""")                    
+                            self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAsetArced}] """)                    
                                 
                         else:
                             # this isnt the first cycle of the tube
@@ -357,30 +357,30 @@ class conditioning_Controller():
                                 # if so start the xrays again and log everything
                                 if not self.HV.read_interlock_status():
                                     # because the xrays were off due to an interlock, log and end the conditioning routine
-                                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                                     self.kill_sig.set()
 
-                                self.Log.append_to_log(f"""Conditioning Mode, Xrays found to be off]\n""")
+                                self.Log.append_to_log(f"""Conditioning Mode, Xrays found to be off] """)
                                 self.HV.xray_on()
-                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]\n""") 
+                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping] """) 
                                 self.__whileRamping()
-                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]\n""")
+                                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete] """)
                             # xrays were not knocked out, or they have been recovered
                             # set voltage back a step, and bump up the current
                             self.HV.set_voltage(self.currentKVset - self.kvStepSize)
                             self.HV.set_current(self.currentMAsetArced)
                             # log the voltage and current setpoint changes
-                            self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset - self.kvStepSize}]\n""")
-                            self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAsetArced}]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVset - self.kvStepSize}] """)
+                            self.Log.append_to_log(f"""Conditioning Mode, Current set to : {self.currentMAsetArced}] """)
                             # increment the arc counter and log
                             self.arcCount += 1
-                            self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}] """)
                             # start the loop with a new end time equal to the post arc dwell value
-                            self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell] """)
                             end_time_loop_1 = datetime.datetime.now()+datetime.timedelta(minutes=self.condPostArcDwell)
                     else:
                         # there has been more arcs than the allowed maximum, log and kill the conditioning routine
-                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs] """)
                         self.kill_sig.set()                                    
                 else:
                     
@@ -389,18 +389,18 @@ class conditioning_Controller():
                     time.sleep(1)
             else:
                 # started the loop and xrays were off
-                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off(271)]\n""")
+                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off(271)] """)
                 if not self.HV.read_interlock_status():
                     # because the xrays were off due to an interlock, log and end the conditioning routine
-                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                     self.kill_sig.set()
                 else:
                     # the interlock is okay, so start up the xrays again and log everything
                     self.HV.xray_on()
-                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on]\n""")
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping]\n""") 
+                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on] """)
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping] """) 
                     self.__whileRamping()
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete]\n""")
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete] """)
                     time.sleep(0.5)
     
     def _increment_Current(self):
@@ -412,7 +412,7 @@ class conditioning_Controller():
                     # is the xray still emitting?
                 if self.HV.is_ArcPresent():
                     # is there an arc present? yes, so log and check conditions
-                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected]\n""")
+                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected] """)
 
                     if (self.arcCount <= self.maxArcCount+1):
                             # has there been more arcs than the allowed amount?
@@ -425,28 +425,28 @@ class conditioning_Controller():
                                 
                             if not self.HV.read_interlock_status():
                                 # because the xrays were off due to an interlock, log and end the conditioning routine
-                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                                 self.kill_sig.set()
 
                             # xrays were not knocked out, or they have been recovered
                                 
-                            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on] """)
                             self.HV.xray_on()
-                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]\n""") 
+                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping] """) 
                             self.__whileRamping()
-                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete] """)
                         # set voltage back a step, 
                         self.HV.set_voltage(self.currentKVsetArced)
-                        self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVsetArced}]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, voltage set to : {self.currentKVsetArced}] """)
                         # increment the arc counter and log
                         self.arcCount += 1
-                        self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}] """)
                         # start the loop with a new end time equal to the post arc dwell value
-                        self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell] """)
                         end_time_loop_2 = datetime.datetime.now()+datetime.timedelta(minutes=self.condPostArcDwell)
                     else:
                         # there has been more arcs than the allowed maximum, log and kill the conditioning routine
-                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs] """)
                         self.kill_sig.set()                                    
                 else:
                     # no arc was detected 
@@ -454,19 +454,19 @@ class conditioning_Controller():
                     time.sleep(1)
             else:
                 # started the loop and xrays were off
-                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off]\n""")
+                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off] """)
 
                 if not self.HV.read_interlock_status():
                     # because the xrays were off due to an interlock, log and end the conditioning routine
-                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                     self.kill_sig.set()
                 else:
                     # the interlock is okay, so start up the xrays again and log everything
                     self.HV.xray_on()
-                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on]\n""")
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping]\n""") 
+                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on] """)
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping] """) 
                     self.__whileRamping()
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete]\n""")
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete] """)
                     time.sleep(0.5)
 
     def _kv_Reramp(self):
@@ -478,7 +478,7 @@ class conditioning_Controller():
                 # is the xray still emitting?
                 if self.HV.is_ArcPresent():
                         # is there an arc present? yes, so log and check conditions
-                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected]\n""")
+                    self.Log.append_to_log(f"""Conditioning Mode, Arc Detected] """)
 
                     if (self.arcCount <= self.maxArcCount+1):
                         # has there been more arcs than the allowed amount?
@@ -491,27 +491,27 @@ class conditioning_Controller():
 
                             if not self.HV.read_interlock_status():
                                 # because the xrays were off due to an interlock, log and end the conditioning routine
-                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine,  ||{datetime.datetime.today()}]\n""") 
+                                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine,  ||{datetime.datetime.today()}] """) 
                                 self.kill_sig.set()
 
                             # xrays were not knocked out, or they have been recovered    
-                            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on]\n""")
+                            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on] """)
                             self.HV.xray_on()
-                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]\n""") 
+                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping] """) 
                             self.__whileRamping()
-                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]\n""")    
+                            self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete] """)    
 
                         # set current back a step,
                         self.HV.set_current(self.currentMAsetArced)
                         # increment the arc counter and log
                         self.arcCount += 1
-                        self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Arc count : {self.arcCount}] """)
                         # start the loop with a new end time equal to the post arc dwell value
-                        self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Starting Arc Dwell] """)
                         end_time_loop_3 = datetime.datetime.now()+datetime.timedelta(minutes=self.condPostArcDwell)
                     else:
                         # there has been more arcs than the allowed maximum, log and kill the conditioning routine
-                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs]\n""")
+                        self.Log.append_to_log(f"""Conditioning Mode, Ending Conditioning routine due to: Arc count exceeding Max allowable Arcs] """)
                         self.kill_sig.set()                                    
                 else:
                     # no arc was detected
@@ -519,7 +519,7 @@ class conditioning_Controller():
                         # there has been an arc at some point
                         # keep a total arc count and log the recovery
                         self.totalArcCount += self.arcCount
-                        self.Log.append_to_log(f"""[Conditiong Mode, Recovered]\n""")
+                        self.Log.append_to_log(f"""[Conditiong Mode, Recovered] """)
                         # reset the arc count
                         self.arcCount = 0
                         
@@ -527,19 +527,19 @@ class conditioning_Controller():
                     time.sleep(1)
             else:
                 # started the loop and xrays were off
-                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off]\n""")
+                self.Log.append_to_log(f"""Conditiong Mode, Xrays found to be off] """)
 
                 if not self.HV.read_interlock_status():
                     # because the xrays were off due to an interlock, log and end the conditioning routine
-                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                    self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine] """) 
                     self.kill_sig.set()
                 else:
                     # the interlock is okay, so start up the xrays again and log everything
                     self.HV.xray_on()
-                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on]\n""")
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping]\n""") 
+                    self.Log.append_to_log(f"""Conditiong Mode, Xrays turned on] """)
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping] """) 
                     self.__whileRamping()
-                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete]\n""")
+                    self.Log.append_to_log(f"""Conditiong Mode, HV Ramping Complete] """)
                     time.sleep(0.5)
 
     def _on_off_cycles(self,cycle_count = 4):
@@ -582,11 +582,11 @@ class conditioning_Controller():
     def _check_emitting(self):
         if not self.HV.is_emitting():
             # check if the xrays are off
-            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on]\n""")
+            self.Log.append_to_log(f"""Conditioning Mode, Xrays turned on] """)
             # log if they are off
             if not self.HV.read_interlock_status():
                 # check if they are off due to the interlocks
-                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]\n""") 
+                self.Log.append_to_log(f"""Conditioning Mode, Xrays turned off due to interlock, ending conditioning Routine]""") 
                 self.kill_sig.set()
                 # since they are off because the interlock is open, kill the routine
 
@@ -594,9 +594,9 @@ class conditioning_Controller():
                 # since the interlocks aren't the reason for xray off
                 # Xray on, wait for ramp complete, log operations
                 self.HV.xray_on()
-                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]\n""") 
+                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping]""") 
                 self.__whileRamping()
-                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]\n""")
+                self.Log.append_to_log(f"""Conditioning Mode, HV Ramping Complete]""")
 
     def _update_Graph_Values(self):
         self.VoltageOverTime.update()
