@@ -78,8 +78,8 @@ class conditioning_Controller():
             self.CurrentOverTime.clear()
             self.FilamentOverTime.clear()
             # set Filament Current Limit and Log it
-           
-            self.Log.append_to_log(f"""Conditiong Mode, Starting Conditioning Cycle] """)
+            self.Log.append_to_log(f"\n#############################################")
+            self.Log.append_to_log(f"Conditiong Mode, Starting Conditioning Cycle]")
             self.HV.set_filament_limit(float(self.settings["filCurLim"]))
             self.Log.append_to_log((f"""Conditiong Mode, Filament Current Limit: {self.settings["filCurLim"]}]"""))
 
@@ -308,8 +308,8 @@ class conditioning_Controller():
         # start the tear down
         tearDown()
         # log the final report
-        for item, value in self.records:
-            self.Log.append_to_log(f"{item} : {value}")
+        for key, value in self.records.items():
+            self.Log.append_to_log(f"{key} : {value}")
 
         self.Log.append_to_log(f"""Conditiong Mode, Conditioning Complete]""")
 
