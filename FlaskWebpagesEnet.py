@@ -142,32 +142,28 @@ def xrayOff():
         if not supply1.connected:
             return "Supply 1 is not connected"
 
-        Logger_1.append_to_log(f"""[Manual Xray OFF 
-            {datetime.datetime.today()}]""")
+        Logger_1.append_to_log(f"Manual Xray OFF]")
         supply1.xray_off()
         return "Supply 1 Requested Off"
     if supply_number == 2:
         if not supply2.connected:
             return "Supply 2 is not connected"
 
-        Logger_2.append_to_log(f"""[Manual Xray OFF 
-            {datetime.datetime.today()}]""")
+        Logger_2.append_to_log(f"Manual Xray OFF]")
         supply2.xray_off()
         return "Supply 2 Requested Off"
     if supply_number == 3:
         if not supply3.connected:
             return "Supply 3 is not connected"
 
-        Logger_3.append_to_log(f"""[Manual Xray OFF 
-            {datetime.datetime.today()}]""")
+        Logger_3.append_to_log(f"Manual Xray OFF]")
         supply3.xray_off()
         return "Supply 3 Requested Off"
     if supply_number == 4:
         if not supply4.connected:
             return "Supply 4 is not connected"
 
-        Logger_4.append_to_log(f"""[Manual Xray OFF 
-            {datetime.datetime.today()}]""")
+        Logger_4.append_to_log(f"Manual Xray OFF")
         supply4.xray_off()
         return "Supply 4 Requested Off"
 
@@ -191,10 +187,7 @@ def xrayOn():
             if not supply1.is_emitting():
                 supply1.xray_on()
 
-            Logger_1.append_to_log(f"""[Manual Xray On, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_1.append_to_log(f"Manual Xray On, set target KV: {request.form['kvSet']}, set target KV: {request.form['mASet']}]")
 
             return "Xrays Turned On"
         else:
@@ -217,10 +210,7 @@ def xrayOn():
             if not supply2.is_emitting():
                 supply2.xray_on()
 
-            Logger_2.append_to_log(f"""[Manual Xray On, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_2.append_to_log(f"Manual Xray On, set target KV: {request.form['kvSet']}, set target KV: {request.form['mASet']}]")
 
             return "Xrays Turned On with Supply 2"
         else:
@@ -242,10 +232,7 @@ def xrayOn():
             if not supply3.is_emitting():
                 supply3.xray_on()
 
-            Logger_3.append_to_log(f"""[Manual Xray On, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_3.append_to_log(f"Manual Xray On, set target KV: {request.form['kvSet']}, set target KV: {request.form['mASet']}]")
 
             return "Xrays Turned On with Supply 3"
 
@@ -268,10 +255,7 @@ def xrayOn():
             if not supply4.is_emitting():
                 supply4.xray_on()
 
-            Logger_4.append_to_log(f"""[Manual Xray On, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_4.append_to_log(f"Manual Xray On, set target KV: {request.form['kvSet']}, set target KV: {request.form['mASet']}]")
 
             return "Xrays Turned On with Supply 4"
             
@@ -363,10 +347,7 @@ def SetKVMA():
             settings1["currKV"] = request.form["kvSet"]
             settings1["currMA"] = request.form["mASet"]
 
-            Logger_1.append_to_log(f"""[Manual KV/MA Adjustment, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_1.append_to_log(f"Manual KV/MA Adjustment, set target KV: {request.form['kvSet']} set target KV: {request.form['mASet']}]")
 
             return "Set the values on Supply 1"
         else:
@@ -384,10 +365,7 @@ def SetKVMA():
             settings2["currKV"] = request.form["kvSet"]
             settings2["currMA"] = request.form["mASet"]
 
-            Logger_2.append_to_log(f"""[Manual KV/MA Adjustment, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_2.append_to_log(f"Manual KV/MA Adjustment, set target KV: {request.form['kvSet']} set target KV: {request.form['mASet']}]")
 
             return "Set the values on Supply 2"
 
@@ -406,10 +384,7 @@ def SetKVMA():
             settings3["currKV"] = request.form["kvSet"]
             settings3["currMA"] = request.form["mASet"]
 
-            Logger_3.append_to_log(f"""[Manual KV/MA Adjustment, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_3.append_to_log(f"Manual KV/MA Adjustment, set target KV: {request.form['kvSet']} set target KV: {request.form['mASet']}]")
 
             return "Set the values on Supply 3"
         else:
@@ -427,10 +402,7 @@ def SetKVMA():
             settings4["currKV"] = request.form["kvSet"]
             settings4["currMA"] = request.form["mASet"]
 
-            Logger_4.append_to_log(f"""[Manual KV/MA Adjustment, 
-            set target KV: {request.form["kvSet"]} 
-            set target KV: {request.form["mASet"]}
-            {datetime.datetime.today()}]""")
+            Logger_4.append_to_log(f"Manual KV/MA Adjustment, set target KV: {request.form['kvSet']} set target KV: {request.form['mASet']}]")
 
             return "Set the values on Supply 4"
         else:
