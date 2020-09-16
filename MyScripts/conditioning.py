@@ -86,7 +86,7 @@ class conditioning_Controller():
             # set Filament Preheat and log it
             self.HV.set_filament_preheat(float(self.settings["filPreHeat"]))
             self.Log.append_to_log((f"""Conditiong Mode, Filament Preheat Set  : {self.settings["filPreHeat"]}]\n"""))    
-            self.start_time = datetime.date.today()
+            self.start_time = datetime.datetime.today()
             self.records["startDate"] = str(datetime.date.today())
             self.condStepCount = float(self.settings["condStepCount"])
             self.condKVTarget = float(self.settings["condKVTarget"])
