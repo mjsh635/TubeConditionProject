@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package proto_manufacturing.tubeconditioner;
-
+ 
 /**
  *
  * @author mjsh6
@@ -14,8 +14,10 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form MainWindow
      */
+    DXM supply1;
     public MainWindow() {
         initComponents();
+        supply1 = new DXM("192.168.1.4",50001);
     }
 
     /**
@@ -27,47 +29,308 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Supply1Panel = new javax.swing.JPanel();
+        SupplyNumber = new javax.swing.JTabbedPane();
+        Supply1 = new javax.swing.JTabbedPane();
+        ManualControlPanel = new javax.swing.JPanel();
+        XrayControlPanel = new javax.swing.JPanel();
+        Supply1Label = new javax.swing.JLabel();
+        ReadoutPanel = new javax.swing.JPanel();
+        CurrentReadoutUnitLabel = new javax.swing.JLabel();
+        VoltageReadoutUnitLabel = new javax.swing.JLabel();
+        VoltageReadoutLabel = new javax.swing.JLabel();
+        VoltageReadoutLabel1 = new javax.swing.JLabel();
+        ControlsPanel = new javax.swing.JPanel();
+        VoltageLabel = new javax.swing.JLabel();
+        XrayOffButton = new javax.swing.JButton();
+        CurrentLabel = new javax.swing.JLabel();
+        CurrentEntryTBox = new javax.swing.JTextField();
         XrayOnButton = new javax.swing.JButton();
+        VoltageEntryTBox = new javax.swing.JTextField();
+        HighVoltageSettingsPanel = new javax.swing.JPanel();
+        HVSettingsPanel = new javax.swing.JPanel();
+        Supply1SettingsLabel = new javax.swing.JLabel();
+        FilCurrLimiTBox = new javax.swing.JTextField();
+        FillCurrLimLabel = new javax.swing.JLabel();
+        FilPreHeatLabel = new javax.swing.JLabel();
+        FilPreHeatTBox = new javax.swing.JTextField();
+        ResetToDefaultButton = new javax.swing.JToggleButton();
+        SaveSettingsButton = new javax.swing.JToggleButton();
+        ConditioningPanel = new javax.swing.JPanel();
+        LoggingPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.black);
 
-        Supply1Panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SupplyNumber.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+
+        Supply1.setBackground(new java.awt.Color(255, 255, 255));
+        Supply1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        XrayControlPanel.setBorder(new javax.swing.border.MatteBorder(null));
+
+        Supply1Label.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Supply1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Supply1Label.setText("SUPPLY 1");
+
+        CurrentReadoutUnitLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        CurrentReadoutUnitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CurrentReadoutUnitLabel.setText("mA");
+
+        VoltageReadoutUnitLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        VoltageReadoutUnitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        VoltageReadoutUnitLabel.setText("kV");
+
+        VoltageReadoutLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        VoltageReadoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        VoltageReadoutLabel.setText("0.0");
+
+        VoltageReadoutLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        VoltageReadoutLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        VoltageReadoutLabel1.setText("0.0");
+
+        javax.swing.GroupLayout ReadoutPanelLayout = new javax.swing.GroupLayout(ReadoutPanel);
+        ReadoutPanel.setLayout(ReadoutPanelLayout);
+        ReadoutPanelLayout.setHorizontalGroup(
+            ReadoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReadoutPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(VoltageReadoutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(VoltageReadoutUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(VoltageReadoutLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CurrentReadoutUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        ReadoutPanelLayout.setVerticalGroup(
+            ReadoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReadoutPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ReadoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CurrentReadoutUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(ReadoutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(VoltageReadoutUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(VoltageReadoutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(VoltageReadoutLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        VoltageLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        VoltageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        VoltageLabel.setText("VOLTAGE kV");
+
+        XrayOffButton.setText("Xray Off");
+
+        CurrentLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CurrentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CurrentLabel.setText("CURRENT mA");
 
         XrayOnButton.setText("Xray On");
 
-        javax.swing.GroupLayout Supply1PanelLayout = new javax.swing.GroupLayout(Supply1Panel);
-        Supply1Panel.setLayout(Supply1PanelLayout);
-        Supply1PanelLayout.setHorizontalGroup(
-            Supply1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Supply1PanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout ControlsPanelLayout = new javax.swing.GroupLayout(ControlsPanel);
+        ControlsPanel.setLayout(ControlsPanelLayout);
+        ControlsPanelLayout.setHorizontalGroup(
+            ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ControlsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(VoltageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(VoltageEntryTBox)
+                    .addComponent(XrayOnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(CurrentEntryTBox, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(XrayOffButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addComponent(CurrentLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        ControlsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {XrayOffButton, XrayOnButton});
+
+        ControlsPanelLayout.setVerticalGroup(
+            ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ControlsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(VoltageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CurrentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(VoltageEntryTBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CurrentEntryTBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ControlsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(XrayOffButton, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(XrayOnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        ControlsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {XrayOffButton, XrayOnButton});
+
+        javax.swing.GroupLayout XrayControlPanelLayout = new javax.swing.GroupLayout(XrayControlPanel);
+        XrayControlPanel.setLayout(XrayControlPanelLayout);
+        XrayControlPanelLayout.setHorizontalGroup(
+            XrayControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Supply1Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(XrayControlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(XrayControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ReadoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ControlsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        XrayControlPanelLayout.setVerticalGroup(
+            XrayControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(XrayControlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Supply1Label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ReadoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ControlsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout ManualControlPanelLayout = new javax.swing.GroupLayout(ManualControlPanel);
+        ManualControlPanel.setLayout(ManualControlPanelLayout);
+        ManualControlPanelLayout.setHorizontalGroup(
+            ManualControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ManualControlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(XrayControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        ManualControlPanelLayout.setVerticalGroup(
+            ManualControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ManualControlPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(XrayOnButton)
-                .addGap(111, 111, 111))
+                .addComponent(XrayControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        Supply1PanelLayout.setVerticalGroup(
-            Supply1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Supply1PanelLayout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(XrayOnButton)
-                .addGap(27, 27, 27))
+
+        Supply1.addTab("Manual Control", ManualControlPanel);
+
+        HVSettingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        Supply1SettingsLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Supply1SettingsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Supply1SettingsLabel.setText("SUPPLY 1 SETTINGS");
+
+        FilCurrLimiTBox.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FilCurrLimiTBox.setText("0.0");
+
+        FillCurrLimLabel.setLabelFor(FilCurrLimiTBox);
+        FillCurrLimLabel.setText("Filament Current Limit:");
+
+        FilPreHeatLabel.setLabelFor(FilCurrLimiTBox);
+        FilPreHeatLabel.setText("Filament Pre-Heat:");
+
+        FilPreHeatTBox.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FilPreHeatTBox.setText("0.0");
+
+        javax.swing.GroupLayout HVSettingsPanelLayout = new javax.swing.GroupLayout(HVSettingsPanel);
+        HVSettingsPanel.setLayout(HVSettingsPanelLayout);
+        HVSettingsPanelLayout.setHorizontalGroup(
+            HVSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Supply1SettingsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(HVSettingsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(HVSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(HVSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(FilPreHeatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FilPreHeatTBox, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(HVSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(FillCurrLimLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FilCurrLimiTBox, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        HVSettingsPanelLayout.setVerticalGroup(
+            HVSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HVSettingsPanelLayout.createSequentialGroup()
+                .addComponent(Supply1SettingsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(HVSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FillCurrLimLabel)
+                    .addComponent(FilCurrLimiTBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(HVSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FilPreHeatLabel)
+                    .addComponent(FilPreHeatTBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ResetToDefaultButton.setText("Reset to Default");
+
+        SaveSettingsButton.setText("Save Settings");
+
+        javax.swing.GroupLayout HighVoltageSettingsPanelLayout = new javax.swing.GroupLayout(HighVoltageSettingsPanel);
+        HighVoltageSettingsPanel.setLayout(HighVoltageSettingsPanelLayout);
+        HighVoltageSettingsPanelLayout.setHorizontalGroup(
+            HighVoltageSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HighVoltageSettingsPanelLayout.createSequentialGroup()
+                .addComponent(HVSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(HighVoltageSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ResetToDefaultButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SaveSettingsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        HighVoltageSettingsPanelLayout.setVerticalGroup(
+            HighVoltageSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(HVSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HighVoltageSettingsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ResetToDefaultButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SaveSettingsButton)
+                .addContainerGap())
+        );
+
+        Supply1.addTab("High Voltage Settings", HighVoltageSettingsPanel);
+
+        javax.swing.GroupLayout ConditioningPanelLayout = new javax.swing.GroupLayout(ConditioningPanel);
+        ConditioningPanel.setLayout(ConditioningPanelLayout);
+        ConditioningPanelLayout.setHorizontalGroup(
+            ConditioningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 556, Short.MAX_VALUE)
+        );
+        ConditioningPanelLayout.setVerticalGroup(
+            ConditioningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        Supply1.addTab("Conditioning", ConditioningPanel);
+
+        javax.swing.GroupLayout LoggingPanelLayout = new javax.swing.GroupLayout(LoggingPanel);
+        LoggingPanel.setLayout(LoggingPanelLayout);
+        LoggingPanelLayout.setHorizontalGroup(
+            LoggingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 556, Short.MAX_VALUE)
+        );
+        LoggingPanelLayout.setVerticalGroup(
+            LoggingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        Supply1.addTab("Logging", LoggingPanel);
+
+        SupplyNumber.addTab("Supply 1", Supply1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Supply1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+            .addComponent(SupplyNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Supply1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+            .addComponent(SupplyNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
         );
 
         pack();
@@ -109,7 +372,33 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Supply1Panel;
+    private javax.swing.JPanel ConditioningPanel;
+    private javax.swing.JPanel ControlsPanel;
+    private javax.swing.JTextField CurrentEntryTBox;
+    private javax.swing.JLabel CurrentLabel;
+    private javax.swing.JLabel CurrentReadoutUnitLabel;
+    private javax.swing.JTextField FilCurrLimiTBox;
+    private javax.swing.JLabel FilPreHeatLabel;
+    private javax.swing.JTextField FilPreHeatTBox;
+    private javax.swing.JLabel FillCurrLimLabel;
+    private javax.swing.JPanel HVSettingsPanel;
+    private javax.swing.JPanel HighVoltageSettingsPanel;
+    private javax.swing.JPanel LoggingPanel;
+    private javax.swing.JPanel ManualControlPanel;
+    private javax.swing.JPanel ReadoutPanel;
+    private javax.swing.JToggleButton ResetToDefaultButton;
+    private javax.swing.JToggleButton SaveSettingsButton;
+    private javax.swing.JTabbedPane Supply1;
+    private javax.swing.JLabel Supply1Label;
+    private javax.swing.JLabel Supply1SettingsLabel;
+    private javax.swing.JTabbedPane SupplyNumber;
+    private javax.swing.JTextField VoltageEntryTBox;
+    private javax.swing.JLabel VoltageLabel;
+    private javax.swing.JLabel VoltageReadoutLabel;
+    private javax.swing.JLabel VoltageReadoutLabel1;
+    private javax.swing.JLabel VoltageReadoutUnitLabel;
+    private javax.swing.JPanel XrayControlPanel;
+    private javax.swing.JButton XrayOffButton;
     private javax.swing.JButton XrayOnButton;
     // End of variables declaration//GEN-END:variables
 }

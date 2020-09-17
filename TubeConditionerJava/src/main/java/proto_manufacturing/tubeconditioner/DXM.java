@@ -1,7 +1,10 @@
+package proto_manufacturing.tubeconditioner;
+
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -376,6 +379,7 @@ public class DXM {
 
         try (Socket sock = new Socket(this.address,this.port)) 
         {   // open socket, create message, send message, receive response, convert to string
+            sock.setSoTimeout(2000);
             String message = String.format("\002%1$s,%2$s\003", Command,Argument);
             byte[] byteResponse = new byte[40];
             byte[] byteArrayMessage = message.getBytes(StandardCharsets.US_ASCII);
@@ -386,6 +390,9 @@ public class DXM {
 
             reply = new String(byteResponse);
         } 
+        catch(SocketTimeoutException STE){
+            System.out.println(String.format("Timeout on Address: %s",this.address));
+        }
         catch (Exception e) {
             System.out.println(e);
         }

@@ -1,3 +1,12 @@
 .vscode/settings.json
 TODO
 MyScripts/playingwiththings.py
+
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
