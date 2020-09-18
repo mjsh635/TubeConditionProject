@@ -10,14 +10,15 @@ package proto_manufacturing.tubeconditioner;
  * @author mjsh6
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    DXM supply1;
     /**
      * Creates new form MainWindow
      */
-    DXM supply1;
+
     public MainWindow() {
         initComponents();
         supply1 = new DXM("192.168.1.4",50001);
+        
     }
 
     /**
@@ -57,6 +58,10 @@ public class MainWindow extends javax.swing.JFrame {
         SaveSettingsButton = new javax.swing.JToggleButton();
         ConditioningPanel = new javax.swing.JPanel();
         LoggingPanel = new javax.swing.JPanel();
+        AboutPanel = new javax.swing.JPanel();
+        AboutRefreshButton = new javax.swing.JButton();
+        AboutTextAreaScrollPane = new javax.swing.JScrollPane();
+        AboutTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -298,7 +303,7 @@ public class MainWindow extends javax.swing.JFrame {
         ConditioningPanel.setLayout(ConditioningPanelLayout);
         ConditioningPanelLayout.setHorizontalGroup(
             ConditioningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
         ConditioningPanelLayout.setVerticalGroup(
             ConditioningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +316,7 @@ public class MainWindow extends javax.swing.JFrame {
         LoggingPanel.setLayout(LoggingPanelLayout);
         LoggingPanelLayout.setHorizontalGroup(
             LoggingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
         LoggingPanelLayout.setVerticalGroup(
             LoggingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,21 +325,70 @@ public class MainWindow extends javax.swing.JFrame {
 
         Supply1.addTab("Logging", LoggingPanel);
 
+        AboutRefreshButton.setText("Refresh");
+        AboutRefreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AboutRefreshButtonActionPerformed(evt);
+            }
+        });
+
+        AboutTextArea.setColumns(20);
+        AboutTextArea.setRows(5);
+        AboutTextAreaScrollPane.setViewportView(AboutTextArea);
+
+        javax.swing.GroupLayout AboutPanelLayout = new javax.swing.GroupLayout(AboutPanel);
+        AboutPanel.setLayout(AboutPanelLayout);
+        AboutPanelLayout.setHorizontalGroup(
+            AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AboutPanelLayout.createSequentialGroup()
+                .addComponent(AboutTextAreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AboutRefreshButton))
+        );
+        AboutPanelLayout.setVerticalGroup(
+            AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AboutPanelLayout.createSequentialGroup()
+                .addContainerGap(229, Short.MAX_VALUE)
+                .addComponent(AboutRefreshButton))
+            .addComponent(AboutTextAreaScrollPane)
+        );
+
+        Supply1.addTab("About", AboutPanel);
+
         SupplyNumber.addTab("Supply 1", Supply1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SupplyNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+            .addComponent(SupplyNumber)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SupplyNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+            .addComponent(SupplyNumber)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AboutRefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutRefreshButtonActionPerformed
+        String textToWrite = "";
+        try{
+            System.out.println("proto_manufacturing.tubeconditioner.MainWindow.AboutRefreshButtonActionPerformed()");
+        
+        String[] info = supply1.Get_About_Information();
+        
+        textToWrite = String.format("Supply IP Address: %1$s\n", String.valueOf(supply1.address));
+        textToWrite += String.format("Remote Mode?: %1$s\n", String.valueOf(supply1.RemoteMode));
+        textToWrite += String.format("Supply Number: %1$s\n", String.valueOf(supply1.modelNumber));
+        textToWrite +=String.format("Set Voltage: %1$s\nSet Current: %2$s\nSet Filament Limit: %3$s\nSet Pre-Heat: %4$s\n", info[0],info[1],info[2],info[3]);
+        }catch(Error e){
+            textToWrite = "Error 001: No Connection to Supply";
+            
+        }finally{
+            AboutTextArea.setText(textToWrite);
+        }
+    }//GEN-LAST:event_AboutRefreshButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,9 +423,14 @@ public class MainWindow extends javax.swing.JFrame {
                 new MainWindow().setVisible(true);
             }
         });
+        
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AboutPanel;
+    private javax.swing.JButton AboutRefreshButton;
+    private javax.swing.JTextArea AboutTextArea;
+    private javax.swing.JScrollPane AboutTextAreaScrollPane;
     private javax.swing.JPanel ConditioningPanel;
     private javax.swing.JPanel ControlsPanel;
     private javax.swing.JTextField CurrentEntryTBox;
