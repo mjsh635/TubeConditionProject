@@ -81,6 +81,10 @@ class DXM_Supply:
             scaled_voltage = float(response[1]) * 0.00976
         elif self.model == 'X4313':
             scaled_voltage = float(response[1]) * 0.007326007
+        elif self.model == 'DXM41':
+            scaled_voltage = float(response[1]) * 0.01831501831
+        elif self.model == 'DXM35':
+            scaled_voltage = float(response[1]) * 0.01465201465  
         return scaled_voltage
 
     def read_model_type(self):
@@ -95,6 +99,10 @@ class DXM_Supply:
                                 # and decided to have some supplies with different Model styles
                 if ans == "DXM02":
                     ans = "X3481"
+                elif ans == "DXM41": # 75kv 1200W
+                    ans ="DXM41"
+                elif ans == "DXM35": # 60KV 1200W
+                    ans ="DXM35"
                 elif ans == "DXM20":
                     ans = "X4313"
                 elif ans == "DXM21":
@@ -117,6 +125,10 @@ class DXM_Supply:
         elif self.model == 'X4911':
             scaled_current = float(response[2]) * 0.00366300
         elif self.model == 'X4313':
+            scaled_current = float(response[2]) * 0.00488400
+        elif self.model == 'DXM41':
+            scaled_current = float(response[2]) * 0.003907203
+        elif self.model == 'DXM35':
             scaled_current = float(response[2]) * 0.00488400
         return scaled_current
 
@@ -148,6 +160,12 @@ class DXM_Supply:
         elif self.model == 'X4313':
             scaled_voltage = float(response[1]) * 0.007326007 #30KV
             scaled_current = float(response[2]) * 0.00488400 #20ma
+        elif self.model == 'DXM41':
+            scaled_voltage = float(response[1]) * 0.0183150183
+            scaled_current = float(response[2]) * 0.003907203
+        elif self.model == 'DXM35':
+            scaled_voltage = float(response[1]) * 0.014652014
+            scaled_current = float(response[2]) * 0.004884004
         scaled_fil = float(response[3]) * 0.001221
 
         return [scaled_voltage, scaled_current, scaled_fil]
@@ -166,6 +184,10 @@ class DXM_Supply:
             scaled_voltage = float(response[1]) * 0.00976
         elif self.model == 'X4313':
             scaled_voltage = float(response[1]) * 0.007326007
+        elif self.model == 'DXM41':
+            scaled_voltage = float(response[1]) * 0.01831501831
+        elif self.model == 'DXM35':
+            scaled_voltage = float(response[1]) * 0.01465201465 
         return scaled_voltage
 
     def request_current_set(self):
@@ -182,6 +204,11 @@ class DXM_Supply:
             scaled_current = float(response[2]) * 0.00366300
         elif self.model == 'X4313':
             scaled_current = float(response[2]) * 0.00488400
+        elif self.model == 'DXM41':
+            scaled_current = float(response[2]) * 0.003907203
+        elif self.model == 'DXM35':
+            scaled_current = float(response[2]) * 0.00488400
+        
         return scaled_current
 
     def request_filament_limit_set(self):
@@ -217,6 +244,10 @@ class DXM_Supply:
             raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.00976)
         elif self.model == 'X4313':
             raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.007326007)
+        elif self.model == 'DXM41':
+            raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.0183150831)
+        elif self.model == 'DXM35':
+            raw_voltage_to_set = math.trunc(float(voltage_to_set) / 0.01465201465)
         with self:
             return self.__send_command(10, raw_voltage_to_set)
 
@@ -231,6 +262,10 @@ class DXM_Supply:
         elif self.model == 'X4911':
             raw_current_to_set = math.trunc(float(current_to_set) / 0.00366300)
         elif self.model == 'X4313':
+            raw_current_to_set = math.trunc(float(current_to_set) / 0.00488400)
+        elif self.model == 'DXM41':
+            raw_current_to_set = math.trunc(float(current_to_set) / 0.003907203)
+        elif self.model == 'DXM35':
             raw_current_to_set = math.trunc(float(current_to_set) / 0.00488400)
         with self:
             return self.__send_command(11, raw_current_to_set)
