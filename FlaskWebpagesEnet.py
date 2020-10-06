@@ -613,6 +613,12 @@ def updateTube():
     elif model1 == 'X4313':
         settings1["maxKV"]= 30
         settings1["maxMA"]= 20
+    elif model1 == 'DXM41':
+        settings1["maxKV"]= 75
+        settings1["maxMA"]= 16
+    elif model1 == 'DXM35':
+        settings1["maxKV"]= 60
+        settings1["maxMA"]= 20
     else:
         settings1["maxKV"]= 0
         settings1["maxMA"]= 0
@@ -630,6 +636,12 @@ def updateTube():
     elif model2 == 'X4313':
         settings2["maxKV"]= 30
         settings2["maxMA"]= 20
+    elif model1 == 'DXM41':
+        settings1["maxKV"]= 75
+        settings1["maxMA"]= 16
+    elif model1 == 'DXM35':
+        settings1["maxKV"]= 60
+        settings1["maxMA"]= 20
     else:
         settings2["maxKV"]= 0
         settings2["maxMA"]= 0
@@ -647,6 +659,12 @@ def updateTube():
     elif model3 == 'X4313':
         settings3["maxKV"]= 30
         settings3["maxMA"]= 20
+    elif model1 == 'DXM41':
+        settings1["maxKV"]= 75
+        settings1["maxMA"]= 16
+    elif model1 == 'DXM35':
+        settings1["maxKV"]= 60
+        settings1["maxMA"]= 20
     else:
         settings3["maxKV"]= 0
         settings3["maxMA"]= 0
@@ -664,6 +682,12 @@ def updateTube():
     elif model4 == 'X4313':
         settings4["maxKV"]= 30
         settings4["maxMA"]= 20
+    elif model1 == 'DXM41':
+        settings1["maxKV"]= 75
+        settings1["maxMA"]= 16
+    elif model1 == 'DXM35':
+        settings1["maxKV"]= 60
+        settings1["maxMA"]= 20
     else:
         settings4["maxKV"]= 0
         settings4["maxMA"]= 0
